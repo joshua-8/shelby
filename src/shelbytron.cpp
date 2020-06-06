@@ -3,7 +3,6 @@
 #include "constants/pinout.h"
 #include "screen/screen.h"
 #include "settings/generalSetStruct.h"
-#include "constants/constants.h"
 
 generalSetStruct genS = { -1, -1, 1, 0, 0, 0};
 Screen screen(&genS);
