@@ -11,7 +11,6 @@ Screen screen(&genS);
 void setup() {
   Serial.begin(250000);
   analogReadResolution(12);
-  delay(5000);
   screen.begin();
 
 }
