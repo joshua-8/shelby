@@ -1,5 +1,6 @@
 #include "volumeSlider.h"
-volumeSlider::volumeSlider(Adafruit_ILI9341* _tft, int _xPos, int _yPos, int _width, int _height, uint16_t _standardColor, uint16_t _activeColor, int _rangeMax, int _boxWidth, int _val) {
+volumeSlider::volumeSlider(Adafruit_ILI9341 *_tft, int _xPos, int _yPos, int _width, int _height, uint16_t _standardColor, uint16_t _activeColor, int _rangeMax, int _boxWidth, int _val)
+{
   val = _val;
   lastVal = _val;
   tft = _tft;
@@ -15,42 +16,55 @@ volumeSlider::volumeSlider(Adafruit_ILI9341* _tft, int _xPos, int _yPos, int _wi
   undrawn = true;
 }
 
-void volumeSlider::run(MouseData mouseData) {
-  if (undrawn) {
+void volumeSlider::run(MouseData mouseData)
+{
+  if (undrawn)
+  {
     undrawn = false;
     draw();
   }
-  if (mouseData.mouseX > xPos and mouseData.mouseX < xPos + width and mouseData.mouseY > yPos and mouseData.mouseY < yPos + height) {
-    if (mouseData.mouseDown) {
+  if (mouseData.mouseX > xPos and mouseData.mouseX < xPos + width and mouseData.mouseY > yPos and mouseData.mouseY < yPos + height)
+  {
+    if (mouseData.mouseDown)
+    {
       state = true;
       draw();
     }
-  } else if (state == true) {
+  }
+  else if (state == true)
+  {
     state = false;
     draw();
   }
-  if (mouseData.mouseUp && state == true) {
+  if (mouseData.mouseUp && state == true)
+  {
     state = false;
     draw();
   }
-  if (state) {
+  if (state)
+  {
     lastVal = val;
     val = constrain(map(mouseData.mouseX, xPos + boxWidth / 2, xPos + width - boxWidth / 2, 0, rangeMax), 0, rangeMax);
-    if (val != lastVal) {
+    if (val != lastVal)
+    {
       draw();
     }
   }
 }
-void volumeSlider::draw() {
+void volumeSlider::draw()
+{
   (*tft).fillRect(xPos, yPos, width, height, standardColor);
   (*tft).fillRect(map(val, 0, rangeMax, xPos, xPos + width - boxWidth), yPos, boxWidth, height, activeColor);
 }
-boolean volumeSlider::getVal() {
+boolean volumeSlider::getVal()
+{
   return val;
 }
-void volumeSlider::setVal(int _val) {
+void volumeSlider::setVal(int _val)
+{
   val = _val;
 }
-void volumeSlider::setUndrawn() {
+void volumeSlider::setUndrawn()
+{
   undrawn = true;
 }

@@ -1,6 +1,7 @@
 #include "sButton.h"
 
-sButton::sButton(Adafruit_ILI9341 *_tft, int _xPos, int _yPos, int _width, int _height, uint16_t _standardColor, uint16_t _activeColor, uint16_t _textColor, uint16_t _edgeColor, String _label, boolean _momentary) {
+sButton::sButton(Adafruit_ILI9341 *_tft, int _xPos, int _yPos, int _width, int _height, uint16_t _standardColor, uint16_t _activeColor, uint16_t _textColor, uint16_t _edgeColor, String _label, boolean _momentary)
+{
   tft = _tft;
   xPos = _xPos;
   yPos = _yPos;
@@ -14,39 +15,52 @@ sButton::sButton(Adafruit_ILI9341 *_tft, int _xPos, int _yPos, int _width, int _
   lastState = false;
   undrawn = true;
   secondLabel = "";
-  if (_label.length()*SCREEN_FONT_WIDTH + 4 >= width) {
+  if (_label.length() * SCREEN_FONT_WIDTH + 4 >= width)
+  {
     label = "";
-  } else {
+  }
+  else
+  {
     label = _label;
   }
   momentary = _momentary;
 }
 
-void sButton::run(MouseData mouseData) {
+void sButton::run(MouseData mouseData)
+{
   lastState = state;
-  if (undrawn) {
+  if (undrawn)
+  {
     draw();
     undrawn = false;
   }
-  if (momentary) {
-    if (mouseData.mouseX > xPos and mouseData.mouseX < xPos + width and mouseData.mouseY > yPos and mouseData.mouseY < yPos + height) {
-      if (mouseData.mouseDown) {
+  if (momentary)
+  {
+    if (mouseData.mouseX > xPos and mouseData.mouseX < xPos + width and mouseData.mouseY > yPos and mouseData.mouseY < yPos + height)
+    {
+      if (mouseData.mouseDown)
+      {
         state = true;
         draw();
       }
     }
-    if (mouseData.mouseUp) {
+    if (mouseData.mouseUp)
+    {
       state = false;
       draw();
     }
-  } else { //if latching
-    if (mouseData.mouseUp and mouseData.mouseXUp > xPos and mouseData.mouseXUp < xPos + width and mouseData.mouseYUp > yPos and mouseData.mouseYUp < yPos + height) {
+  }
+  else
+  { //if latching
+    if (mouseData.mouseUp and mouseData.mouseXUp > xPos and mouseData.mouseXUp < xPos + width and mouseData.mouseYUp > yPos and mouseData.mouseYUp < yPos + height)
+    {
       state = !state;
       draw();
     }
   }
 }
-void sButton::draw() {
+void sButton::draw()
+{
   (*tft).fillRect(xPos, yPos, width, height, state ? activeColor : standardColor);
   (*tft).drawRect(xPos, yPos, width, height, edgeColor);
   (*tft).setCursor(xPos + 2, yPos + 2);
@@ -56,22 +70,28 @@ void sButton::draw() {
   (*tft).setCursor(xPos + 2, yPos + height / 2);
   (*tft).print(secondLabel);
 }
-boolean sButton::getState() {
+boolean sButton::getState()
+{
   return state;
 }
-boolean sButton::getJustPushed() {
+boolean sButton::getJustPushed()
+{
   return (state == true and lastState == false);
 }
-boolean sButton::getJustReleased() {
+boolean sButton::getJustReleased()
+{
   return (state == false and lastState == true);
 }
-void sButton::setState(boolean _state) {
+void sButton::setState(boolean _state)
+{
   lastState = state;
   state = _state;
   draw();
 }
-boolean sButton::setText(String _label) {
-  if (_label.length()*SCREEN_FONT_WIDTH + 4 >= width) {
+boolean sButton::setText(String _label)
+{
+  if (_label.length() * SCREEN_FONT_WIDTH + 4 >= width)
+  {
     return true;
   }
   label = _label;
@@ -79,14 +99,17 @@ boolean sButton::setText(String _label) {
   return false;
 }
 
-boolean sButton::setSubText(String _label) {
-  if (_label.length()*SCREEN_FONT_WIDTH + 4 >= width) {
+boolean sButton::setSubText(String _label)
+{
+  if (_label.length() * SCREEN_FONT_WIDTH + 4 >= width)
+  {
     return true;
   }
   secondLabel = _label;
   draw();
   return false;
 }
-void sButton::setUndrawn() {
+void sButton::setUndrawn()
+{
   undrawn = true;
 }
