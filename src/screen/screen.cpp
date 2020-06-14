@@ -2,7 +2,8 @@
 
 Screen::Screen(generalSetStruct *_genSettings)
 {
-  preditScreen = new Screen_Predit(&screenMode, &tft);
+  numPad = new NumPad(&tft);
+  preditScreen = new Screen_Predit(_genSettings, &screenMode, &tft, numPad);
   homeScreen = new Screen_Home(_genSettings, &screenMode, &tft, preditScreen);
 }
 
