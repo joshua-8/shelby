@@ -35,8 +35,6 @@ void Screen_Predit::run(MouseData mouseData)
 
     (*tft).setCursor(160, 130);
     (*tft).println((*numPad).getFinalValString());
-    (*tft).setCursor(160, 160);
-    (*tft).println((*numPad).getValString());
     (*tft).setCursor(160, 190);
     (*tft).println((*numPad).getString());
   }
