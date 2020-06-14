@@ -1,6 +1,6 @@
 #include "NumPad.h"
 
-NumPad::NumPad(Adafruit_ILI9341 *_tft)
+NumPad::NumPad(Adafruit_ILI9341* _tft)
 {
     tft = _tft;
     button0 = new sButton(tft, NUMPAD_POS_X + NUMPAD_WIDTH * 0 / 3, NUMPAD_POS_Y + NUMPAD_HEIGHT * 3 / 5, NUMPAD_WIDTH / 3, NUMPAD_HEIGHT / 5, NUMPAD_BACKGROUND_COLOR, NUMPAD_ACTIVE_COLOR, NUMPAD_TEXT_COLOR, NUMPAD_ACTIVE_COLOR, "0", true);
@@ -48,8 +48,7 @@ void NumPad::begin()
 boolean NumPad::run(MouseData mouseData)
 {
     boolean change = false;
-    if (str == "#")
-    {
+    if (str == "#") {
         change = true;
         str = getValString();
     }
@@ -69,91 +68,71 @@ boolean NumPad::run(MouseData mouseData)
     (*buttonN).run(mouseData);
     (*buttonDel).run(mouseData);
 
-    if (str.length() < NUMPAD_STRING_LENGTH + (str.charAt(0) == '-' ? 1 : 0) + (str.indexOf('.') != -1 ? 1 : 0))
-    {
-        if ((*button0).getJustReleased())
-        {
+    if ((int)str.length() < NUMPAD_STRING_LENGTH + (str.charAt(0) == '-' ? 1 : 0) + (str.indexOf('.') != -1 ? 1 : 0)) {
+        if ((*button0).getJustReleased()) {
             str.append(0);
             change = true;
         }
-        if ((*button1).getJustReleased())
-        {
+        if ((*button1).getJustReleased()) {
             str.append("1");
             change = true;
         }
-        if ((*button2).getJustReleased())
-        {
+        if ((*button2).getJustReleased()) {
             str.append("2");
             change = true;
         }
-        if ((*button3).getJustReleased())
-        {
+        if ((*button3).getJustReleased()) {
             str.append("3");
             change = true;
         }
-        if ((*button4).getJustReleased())
-        {
+        if ((*button4).getJustReleased()) {
             str.append("4");
             change = true;
         }
-        if ((*button5).getJustReleased())
-        {
+        if ((*button5).getJustReleased()) {
             str.append("5");
             change = true;
         }
-        if ((*button6).getJustReleased())
-        {
+        if ((*button6).getJustReleased()) {
             str.append("6");
             change = true;
         }
-        if ((*button7).getJustReleased())
-        {
+        if ((*button7).getJustReleased()) {
             str.append("7");
             change = true;
         }
-        if ((*button8).getJustReleased())
-        {
+        if ((*button8).getJustReleased()) {
             str.append("8");
             change = true;
         }
-        if ((*button9).getJustReleased())
-        {
+        if ((*button9).getJustReleased()) {
             str.append("9");
             change = true;
         }
     }
-    if ((*buttonDec).getJustReleased() && !constrainInteger && str.length() < NUMPAD_STRING_LENGTH + (str.charAt(0) == '-' ? 1 : 0))
-    {
-        if (str == ""||str=="-")
-        {
+    if ((*buttonDec).getJustReleased() && !constrainInteger && str.length() < NUMPAD_STRING_LENGTH + (str.charAt(0) == '-' ? 1 : 0)) {
+        if (str == "" || str == "-") {
             str = "0";
         }
         str.append(".");
         change = true;
     }
-
-    if ((*buttonDel).getJustReleased())
-    {
+    if ((*buttonDel).getJustReleased()) {
         change = true;
-
-        if (str.length() == 1)
-        {
+        if (str.length() == 1) {
             str = "";
-        }
-        else
-        {
+        } else {
             str = str.substring(0, str.length() - 1);
         }
     }
+
     val = str.toFloat();
-    if (str == "")
-    {
+    if (str == "") {
         val = 0;
     }
 
-    if ((*buttonNeg).getJustReleased())
-    {
-        if (val < 0||str.charAt(0)=='-')
+    if ((*buttonNeg).getJustReleased()) {
+        if (val < 0 || str.charAt(0) == '-')
             str = str.substring(1, str.length());
         else
             str = "-" + str;
@@ -161,36 +140,18 @@ boolean NumPad::run(MouseData mouseData)
         change = true;
         val = -val; //negative key
     }
-    if ((*buttonY).getJustReleased())
-    {
+    if ((*buttonY).getJustReleased()) {
         change = true;
-        if (constrainInteger)
-        {
+        if (constrainInteger) {
             finalVal = int(val);
-        }
-        else
-        {
+        } else {
             finalVal = val;
         }
     }
-    if ((*buttonN).getJustReleased())
-    {
-        if (val == finalVal) //quick clear
-        {
-            str = String("");
-            val = str.toFloat();
-            if (str == "")
-            {
-                val = 0;
-            }
-            change = true;
-        }
-        else
-        {
-            change = true;
-            val = finalVal;
-            str = getValString();
-        }
+    if ((*buttonN).getJustReleased()) {
+        change = true;
+        val = finalVal;
+        str = getValString();
     }
     return change;
 }
