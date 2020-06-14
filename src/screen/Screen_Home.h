@@ -11,34 +11,36 @@
 #include "constants/hardwareConstants.h"
 #include "screen_predit.h"
 
-class Screen_Home {
-  public:
-    Screen_Home(generalSetStruct* _genSettings, short* _screenMode, Adafruit_ILI9341* _tft, Screen_Predit* _preditScreen);
-  public:
-    void begin();
-    void run(MouseData);
-  private:
-    generalSetStruct *genSettings;
-    Adafruit_ILI9341 *tft;
-    MouseData mouseData;
-    short *screenMode;
+class Screen_Home
+{
+public:
+  Screen_Home(generalSetStruct *_genSettings, short *_screenMode, Adafruit_ILI9341 *_tft, Screen_Predit *_preditScreen);
 
-    sButton *modeButton[modeNum];
-    sButton *presetButton[presetNum];
-    sButton *preditButton[presetNum];
-    volumeSlider *volSl;
+public:
+  void begin();
+  void run(MouseData);
 
-    sButton *wordModeButton;
-    sButton *lightsModeButton;
-    sButton *musicModeButton;
-    sButton *musicPlaylistButton;
+private:
+  generalSetStruct *genSettings;
+  Adafruit_ILI9341 *tft;
+  MouseData mouseData;
+  short *screenMode;
 
+  sButton *modeButton[modeNum];
+  sButton *presetButton[presetNum];
+  sButton *preditButton[presetNum];
+  volumeSlider *volSl;
 
-    Screen_Predit *preditScreen;
+  sButton *wordModeButton;
+  sButton *lightsModeButton;
+  sButton *musicModeButton;
+  sButton *musicPlaylistButton;
 
-    void modeSelector();
-    void presetSelector();
-    void genericButtons();
-    void setUndrawn();
+  Screen_Predit *preditScreen;
+
+  void modeSelector();
+  void presetSelector();
+  void genericButtons();
+  void setUndrawn();
 };
 #endif

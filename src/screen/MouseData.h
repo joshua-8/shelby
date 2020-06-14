@@ -3,7 +3,8 @@
 
 #include <Arduino.h>
 
-struct MouseData {
+struct MouseData
+{
   float mouseX;
   float mouseY;
   float lastMouseX;
