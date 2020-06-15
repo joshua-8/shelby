@@ -111,8 +111,11 @@ boolean NumPad::run(MouseData mouseData)
         }
     }
     if ((*buttonDec).getJustReleased() && !constrainInteger && str.length() < NUMPAD_STRING_LENGTH + (str.charAt(0) == '-' ? 1 : 0)) {
-        if (str == "" || str == "-") {
+        if (str == "") {
             str = "0";
+        }
+        if (str == "-") {
+            str="-0";
         }
         str.append(".");
         change = true;

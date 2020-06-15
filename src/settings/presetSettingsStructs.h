@@ -1,35 +1,35 @@
 #ifndef PRESET_SETTINGS_STRUCTS_H
 #define PRESET_SETTINGS_STRUCTS_H
 
-typedef struct tagModePresetSettingsStruct
+struct tagModePresetSettingsStruct
 {
     int settingA;
     float settingB;
     bool settingC;
 };
 
-typedef struct chaseModePresetSettingsStruct
+struct chaseModePresetSettingsStruct
 {
     int settingA;
     float settingB;
     bool settingC;
 };
 
-typedef struct raceModePresetSettingsStruct
+struct raceModePresetSettingsStruct
 {
     int settingA;
     float settingB;
     bool settingC;
 };
 
-typedef struct walkerModePresetSettingsStruct
+struct walkerModePresetSettingsStruct
 {
     int settingA;
     float settingB;
     bool settingC;
 };
 
-typedef struct demoModePresetSettingsStruct
+struct demoModePresetSettingsStruct
 {
     int settingA;
     float settingB;
