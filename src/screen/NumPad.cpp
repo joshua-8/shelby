@@ -117,6 +117,11 @@ boolean NumPad::run(MouseData mouseData)
         str.append(".");
         change = true;
     }
+    if ((*buttonDel).getState() && mouseData.millisSinceMouseDown > NUMPAD_DEL_LONG_HOLD) {
+        (*buttonDel).setState(false);
+        change = true;
+        str = "";
+    }
     if ((*buttonDel).getJustReleased()) {
         change = true;
         if (str.length() == 1) {
@@ -126,9 +131,10 @@ boolean NumPad::run(MouseData mouseData)
         }
     }
 
-    val = str.toFloat();
     if (str == "") {
         val = 0;
+    } else {
+        val = str.toFloat();
     }
 
     if ((*buttonNeg).getJustReleased()) {
