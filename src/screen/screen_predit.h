@@ -21,6 +21,8 @@ private:
   byte presetID;
   NumPad *numPad;
   generalSetStruct *genSettings;
+  sButton *cancelButton;
+  sButton *saveButton;
 
   void setUndrawn();
 

@@ -115,7 +115,7 @@ boolean NumPad::run(MouseData mouseData)
             str = "0";
         }
         if (str == "-") {
-            str="-0";
+            str = "-0";
         }
         str.append(".");
         change = true;

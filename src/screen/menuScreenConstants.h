@@ -59,13 +59,16 @@ const int NUMPAD_WIDTH=150;
 const int NUMPAD_HEIGHT=200;
 const int NUMPAD_POS_X=0;
 const int NUMPAD_POS_Y=40;
-const uint16_t NUMPAD_BACKGROUND_COLOR=65535;
-const uint16_t NUMPAD_ACTIVE_COLOR=50712;
-const uint16_t NUMPAD_TEXT_COLOR=0;
-const uint16_t NUMPAD_YES_COLOR=2016;
-const uint16_t NUMPAD_NO_COLOR=64008;
-const uint16_t NUMPAD_DEL_COLOR=65504;
+const uint16_t NUMPAD_BACKGROUND_COLOR=65535;//white
+const uint16_t NUMPAD_ACTIVE_COLOR=50712;//light grey
+const uint16_t NUMPAD_TEXT_COLOR=0;//black
+const uint16_t NUMPAD_YES_COLOR=2016;//green
+const uint16_t NUMPAD_NO_COLOR=64008;//red
+const uint16_t NUMPAD_DEL_COLOR=65504;//yellow
 const int NUMPAD_DEL_LONG_HOLD=333;
+
+const uint16_t PREDIT_SAVE_COLOR=1024;//dark green
+const uint16_t PREDIT_CANCEL_COLOR=8479;//blue
 
 
 const int SCREEN_PRESSED_THRESHOLD = 700;
