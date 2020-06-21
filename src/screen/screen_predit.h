@@ -7,6 +7,7 @@
 #include "menuScreenConstants.h"
 #include "NumPad.h"
 #include "settings/generalSetStruct.h"
+#include "SetList.h"
 
 class Screen_Predit
 {
@@ -23,6 +24,7 @@ private:
   generalSetStruct *genSettings;
   sButton *cancelButton;
   sButton *saveButton;
+  SetList *setlist;
 
   void setUndrawn();
 

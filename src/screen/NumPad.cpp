@@ -20,21 +20,12 @@ NumPad::NumPad(Adafruit_ILI9341* _tft)
     buttonN = new sButton(tft, NUMPAD_POS_X + NUMPAD_WIDTH * 1 / 3, NUMPAD_POS_Y + NUMPAD_HEIGHT * 4 / 5, NUMPAD_WIDTH / 3, NUMPAD_HEIGHT / 5, NUMPAD_NO_COLOR, NUMPAD_ACTIVE_COLOR, NUMPAD_TEXT_COLOR, NUMPAD_ACTIVE_COLOR, "N", true);
     buttonDel = new sButton(tft, NUMPAD_POS_X + NUMPAD_WIDTH * 2 / 3, NUMPAD_POS_Y + NUMPAD_HEIGHT * 4 / 5, NUMPAD_WIDTH / 3, NUMPAD_HEIGHT / 5, NUMPAD_DEL_COLOR, NUMPAD_ACTIVE_COLOR, NUMPAD_TEXT_COLOR, NUMPAD_ACTIVE_COLOR, "<", true);
     str.reserve(NUMPAD_STRING_LENGTH + 1);
-}
-
-void NumPad::setInteger(boolean _integer)
-{
-    constrainInteger = _integer;
-}
-void NumPad::setVal(float _val)
-{
-    finalVal = _val;
-    val = finalVal;
+    val = 0;
+    finalVal = 0;
     str = "#";
-}
-float NumPad::getFinalVal()
-{
-    return finalVal;
+    justFinalized = false;
+    change = false;
+    justStarted = true;
 }
 
 void NumPad::begin()
@@ -43,11 +34,14 @@ void NumPad::begin()
     val = 0;
     finalVal = 0;
     str = "#";
+    justFinalized = false;
+    change = false;
+    justStarted = true;
 }
 
 boolean NumPad::run(MouseData mouseData)
 {
-    boolean change = false;
+    change = false;
     if (str == "#") {
         change = true;
         str = getValString();
@@ -67,6 +61,16 @@ boolean NumPad::run(MouseData mouseData)
     (*buttonY).run(mouseData);
     (*buttonN).run(mouseData);
     (*buttonDel).run(mouseData);
+    if (justStarted) {
+        if ((*button0).getJustReleased() || (*button1).getJustReleased() || (*button2).getJustReleased() || (*button3).getJustReleased() || (*button4).getJustReleased() || (*button5).getJustReleased() || (*button6).getJustReleased() || (*button7).getJustReleased() || (*button8).getJustReleased() || (*button9).getJustReleased() || (*buttonNeg).getJustReleased() || (*buttonDec).getJustReleased()) {
+            justStarted = false;
+            str = "";
+            change = true;
+        }
+    }
+    if (justStarted && (*buttonDel).getJustReleased()) {
+        justStarted = false;
+    }
 
     if ((int)str.length() < NUMPAD_STRING_LENGTH + (str.charAt(0) == '-' ? 1 : 0) + (str.indexOf('.') != -1 ? 1 : 0)) {
         if ((*button0).getJustReleased()) {
@@ -151,16 +155,18 @@ boolean NumPad::run(MouseData mouseData)
     }
     if ((*buttonY).getJustReleased()) {
         change = true;
-        if (constrainInteger) {
-            finalVal = int(val);
-        } else {
-            finalVal = val;
+        justFinalized = true;
+        if (str != "") {
+            if (constrainInteger) {
+                finalVal = int(val);
+            } else {
+                finalVal = val;
+            }
         }
     }
     if ((*buttonN).getJustReleased()) {
+        justFinalized = true;
         change = true;
-        val = finalVal;
-        str = getValString();
     }
     return change;
 }
@@ -183,15 +189,43 @@ void NumPad::setUndrawn()
     (*buttonN).setUndrawn();
     (*buttonDel).setUndrawn();
 }
+void NumPad::setInteger(boolean _integer)
+{
+    constrainInteger = _integer;
+}
+void NumPad::setVal(float _val)
+{
+    finalVal = _val;
+    val = finalVal;
+    str = "#";
+    justFinalized = false;
+    justStarted = true;
+}
+float NumPad::getFinalVal()
+{
+    return finalVal;
+}
 String NumPad::getValString()
 {
+    if (constrainInteger) {
+        return String(int(val));
+    }
     return String(val, NUMPAD_STRING_LENGTH - 1 - max(int(log10(abs(val))), 0));
-}
-String NumPad::getFinalValString()
-{
-    return String(finalVal, NUMPAD_STRING_LENGTH - 1 - max(int(log10(abs(finalVal))), 0));
 }
 String NumPad::getString()
 {
     return str;
+}
+
+boolean NumPad::getFinalized()
+{
+    if (justFinalized) {
+        justFinalized = false;
+        return true;
+    }
+    return false;
+}
+boolean NumPad::getChanged()
+{
+    return change;
 }

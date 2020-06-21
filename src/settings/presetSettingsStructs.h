@@ -3,37 +3,47 @@
 
 struct tagModePresetSettingsStruct
 {
-    int settingA;
-    float settingB;
-    bool settingC;
+    int tagsettingA;
+    float tagsettingB;
+    bool tagsettingC;
 };
 
 struct chaseModePresetSettingsStruct
 {
-    int settingA;
-    float settingB;
-    bool settingC;
+    int chasesettingA;
+    float chasesettingB;
+    bool chasesettingC;
 };
 
 struct raceModePresetSettingsStruct
 {
-    int settingA;
-    float settingB;
-    bool settingC;
+    int racesettingA;
+    float racesettingB;
+    bool racesettingC;
+    int racesettingD;
+    float racesettingE;
+    bool racesettingF;
+    int racesettingG;
+    float racesettingH;
+    bool racesettingI;
+    int racesettingJ;
+    float racesettingK;
+    bool racesettingL;
 };
 
 struct walkerModePresetSettingsStruct
 {
-    int settingA;
-    float settingB;
-    bool settingC;
+    int walkersettingA;
+    float walkersettingB;
+    bool walkersettingC;
+    int walkersettingD;
 };
 
 struct demoModePresetSettingsStruct
 {
-    int settingA;
-    float settingB;
-    bool settingC;
+    bool demosettingA;
+    int demosettingB;
+    float demosettingC;
 };
 
 #endif

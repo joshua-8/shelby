@@ -4,10 +4,10 @@
 #include "generalSetStruct.h"
 #include "presetSettingsStructs.h"
 #include "constants/constants.h"
-generalSetStruct genS = { -1, -1, 1, 0, 0, 0};
-tagModePresetSettingsStruct tagModePresetSettings[presetNum];
-chaseModePresetSettingsStruct chaseModePresetSettings[presetNum];
-raceModePresetSettingsStruct raceModePresetSettings[presetNum];
-walkerModePresetSettingsStruct walkerModePresetSettings[presetNum];
-demoModePresetSettingsStruct demoModePresetSettings[presetNum];
+extern generalSetStruct genS;
+extern tagModePresetSettingsStruct tagModePresetSettings[presetNum];
+extern chaseModePresetSettingsStruct chaseModePresetSettings[presetNum];
+extern raceModePresetSettingsStruct raceModePresetSettings[presetNum];
+extern walkerModePresetSettingsStruct walkerModePresetSettings[presetNum];
+extern demoModePresetSettingsStruct demoModePresetSettings[presetNum];
 #endif

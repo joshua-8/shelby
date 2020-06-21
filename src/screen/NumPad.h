@@ -13,9 +13,10 @@ public:
     void setInteger(boolean _integer);
     void setVal(float _val);
     String getValString();
-    String getFinalValString();
     String getString();
     float getFinalVal();
+    boolean getChanged();
+    boolean getFinalized();
 
 private:
     Adafruit_ILI9341 *tft;
@@ -38,6 +39,9 @@ private:
     float val = 0.0;
     String str;
     boolean constrainInteger = false;
+    boolean change;
+    boolean justFinalized;
+    boolean justStarted;
 
 public:
     NumPad(Adafruit_ILI9341 *_tft);
