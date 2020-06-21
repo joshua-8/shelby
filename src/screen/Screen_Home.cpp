@@ -126,7 +126,7 @@ void Screen_Home::presetSelector()
     }
 
     (*preditButton[i]).run(mouseData);
-    if ((*preditButton[i]).getJustReleased())
+    if ((*preditButton[i]).getJustReleased()&&(*genSettings).mode>=0&&(*genSettings).mode<modeNum)
     {
       (*screenMode) = SCREEN_MODE_PREDIT;
       (*preditScreen).setPreset(i);
