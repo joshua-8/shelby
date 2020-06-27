@@ -29,11 +29,11 @@ void Screen_Predit::run(MouseData mouseData)
     (*cancelButton).run(mouseData);
     (*saveButton).run(mouseData);
     if ((*cancelButton).getJustReleased()) {
-        //TODO: RECALL PRESETS
+        recallPresetSettingsSD((*genSettings).mode,presetID);
         (*screenMode) = SCREEN_MODE_HOME;
     }
     if ((*saveButton).getJustReleased()) {
-        //TODO: SAVE PRESETS
+        savePresetSettingsSD((*genSettings).mode,presetID);
         (*screenMode) = SCREEN_MODE_HOME;
     }
     (*numPad).run(mouseData);

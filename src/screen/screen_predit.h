@@ -8,6 +8,7 @@
 #include "NumPad.h"
 #include "settings/generalSetStruct.h"
 #include "SetList.h"
+#include "settings/presetSettingsSD.h"
 
 class Screen_Predit
 {

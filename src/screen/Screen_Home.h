@@ -10,6 +10,7 @@
 #include "volumeSlider.h"
 #include "constants/hardwareConstants.h"
 #include "screen_predit.h"
+#include "settings/settingsSD.h"
 
 class Screen_Home
 {
