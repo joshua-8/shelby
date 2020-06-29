@@ -6,3 +6,9 @@ chaseModePresetSettingsStruct chaseModePresetSettings[presetNum];
 raceModePresetSettingsStruct raceModePresetSettings[presetNum];
 walkerModePresetSettingsStruct walkerModePresetSettings[presetNum];
 demoModePresetSettingsStruct demoModePresetSettings[presetNum];
+
+tagModeModeSettingsStruct tagModeModeSettings;
+chaseModeModeSettingsStruct chaseModeModeSettings;
+raceModeModeSettingsStruct raceModeModeSettings;
+walkerModeModeSettingsStruct walkerModeModeSettings;
+demoModeModeSettingsStruct demoModeModeSettings;

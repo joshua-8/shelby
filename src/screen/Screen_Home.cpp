@@ -1,10 +1,13 @@
 #include "Screen_Home.h"
-Screen_Home::Screen_Home(generalSetStruct* _genSettings, short* _screenMode, Adafruit_ILI9341* _tft, Screen_Predit* _preditScreen)
+Screen_Home::Screen_Home(generalSetStruct* _genSettings, short* _screenMode, Adafruit_ILI9341* _tft, Screen_Predit* _preditScreen, Screen_MSedit* _mseditScreen)
 {
     tft = _tft;
     genSettings = _genSettings;
     screenMode = _screenMode;
     preditScreen = _preditScreen;
+    mseditScreen = _mseditScreen;
+
+    modeSettingsButton = new sButton(tft, MODE_SETTINGS_BUTTON_POS_X, MODE_SETTINGS_BUTTON_POS_Y, MODE_SETTINGS_BUTTON_WIDTH, MODE_SETTINGS_BUTTON_HEIGHT, MODE_SETTINGS_BUTTON_SC, MODE_SETTINGS_BUTTON_AC, MODE_SETTINGS_BUTTON_TC, MODE_SETTINGS_BUTTON_TC, "settings", true);
 
     for (int i = 0; i < modeNum; i++) {
         modeButton[i] = new sButton(tft, MODE_SELECTOR_POS_X, MODE_SELECTOR_POS_Y + i * MODE_SELECTOR_HEIGHT / modeNum, MODE_SELECTOR_WIDTH, MODE_SELECTOR_HEIGHT / modeNum * (100 - MODE_BUTTON_BLANK_PERCENT) / 100, MODE_BUTTON_STANDARD_COLOR, MODE_BUTTON_ACTIVE_COLOR, MODE_BUTTON_TEXT_COLOR, MODE_BUTTON_EDGE_COLOR, modeSelName[i], false);
@@ -55,6 +58,7 @@ void Screen_Home::setUndrawn()
     (*musicModeButton).setUndrawn();
     (*musicPlaylistButton).setUndrawn();
     (*volSl).setUndrawn();
+    (*modeSettingsButton).setUndrawn();
 }
 
 void Screen_Home::genericButtons()
@@ -90,6 +94,10 @@ void Screen_Home::genericButtons()
     if ((*musicPlaylistButton).getJustPushed()) {
         //TODO: open playlist
     }
+    (*modeSettingsButton).run(mouseData);
+    if ((*modeSettingsButton).getJustReleased() && (*genSettings).mode >= 0 && (*genSettings).mode < modeNum) {
+        (*screenMode) = SCREEN_MODE_MSEDIT;
+    }
 }
 
 void Screen_Home::presetSelector()
@@ -104,7 +112,7 @@ void Screen_Home::presetSelector()
                     (*presetButton[j]).setState(false);
                 }
             }
-            recallPresetSettingsSD((*genSettings).mode,i);
+            recallPresetSettingsSD((*genSettings).mode, i);
         }
         if ((*presetButton[i]).getJustReleased() && i == (*genSettings).preset) {
             (*presetButton[i]).setState(true);

@@ -3,6 +3,7 @@
 #include "SdFat.h"
 #include <SPI.h>
 #include "presetSettingsSD.h"
+#include "modeSettingsSD.h"
 extern SdFatSdio sd;
 extern SdFile file;
 

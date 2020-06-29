@@ -14,6 +14,7 @@
 #include "settings/generalSetStruct.h"
 #include "Screen_Home.h"
 #include "screen_predit.h"
+#include "screen_msedit.h"
 #include "NumPad.h"
 
 class Screen
@@ -25,6 +26,7 @@ private:
   Adafruit_ILI9341 tft = Adafruit_ILI9341(SCREEN_CS_PIN, SCREEN_DC_PIN);
   Screen_Home *homeScreen;
   Screen_Predit *preditScreen;
+  Screen_MSedit *mseditScreen;
   NumPad *numPad;
 
 public:
