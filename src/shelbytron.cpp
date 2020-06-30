@@ -10,7 +10,7 @@ void setup() {
   Serial.begin(250000);
   analogReadResolution(12);
   setupSettingsSD();
-  recallAllSettings();
+  recallAllSettingsSD(&genS);
   screen.begin();
 }
 

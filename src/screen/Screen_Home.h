@@ -11,12 +11,13 @@
 #include "constants/hardwareConstants.h"
 #include "screen_predit.h"
 #include "screen_msedit.h"
+#include "screen_tedit.h"
 #include "settings/settingsSD.h"
 
 class Screen_Home
 {
 public:
-  Screen_Home(generalSetStruct *_genSettings, short *_screenMode, Adafruit_ILI9341 *_tft, Screen_Predit *_preditScreen,Screen_MSedit *_mseditScreen);
+  Screen_Home(generalSetStruct *_genSettings, short *_screenMode, Adafruit_ILI9341 *_tft, Screen_Predit *_preditScreen,Screen_MSedit *_mseditScreen,Screen_Tedit *_);
 
 public:
   void begin();
@@ -34,6 +35,7 @@ private:
   volumeSlider *volSl;
 
   sButton *modeSettingsButton;
+  sButton *topSettingsButton;
 
   sButton *wordModeButton;
   sButton *lightsModeButton;
@@ -42,6 +44,7 @@ private:
 
   Screen_Predit *preditScreen;
   Screen_MSedit *mseditScreen;
+  Screen_Tedit *teditScreen;
 
   void modeSelector();
   void presetSelector();

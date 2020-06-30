@@ -4,6 +4,7 @@
 #include "generalSetStruct.h"
 #include "presetSettingsStructs.h"
 #include "modeSettingsStructs.h"
+#include "topSettingsStruct.h"
 #include "constants/constants.h"
 extern generalSetStruct genS;
 
@@ -18,5 +19,7 @@ extern chaseModeModeSettingsStruct chaseModeModeSettings;
 extern raceModeModeSettingsStruct raceModeModeSettings;
 extern walkerModeModeSettingsStruct walkerModeModeSettings;
 extern demoModeModeSettingsStruct demoModeModeSettings;
+
+extern topSettingsStruct topSettings;
 
 #endif

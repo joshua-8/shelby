@@ -1,13 +1,15 @@
 #include "Screen_Home.h"
-Screen_Home::Screen_Home(generalSetStruct* _genSettings, short* _screenMode, Adafruit_ILI9341* _tft, Screen_Predit* _preditScreen, Screen_MSedit* _mseditScreen)
+Screen_Home::Screen_Home(generalSetStruct* _genSettings, short* _screenMode, Adafruit_ILI9341* _tft, Screen_Predit* _preditScreen, Screen_MSedit* _mseditScreen, Screen_Tedit* _teditScreen)
 {
     tft = _tft;
     genSettings = _genSettings;
     screenMode = _screenMode;
     preditScreen = _preditScreen;
     mseditScreen = _mseditScreen;
+    teditScreen = _teditScreen;
 
-    modeSettingsButton = new sButton(tft, MODE_SETTINGS_BUTTON_POS_X, MODE_SETTINGS_BUTTON_POS_Y, MODE_SETTINGS_BUTTON_WIDTH, MODE_SETTINGS_BUTTON_HEIGHT, MODE_SETTINGS_BUTTON_SC, MODE_SETTINGS_BUTTON_AC, MODE_SETTINGS_BUTTON_TC, MODE_SETTINGS_BUTTON_TC, "settings", true);
+    modeSettingsButton = new sButton(tft, MODE_SETTINGS_BUTTON_POS_X, MODE_SETTINGS_BUTTON_POS_Y, MODE_SETTINGS_BUTTON_WIDTH, MODE_SETTINGS_BUTTON_HEIGHT, MODE_SETTINGS_BUTTON_SC, MODE_SETTINGS_BUTTON_AC, MODE_SETTINGS_BUTTON_TC, MODE_SETTINGS_BUTTON_TC, "m set", true);
+    topSettingsButton = new sButton(tft, TOP_SETTINGS_BUTTON_POS_X, TOP_SETTINGS_BUTTON_POS_Y, TOP_SETTINGS_BUTTON_WIDTH, TOP_SETTINGS_BUTTON_HEIGHT, TOP_SETTINGS_BUTTON_SC, TOP_SETTINGS_BUTTON_AC, TOP_SETTINGS_BUTTON_TC, TOP_SETTINGS_BUTTON_TC, "g set", true);
 
     for (int i = 0; i < modeNum; i++) {
         modeButton[i] = new sButton(tft, MODE_SELECTOR_POS_X, MODE_SELECTOR_POS_Y + i * MODE_SELECTOR_HEIGHT / modeNum, MODE_SELECTOR_WIDTH, MODE_SELECTOR_HEIGHT / modeNum * (100 - MODE_BUTTON_BLANK_PERCENT) / 100, MODE_BUTTON_STANDARD_COLOR, MODE_BUTTON_ACTIVE_COLOR, MODE_BUTTON_TEXT_COLOR, MODE_BUTTON_EDGE_COLOR, modeSelName[i], false);
@@ -47,9 +49,15 @@ void Screen_Home::run(MouseData _mouseData)
 void Screen_Home::setUndrawn()
 {
     for (int i = 0; i < modeNum; i++) {
+        if ((*genSettings).mode == i) {
+            (*modeButton[i]).setState(true);
+        }
         (*modeButton[i]).setUndrawn();
     }
     for (int i = 0; i < presetNum; i++) {
+        if ((*genSettings).preset == i) {
+            (*presetButton[i]).setState(true);
+        }
         (*presetButton[i]).setUndrawn();
         (*preditButton[i]).setUndrawn();
     }
@@ -59,6 +67,7 @@ void Screen_Home::setUndrawn()
     (*musicPlaylistButton).setUndrawn();
     (*volSl).setUndrawn();
     (*modeSettingsButton).setUndrawn();
+    (*topSettingsButton).setUndrawn();
 }
 
 void Screen_Home::genericButtons()
@@ -70,6 +79,7 @@ void Screen_Home::genericButtons()
             (*genSettings).wordsMode = 0;
         }
         (*wordModeButton).setSubText(wordModeName[(*genSettings).wordsMode]);
+        saveGenSettingsSD(genSettings);
     }
 
     (*lightsModeButton).run(mouseData);
@@ -79,6 +89,7 @@ void Screen_Home::genericButtons()
             (*genSettings).lightsMode = 0;
         }
         (*lightsModeButton).setSubText(lightsModeName[(*genSettings).lightsMode]);
+        saveGenSettingsSD(genSettings);
     }
 
     (*musicModeButton).run(mouseData);
@@ -88,6 +99,7 @@ void Screen_Home::genericButtons()
             (*genSettings).musicMode = 0;
         }
         (*musicModeButton).setSubText(musicModeName[(*genSettings).musicMode]);
+        saveGenSettingsSD(genSettings);
     }
 
     (*musicPlaylistButton).run(mouseData);
@@ -97,6 +109,11 @@ void Screen_Home::genericButtons()
     (*modeSettingsButton).run(mouseData);
     if ((*modeSettingsButton).getJustReleased() && (*genSettings).mode >= 0 && (*genSettings).mode < modeNum) {
         (*screenMode) = SCREEN_MODE_MSEDIT;
+    }
+
+    (*topSettingsButton).run(mouseData);
+    if ((*topSettingsButton).getJustReleased()) {
+        (*screenMode) = SCREEN_MODE_TEDIT;
     }
 }
 
@@ -113,6 +130,7 @@ void Screen_Home::presetSelector()
                 }
             }
             recallPresetSettingsSD((*genSettings).mode, i);
+            saveGenSettingsSD(genSettings);
         }
         if ((*presetButton[i]).getJustReleased() && i == (*genSettings).preset) {
             (*presetButton[i]).setState(true);
@@ -138,6 +156,7 @@ void Screen_Home::modeSelector()
                     (*modeButton[j]).setState(false);
                 }
             }
+            saveGenSettingsSD(genSettings);
         }
         if ((*modeButton[i]).getJustReleased()) {
             (*genSettings).mode = -1;

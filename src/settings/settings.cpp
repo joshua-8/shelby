@@ -12,3 +12,5 @@ chaseModeModeSettingsStruct chaseModeModeSettings;
 raceModeModeSettingsStruct raceModeModeSettings;
 walkerModeModeSettingsStruct walkerModeModeSettings;
 demoModeModeSettingsStruct demoModeModeSettings;
+
+topSettingsStruct topSettings;

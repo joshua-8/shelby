@@ -15,6 +15,7 @@
 #include "Screen_Home.h"
 #include "screen_predit.h"
 #include "screen_msedit.h"
+#include "screen_tedit.h"
 #include "NumPad.h"
 
 class Screen
@@ -27,6 +28,7 @@ private:
   Screen_Home *homeScreen;
   Screen_Predit *preditScreen;
   Screen_MSedit *mseditScreen;
+  Screen_Tedit *teditScreen;
   NumPad *numPad;
 
 public:
