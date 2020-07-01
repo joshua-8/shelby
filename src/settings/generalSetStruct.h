@@ -9,5 +9,7 @@ struct generalSetStruct
   int8_t musicMode;
   int8_t lightsMode;
   int8_t wordsMode;
+  int8_t musicList;
+  int8_t volume;
 };
 #endif

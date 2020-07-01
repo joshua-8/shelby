@@ -1,10 +1,12 @@
-#include "Screen.h"
+#include "screen.h"
 
 Screen::Screen(generalSetStruct* _genSettings)
 {
     numPad = new NumPad(&tft);
     preditScreen = new Screen_Predit(_genSettings, &screenMode, &tft, numPad);
-    homeScreen = new Screen_Home(_genSettings, &screenMode, &tft, preditScreen);
+    mseditScreen = new Screen_MSedit(_genSettings, &screenMode, &tft, numPad);
+    teditScreen = new Screen_Tedit(&screenMode, &tft, numPad);
+    homeScreen = new Screen_Home(_genSettings, &screenMode, &tft, preditScreen, mseditScreen, teditScreen);
 }
 
 void Screen::begin()
@@ -26,9 +28,27 @@ void Screen::run()
         if (screenMode == SCREEN_MODE_PREDIT) {
             (*preditScreen).begin();
         }
+        if (screenMode == SCREEN_MODE_MSEDIT) {
+            (*mseditScreen).begin();
+        }
+        if (screenMode == SCREEN_MODE_TEDIT) {
+            (*teditScreen).begin();
+        }
     }
     if (screenMode == SCREEN_MODE_PREDIT) {
         (*preditScreen).run(mouseData);
+        if (screenMode == SCREEN_MODE_HOME) {
+            (*homeScreen).begin();
+        }
+    }
+    if (screenMode == SCREEN_MODE_MSEDIT) {
+        (*mseditScreen).run(mouseData);
+        if (screenMode == SCREEN_MODE_HOME) {
+            (*homeScreen).begin();
+        }
+    }
+    if (screenMode == SCREEN_MODE_TEDIT) {
+        (*teditScreen).run(mouseData);
         if (screenMode == SCREEN_MODE_HOME) {
             (*homeScreen).begin();
         }

@@ -1,12 +1,12 @@
-#ifndef SET_LIST_H
-#define SET_LIST_H
+#ifndef prSET_LIST_H
+#define prSET_LIST_H
 #include "Adafruit_GFX.h"
 #include "Adafruit_ILI9341.h"
 #include "MouseData.h"
 #include "NumPad.h"
 #include "settings/presetSettingsListify.h"
 #include <Arduino.h>
-class SetList {
+class presetSetList {
 private:
     Adafruit_ILI9341* tft;
     int xPos;
@@ -23,7 +23,7 @@ private:
     String valToString(float val,boolean integer);
 
 public:
-    SetList(Adafruit_ILI9341* _tft, int _xPos, int _yPos, int _width, int _height);
+    presetSetList(Adafruit_ILI9341* _tft, int _xPos, int _yPos, int _width, int _height);
     void setUndrawn();
     void run(NumPad* numpad, MouseData* mouseData);
     void begin();

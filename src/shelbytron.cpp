@@ -2,10 +2,15 @@
 #include <Arduino.h>
 #include "screen/screen.h"
 #include "settings/settings.h"
+#include "settings/settingsSD.h"
+
 Screen screen(&genS);
+
 void setup() {
   Serial.begin(250000);
   analogReadResolution(12);
+  setupSettingsSD();
+  recallAllSettingsSD(&genS);
   screen.begin();
 }
 

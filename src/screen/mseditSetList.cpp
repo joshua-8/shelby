@@ -1,6 +1,6 @@
-#include "SetList.h"
+#include "mseditSetList.h"
 
-SetList::SetList(Adafruit_ILI9341* _tft, int _xPos, int _yPos, int _width, int _height)
+mseditSetList::mseditSetList(Adafruit_ILI9341* _tft, int _xPos, int _yPos, int _width, int _height)
 {
     tft = _tft;
     xPos = _xPos;
@@ -11,15 +11,14 @@ SetList::SetList(Adafruit_ILI9341* _tft, int _xPos, int _yPos, int _width, int _
     drawn = false;
     currVal = -1;
     mode = 0;
-    preset = 0;
     mouseStartupUnlocked = false;
 }
-void SetList::run(NumPad* numpad, MouseData* mouseData)
+void mseditSetList::run(NumPad* numpad, MouseData* mouseData)
 {
     if (mouseStartupUnlocked && (*mouseData).mouseUp && abs((*mouseData).mouseYDown - (*mouseData).mouseYUp) < SETTING_LIST_ROW_HEIGHT && (*mouseData).mouseXUp > xPos && (*mouseData).mouseXUp < xPos + width && (*mouseData).mouseYUp > yPos && (*mouseData).mouseYUp < yPos + height) {
         currVal = ((*mouseData).mouseYUp - yPos + scroll * height) / SETTING_LIST_ROW_HEIGHT;
-        (*numpad).setVal(presetSettingsListifyGetVal(mode, preset, currVal));
-        (*numpad).setInteger(presetSettingsListifyGetIsBIF(mode, currVal) == PRESET_SETTINGS_LISTIFY_INT);
+        (*numpad).setVal(modeSettingsListifyGetVal(mode, currVal));
+        (*numpad).setInteger(modeSettingsListifyGetIsBIF(mode, currVal) == MODE_SETTINGS_LISTIFY_INT);
         drawn = false;
     }
     if (length > 1) {
@@ -36,13 +35,13 @@ void SetList::run(NumPad* numpad, MouseData* mouseData)
         drawn = false;
     }
 
-    if (currVal != -1 && presetSettingsListifyGetIsBIF(mode, currVal) != PRESET_SETTINGS_LISTIFY_BOOLEAN && (*numpad).getFinalized()) {
-        presetSettingsListifySetVal(mode, preset, currVal, (*numpad).getFinalVal());
+    if (currVal != -1 && modeSettingsListifyGetIsBIF(mode, currVal) != MODE_SETTINGS_LISTIFY_BOOLEAN && (*numpad).getFinalized()) {
+        modeSettingsListifySetVal(mode, currVal, (*numpad).getFinalVal());
         currVal = -1;
         drawn = false;
     }
-    if (currVal != -1 && presetSettingsListifyGetIsBIF(mode, currVal) == PRESET_SETTINGS_LISTIFY_BOOLEAN) {
-        presetSettingsListifySetVal(mode, preset, currVal, !presetSettingsListifyGetVal(mode, preset, currVal)); //toggle
+    if (currVal != -1 && modeSettingsListifyGetIsBIF(mode, currVal) == MODE_SETTINGS_LISTIFY_BOOLEAN) {
+        modeSettingsListifySetVal(mode, currVal, !modeSettingsListifyGetVal(mode, currVal)); //toggle
         currVal = -1;
         drawn = false;
     }
@@ -50,12 +49,12 @@ void SetList::run(NumPad* numpad, MouseData* mouseData)
     if (!drawn) {
         (*tft).setTextColor(SETTING_LIST_TEXT_COLOR);
         (*tft).setTextSize(1);
-        for (int i = 0; i < presetSettingsListifyGetLength(mode); i++) {
+        for (int i = 0; i < modeSettingsListifyGetLength(mode); i++) {
             float y = i * SETTING_LIST_ROW_HEIGHT - scroll * height + yPos;
             if (y - yPos >= -SETTING_LIST_ROW_HEIGHT || y - yPos <= height) { //show
-                if (presetSettingsListifyGetIsBIF(mode, i) == PRESET_SETTINGS_LISTIFY_BOOLEAN) { //boolean
+                if (modeSettingsListifyGetIsBIF(mode, i) == MODE_SETTINGS_LISTIFY_BOOLEAN) { //boolean
                     (*tft).fillRect(xPos, y, width, SETTING_LIST_ROW_HEIGHT, SETTING_LIST_BACKGROUND_COLOR);
-                    if (presetSettingsListifyGetVal(mode, preset, i)) { //boolean true
+                    if (modeSettingsListifyGetVal(mode, i)) { //boolean true
                         (*tft).fillRect(xPos + width * SETTING_LIST_VAL_POS, y + SETTING_LIST_ROW_HEIGHT * .1, width / 4, SETTING_LIST_ROW_HEIGHT * .8, SETTING_LIST_TRUE_COLOR);
                         (*tft).setCursor(xPos + width * SETTING_LIST_VAL_POS, y + SETTING_LIST_ROW_HEIGHT * .3);
                         (*tft).print("true");
@@ -72,42 +71,41 @@ void SetList::run(NumPad* numpad, MouseData* mouseData)
                     } else {
                         (*tft).fillRect(xPos, y, width, SETTING_LIST_ROW_HEIGHT, SETTING_LIST_BACKGROUND_COLOR);
                         (*tft).setCursor(xPos + width * SETTING_LIST_VAL_POS, y + SETTING_LIST_ROW_HEIGHT / 2 - SCREEN_FONT_HEIGHT);
-                        (*tft).print(valToString(presetSettingsListifyGetVal(mode, preset, i), presetSettingsListifyGetIsBIF(mode, i) == PRESET_SETTINGS_LISTIFY_INT));
+                        (*tft).print(valToString(modeSettingsListifyGetVal(mode, i), modeSettingsListifyGetIsBIF(mode, i) == MODE_SETTINGS_LISTIFY_INT));
                     }
                 }
                 (*tft).setCursor(xPos + SCREEN_FONT_WIDTH, y + SETTING_LIST_ROW_HEIGHT / 2 - SCREEN_FONT_HEIGHT);
-                (*tft).print(presetSettingsListifyGetName(mode, i));
+                (*tft).print(modeSettingsListifyGetName(mode, i));
                 (*tft).drawRect(xPos, y, width, SETTING_LIST_ROW_HEIGHT, SETTING_LIST_OUTLINE_COLOR);
             }
-            (*tft).fillRect(xPos + width, yPos, SETTING_LIST_SCROLL_BAR_WIDTH, height, SETTING_LIST_BACKGROUND_COLOR);
-            if (length < 1) {
-                (*tft).fillRect(xPos, yPos + height * (length), width, height * (1.0 - length), SETTING_LIST_BACKGROUND_COLOR);
-            } else {
-                (*tft).fillRect(xPos + width, yPos + map(scroll, 0, length - 1, 0, height * .9), SETTING_LIST_SCROLL_BAR_WIDTH, height * .1, SETTING_LIST_SEL_COLOR);
-            }
+        }
+        (*tft).fillRect(xPos + width, yPos, SETTING_LIST_SCROLL_BAR_WIDTH, height, SETTING_LIST_BACKGROUND_COLOR);
+        if (length < 1) {
+            (*tft).fillRect(xPos, yPos + height * (length), width, height * (1.0 - length), SETTING_LIST_BACKGROUND_COLOR);
+        } else {
+            (*tft).fillRect(xPos + width, yPos + map(scroll, 0, length - 1, 0, height * .9), SETTING_LIST_SCROLL_BAR_WIDTH, height * .1, SETTING_LIST_SEL_COLOR);
         }
         drawn = true;
     }
 }
-void SetList::SetList::begin()
+void mseditSetList::mseditSetList::begin()
 {
     scroll = 0;
     currVal = -1;
     mouseStartupUnlocked = false;
     setUndrawn();
 }
-void SetList::setPresetAndMode(int _preset, int _mode)
+void mseditSetList::setMode(int _mode)
 {
-    preset = _preset;
     mode = _mode;
-    length = (float)presetSettingsListifyGetLength(mode) * SETTING_LIST_ROW_HEIGHT / height;
+    length = (float)modeSettingsListifyGetLength(mode) * SETTING_LIST_ROW_HEIGHT / height;
 }
-void SetList::setUndrawn()
+void mseditSetList::setUndrawn()
 {
     drawn = false;
 }
 
-String SetList::valToString(float val, boolean integer)
+String mseditSetList::valToString(float val, boolean integer)
 {
     if (integer) {
         return String(val, 0);
