@@ -1,5 +1,5 @@
 #include "settings.h"
-generalSetStruct genS= { -1, -1, 1, 0, 0, 0};
+generalSetStruct genS = { -1, -1, 1, 0, 0, 0, 0, 1 };
 
 tagModePresetSettingsStruct tagModePresetSettings[presetNum];
 chaseModePresetSettingsStruct chaseModePresetSettings[presetNum];

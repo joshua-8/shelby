@@ -30,11 +30,11 @@ void Screen_Home::begin()
     (*tft).fillScreen(ILI9341_WHITE);
     (*tft).fillRect(MODE_SELECTOR_POS_X, MODE_SELECTOR_POS_Y, MODE_SELECTOR_WIDTH, MODE_SELECTOR_HEIGHT, MODE_SELECTOR_BACKGROUND);
     setUndrawn();
-    (*musicPlaylistButton).setSubText("list");
-
+    (*musicPlaylistButton).setSubText(musicListName[(*genSettings).musicList]);
     (*wordModeButton).setSubText(wordModeName[(*genSettings).wordsMode]);
     (*lightsModeButton).setSubText(lightsModeName[(*genSettings).lightsMode]);
     (*musicModeButton).setSubText(musicModeName[(*genSettings).musicMode]);
+    (*volSl).setVal((*genSettings).volume);
 }
 
 void Screen_Home::run(MouseData _mouseData)
@@ -44,6 +44,10 @@ void Screen_Home::run(MouseData _mouseData)
     presetSelector();
     genericButtons();
     (*volSl).run(mouseData);
+    (*genSettings).volume = (*volSl).getVal();
+    if ((*volSl).newValue()) {
+        saveGenSettingsSD(genSettings);
+    }
 }
 
 void Screen_Home::setUndrawn()
@@ -65,6 +69,7 @@ void Screen_Home::setUndrawn()
     (*lightsModeButton).setUndrawn();
     (*musicModeButton).setUndrawn();
     (*musicPlaylistButton).setUndrawn();
+    (*volSl).setVal((*genSettings).volume);
     (*volSl).setUndrawn();
     (*modeSettingsButton).setUndrawn();
     (*topSettingsButton).setUndrawn();
@@ -104,8 +109,14 @@ void Screen_Home::genericButtons()
 
     (*musicPlaylistButton).run(mouseData);
     if ((*musicPlaylistButton).getJustPushed()) {
-        //TODO: open playlist
+        (*genSettings).musicList++;
+        if ((*genSettings).musicList == sizeof(musicListName) / sizeof(musicListName[0]) - 1) {
+            (*genSettings).musicList = 0;
+        }
+        (*musicPlaylistButton).setSubText(musicListName[(*genSettings).musicList]);
+        saveGenSettingsSD(genSettings);
     }
+
     (*modeSettingsButton).run(mouseData);
     if ((*modeSettingsButton).getJustReleased() && (*genSettings).mode >= 0 && (*genSettings).mode < modeNum) {
         (*screenMode) = SCREEN_MODE_MSEDIT;

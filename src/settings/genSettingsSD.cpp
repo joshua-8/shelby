@@ -1,13 +1,4 @@
 #include "genSettingsSD.h"
-// struct generalSetStruct
-// {
-//   int8_t mode;
-//   int8_t lastMode;
-//   int8_t preset;
-//   int8_t musicMode;
-//   int8_t lightsMode;
-//   int8_t wordsMode;
-// };
 
 void saveGenSettingsSD(generalSetStruct* genSet)
 {
@@ -18,6 +9,8 @@ void saveGenSettingsSD(generalSetStruct* genSet)
     file.println((*genSet).musicMode);
     file.println((*genSet).lightsMode);
     file.println((*genSet).wordsMode);
+    file.println((*genSet).musicList);
+    file.println((*genSet).volume);
     file.close();
 }
 void recallGenSettingsSD(generalSetStruct* genSet)
@@ -47,6 +40,12 @@ void recallGenSettingsSD(generalSetStruct* genSet)
                     break;
                 case 4:
                     (*genSet).wordsMode = atoi(num);
+                    break;
+                case 5:
+                    (*genSet).musicList = atoi(num);
+                    break;
+                case 6:
+                    (*genSet).volume = atoi(num);
                     break;
                 }
                 valCounter++;
