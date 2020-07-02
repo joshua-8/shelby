@@ -1,8 +1,8 @@
 #ifndef PINOUT_H
 #define PINOUT_H
 #include <Arduino.h>
-const byte PIXY_MOSI_PIN = 0;
-const byte PIXY_MISO_PIN = 1;
+const byte PIXY_COPI_PIN = 0;
+const byte PIXY_CIPO_PIN = 1;
 const byte SCL_PIN = 3;
 const byte SDA_PIN = 4;
 const byte SCREEN_DC_PIN = 5;
