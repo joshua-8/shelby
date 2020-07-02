@@ -96,10 +96,10 @@ const float SETTING_LIST_VAL_POS = .63;
 const int SETTING_LIST_SCROLL_BAR_WIDTH = 30;
 
 const int SCREEN_PRESSED_THRESHOLD = 500;
-const int SCREEN_MIN_X = 650;
-const int SCREEN_MAX_X = 7300;
-const int SCREEN_MIN_Y = 7600;
-const int SCREEN_MAX_Y = 900;
+const int SCREEN_MAX_X = 650;
+const int SCREEN_MIN_X = 7300;
+const int SCREEN_MAX_Y = 7600;
+const int SCREEN_MIN_Y = 900;
 const int SCREEN_DEBOUNCE_TIME = 35;
 
 #endif

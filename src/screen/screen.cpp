@@ -14,7 +14,7 @@ void Screen::begin()
     pinMode(SCREEN_LIGHT_PIN, OUTPUT);
     digitalWrite(SCREEN_LIGHT_PIN, HIGH);
     tft.begin();
-    tft.setRotation(1);
+    tft.setRotation(3);
     tft.setTextWrap(false);
     (*homeScreen).begin();
     screenMode = 0;
