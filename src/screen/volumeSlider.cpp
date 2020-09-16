@@ -49,14 +49,11 @@ void volumeSlider::run(MouseData mouseData)
 void volumeSlider::draw()
 {
     (*tft).fillRect(xPos, yPos, width, height, standardColor);
-    (*tft).setTextSize(height / SCREEN_FONT_HEIGHT);
-    (*tft).setCursor(xPos + SCREEN_FONT_WIDTH, yPos);
-    (*tft).print("X");
     (*tft).setTextSize(1);
     (*tft).fillRect(map(val, 0, rangeMax, xPos, xPos + width - boxWidth), yPos, boxWidth, height, activeColor);
     (*tft).setTextColor(0);
-    (*tft).setCursor(map(val, 0, rangeMax, xPos, xPos + width - boxWidth) + SCREEN_FONT_WIDTH, yPos + height / 2);
-    (*tft).print(val);
+    (*tft).setCursor(map(val, 0, rangeMax, xPos, xPos + width - boxWidth) + menuScreenConstants.SCREEN_FONT_WIDTH, yPos + height / 2);
+    (*tft).print(map(val,0,rangeMax,0,100));
 }
 int volumeSlider::getVal()
 {

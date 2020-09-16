@@ -8,29 +8,29 @@ Screen_Home::Screen_Home(generalSetStruct* _genSettings, short* _screenMode, Ada
     mseditScreen = _mseditScreen;
     teditScreen = _teditScreen;
 
-    modeSettingsButton = new sButton(tft, MODE_SETTINGS_BUTTON_POS_X, MODE_SETTINGS_BUTTON_POS_Y, MODE_SETTINGS_BUTTON_WIDTH, MODE_SETTINGS_BUTTON_HEIGHT, MODE_SETTINGS_BUTTON_SC, MODE_SETTINGS_BUTTON_AC, MODE_SETTINGS_BUTTON_TC, MODE_SETTINGS_BUTTON_TC, "m set", true);
-    topSettingsButton = new sButton(tft, TOP_SETTINGS_BUTTON_POS_X, TOP_SETTINGS_BUTTON_POS_Y, TOP_SETTINGS_BUTTON_WIDTH, TOP_SETTINGS_BUTTON_HEIGHT, TOP_SETTINGS_BUTTON_SC, TOP_SETTINGS_BUTTON_AC, TOP_SETTINGS_BUTTON_TC, TOP_SETTINGS_BUTTON_TC, "g set", true);
+    modeSettingsButton = new sButton(tft, menuScreenConstants.MODE_SETTINGS_BUTTON_POS_X, menuScreenConstants.MODE_SETTINGS_BUTTON_POS_Y, menuScreenConstants.MODE_SETTINGS_BUTTON_WIDTH, menuScreenConstants.MODE_SETTINGS_BUTTON_HEIGHT, menuScreenConstants.MODE_SETTINGS_BUTTON_SC, menuScreenConstants.MODE_SETTINGS_BUTTON_AC, menuScreenConstants.MODE_SETTINGS_BUTTON_TC, menuScreenConstants.MODE_SETTINGS_BUTTON_TC, "m set", true);
+    topSettingsButton = new sButton(tft, menuScreenConstants.TOP_SETTINGS_BUTTON_POS_X, menuScreenConstants.TOP_SETTINGS_BUTTON_POS_Y, menuScreenConstants.TOP_SETTINGS_BUTTON_WIDTH, menuScreenConstants.TOP_SETTINGS_BUTTON_HEIGHT, menuScreenConstants.TOP_SETTINGS_BUTTON_SC, menuScreenConstants.TOP_SETTINGS_BUTTON_AC, menuScreenConstants.TOP_SETTINGS_BUTTON_TC, menuScreenConstants.TOP_SETTINGS_BUTTON_TC, "g set", true);
 
     for (int i = 0; i < modeNum; i++) {
-        modeButton[i] = new sButton(tft, MODE_SELECTOR_POS_X, MODE_SELECTOR_POS_Y + i * MODE_SELECTOR_HEIGHT / modeNum, MODE_SELECTOR_WIDTH, MODE_SELECTOR_HEIGHT / modeNum * (100 - MODE_BUTTON_BLANK_PERCENT) / 100, MODE_BUTTON_STANDARD_COLOR, MODE_BUTTON_ACTIVE_COLOR, MODE_BUTTON_TEXT_COLOR, MODE_BUTTON_EDGE_COLOR, modeSelName[i], false);
+        modeButton[i] = new sButton(tft, menuScreenConstants.MODE_SELECTOR_POS_X, menuScreenConstants.MODE_SELECTOR_POS_Y + i * menuScreenConstants.MODE_SELECTOR_HEIGHT / modeNum, menuScreenConstants.MODE_SELECTOR_WIDTH, menuScreenConstants.MODE_SELECTOR_HEIGHT / modeNum * (100 - menuScreenConstants.MODE_BUTTON_BLANK_PERCENT) / 100, menuScreenConstants.MODE_BUTTON_STANDARD_COLOR, menuScreenConstants.MODE_BUTTON_ACTIVE_COLOR, menuScreenConstants.MODE_BUTTON_TEXT_COLOR, menuScreenConstants.MODE_BUTTON_EDGE_COLOR, modeSelName[i], false);
     }
     for (int i = 0; i < presetNum; i++) {
-        presetButton[i] = new sButton(tft, PRESET_SELECTOR_POS_X + i * PRESET_SELECTOR_WIDTH / presetNum, PRESET_SELECTOR_POS_Y, PRESET_SELECTOR_WIDTH / presetNum, PRESET_SELECTOR_HEIGHT * PRESET_SELECTOR_TOP_PERCENT / 100, PRESET_BUTTON_STANDARD_COLOR, PRESET_BUTTON_ACTIVE_COLOR, PRESET_BUTTON_TEXT_COLOR, PRESET_BUTTON_EDGE_COLOR, String("pre " + String(i + 1)), false);
-        preditButton[i] = new sButton(tft, PRESET_SELECTOR_POS_X + i * PRESET_SELECTOR_WIDTH / presetNum, PRESET_SELECTOR_HEIGHT * PRESET_SELECTOR_TOP_PERCENT / 100, PRESET_SELECTOR_WIDTH / presetNum, PRESET_SELECTOR_HEIGHT * (100 - PRESET_SELECTOR_TOP_PERCENT) / 100, PRESET_BUTTON_STANDARD_COLOR, PRESET_BUTTON_ACTIVE_COLOR, PRESET_BUTTON_TEXT_COLOR, PRESET_BUTTON_EDGE_COLOR, "edit", true);
+        presetButton[i] = new sButton(tft, menuScreenConstants.PRESET_SELECTOR_POS_X + i * menuScreenConstants.PRESET_SELECTOR_WIDTH / presetNum, menuScreenConstants.PRESET_SELECTOR_POS_Y, menuScreenConstants.PRESET_SELECTOR_WIDTH / presetNum, menuScreenConstants.PRESET_SELECTOR_HEIGHT * menuScreenConstants.PRESET_SELECTOR_TOP_PERCENT / 100, menuScreenConstants.PRESET_BUTTON_STANDARD_COLOR, menuScreenConstants.PRESET_BUTTON_ACTIVE_COLOR, menuScreenConstants.PRESET_BUTTON_TEXT_COLOR, menuScreenConstants.PRESET_BUTTON_EDGE_COLOR, String("pre " + String(i + 1)), false);
+        preditButton[i] = new sButton(tft, menuScreenConstants.PRESET_SELECTOR_POS_X + i * menuScreenConstants.PRESET_SELECTOR_WIDTH / presetNum, menuScreenConstants.PRESET_SELECTOR_HEIGHT * menuScreenConstants.PRESET_SELECTOR_TOP_PERCENT / 100, menuScreenConstants.PRESET_SELECTOR_WIDTH / presetNum, menuScreenConstants.PRESET_SELECTOR_HEIGHT * (100 - menuScreenConstants.PRESET_SELECTOR_TOP_PERCENT) / 100, menuScreenConstants.PRESET_BUTTON_STANDARD_COLOR, menuScreenConstants.PRESET_BUTTON_ACTIVE_COLOR, menuScreenConstants.PRESET_BUTTON_TEXT_COLOR, menuScreenConstants.PRESET_BUTTON_EDGE_COLOR, "edit", true);
     }
-    wordModeButton = new sButton(tft, WORD_MODE_BUTTON_POS_X, ENTERTAINMENT_BUTTONS_POS_Y, WORD_MODE_BUTTON_WIDTH, ENTERTAINMENT_BUTTONS_HEIGHT, ENTERTAINMENT_BUTTONS_COLOR, ENTERTAINMENT_BUTTONS_ACTIVE_COLOR, ENTERTAINMENT_BUTTONS_TEXT_COLOR, ENTERTAINMENT_BUTTONS_TEXT_COLOR, "words: ", true);
-    lightsModeButton = new sButton(tft, LIGHTS_MODE_BUTTON_POS_X, ENTERTAINMENT_BUTTONS_POS_Y, LIGHTS_MODE_BUTTON_WIDTH, ENTERTAINMENT_BUTTONS_HEIGHT, ENTERTAINMENT_BUTTONS_COLOR, ENTERTAINMENT_BUTTONS_ACTIVE_COLOR, ENTERTAINMENT_BUTTONS_TEXT_COLOR, ENTERTAINMENT_BUTTONS_TEXT_COLOR, "lights: ", true);
-    musicModeButton = new sButton(tft, MUSIC_MODE_BUTTON_POS_X, ENTERTAINMENT_BUTTONS_POS_Y, MUSIC_MODE_BUTTON_WIDTH, ENTERTAINMENT_BUTTONS_HEIGHT, ENTERTAINMENT_BUTTONS_COLOR, ENTERTAINMENT_BUTTONS_ACTIVE_COLOR, ENTERTAINMENT_BUTTONS_TEXT_COLOR, ENTERTAINMENT_BUTTONS_TEXT_COLOR, "music: ", true);
-    musicPlaylistButton = new sButton(tft, MUSIC_PLAYLIST_BUTTON_POS_X, ENTERTAINMENT_BUTTONS_POS_Y, MUSIC_PLAYLIST_BUTTON_WIDTH, ENTERTAINMENT_BUTTONS_HEIGHT, ENTERTAINMENT_BUTTONS_COLOR, ENTERTAINMENT_BUTTONS_ACTIVE_COLOR, ENTERTAINMENT_BUTTONS_TEXT_COLOR, ENTERTAINMENT_BUTTONS_TEXT_COLOR, "music", true);
-    volSl = new volumeSlider(tft, VOLUME_SLIDER_POS_X, VOLUME_SLIDER_POS_Y, VOLUME_SLIDER_WIDTH, VOLUME_SLIDER_HEIGHT, VOLUME_SLIDER_BACKGROUND_COLOR, VOLUME_SLIDER_BOX_COLOR, AUDIO_BOARD_VOLUME_RANGE, VOLUME_SLIDER_BOX_WIDTH, 0);
+    wordModeButton = new sButton(tft, menuScreenConstants.WORD_MODE_BUTTON_POS_X, menuScreenConstants.ENTERTAINMENT_BUTTONS_POS_Y, menuScreenConstants.WORD_MODE_BUTTON_WIDTH, menuScreenConstants.ENTERTAINMENT_BUTTONS_HEIGHT, menuScreenConstants.ENTERTAINMENT_BUTTONS_COLOR, menuScreenConstants.ENTERTAINMENT_BUTTONS_ACTIVE_COLOR, menuScreenConstants.ENTERTAINMENT_BUTTONS_TEXT_COLOR, menuScreenConstants.ENTERTAINMENT_BUTTONS_TEXT_COLOR, "words: ", true);
+    lightsModeButton = new sButton(tft, menuScreenConstants.LIGHTS_MODE_BUTTON_POS_X, menuScreenConstants.ENTERTAINMENT_BUTTONS_POS_Y, menuScreenConstants.LIGHTS_MODE_BUTTON_WIDTH, menuScreenConstants.ENTERTAINMENT_BUTTONS_HEIGHT, menuScreenConstants.ENTERTAINMENT_BUTTONS_COLOR, menuScreenConstants.ENTERTAINMENT_BUTTONS_ACTIVE_COLOR, menuScreenConstants.ENTERTAINMENT_BUTTONS_TEXT_COLOR, menuScreenConstants.ENTERTAINMENT_BUTTONS_TEXT_COLOR, "lights: ", true);
+    musicModeButton = new sButton(tft, menuScreenConstants.MUSIC_MODE_BUTTON_POS_X, menuScreenConstants.ENTERTAINMENT_BUTTONS_POS_Y, menuScreenConstants.MUSIC_MODE_BUTTON_WIDTH, menuScreenConstants.ENTERTAINMENT_BUTTONS_HEIGHT, menuScreenConstants.ENTERTAINMENT_BUTTONS_COLOR, menuScreenConstants.ENTERTAINMENT_BUTTONS_ACTIVE_COLOR, menuScreenConstants.ENTERTAINMENT_BUTTONS_TEXT_COLOR, menuScreenConstants.ENTERTAINMENT_BUTTONS_TEXT_COLOR, "music: ", true);
+    musicPlaylistButton = new sButton(tft, menuScreenConstants.MUSIC_PLAYLIST_BUTTON_POS_X, menuScreenConstants.ENTERTAINMENT_BUTTONS_POS_Y, menuScreenConstants.MUSIC_PLAYLIST_BUTTON_WIDTH, menuScreenConstants.ENTERTAINMENT_BUTTONS_HEIGHT, menuScreenConstants.ENTERTAINMENT_BUTTONS_COLOR, menuScreenConstants.ENTERTAINMENT_BUTTONS_ACTIVE_COLOR, menuScreenConstants.ENTERTAINMENT_BUTTONS_TEXT_COLOR, menuScreenConstants.ENTERTAINMENT_BUTTONS_TEXT_COLOR, "music", true);
+    volSl = new volumeSlider(tft, menuScreenConstants.VOLUME_SLIDER_POS_X, menuScreenConstants.VOLUME_SLIDER_POS_Y, menuScreenConstants.VOLUME_SLIDER_WIDTH, menuScreenConstants.VOLUME_SLIDER_HEIGHT, menuScreenConstants.VOLUME_SLIDER_BACKGROUND_COLOR, menuScreenConstants.VOLUME_SLIDER_BOX_COLOR, audioConstants.AUDIO_BOARD_VOLUME_RANGE, menuScreenConstants.VOLUME_SLIDER_BOX_WIDTH, 0);
 }
 
 void Screen_Home::begin()
 {
     (*tft).fillScreen(ILI9341_WHITE);
-    (*tft).fillRect(MODE_SELECTOR_POS_X, MODE_SELECTOR_POS_Y, MODE_SELECTOR_WIDTH, MODE_SELECTOR_HEIGHT, MODE_SELECTOR_BACKGROUND);
+    (*tft).fillRect(menuScreenConstants.MODE_SELECTOR_POS_X, menuScreenConstants.MODE_SELECTOR_POS_Y, menuScreenConstants.MODE_SELECTOR_WIDTH, menuScreenConstants.MODE_SELECTOR_HEIGHT, menuScreenConstants.MODE_SELECTOR_BACKGROUND);
     setUndrawn();
-    (*musicPlaylistButton).setSubText(musicListName[(*genSettings).musicList]);
+    (*musicPlaylistButton).setSubText(audioConstants.musicListName[(*genSettings).musicList]);
     (*wordModeButton).setSubText(wordModeName[(*genSettings).wordsMode]);
     (*lightsModeButton).setSubText(lightsModeName[(*genSettings).lightsMode]);
     (*musicModeButton).setSubText(musicModeName[(*genSettings).musicMode]);
@@ -110,21 +110,21 @@ void Screen_Home::genericButtons()
     (*musicPlaylistButton).run(mouseData);
     if ((*musicPlaylistButton).getJustPushed()) {
         (*genSettings).musicList++;
-        if ((*genSettings).musicList == sizeof(musicListName) / sizeof(musicListName[0]) - 1) {
+        if ((*genSettings).musicList == sizeof(audioConstants.musicListName) / sizeof(audioConstants.musicListName[0]) - 1) {
             (*genSettings).musicList = 0;
         }
-        (*musicPlaylistButton).setSubText(musicListName[(*genSettings).musicList]);
+        (*musicPlaylistButton).setSubText(audioConstants.musicListName[(*genSettings).musicList]);
         saveGenSettingsSD(genSettings);
     }
 
     (*modeSettingsButton).run(mouseData);
     if ((*modeSettingsButton).getJustReleased() && (*genSettings).mode >= 0 && (*genSettings).mode < modeNum) {
-        (*screenMode) = SCREEN_MODE_MSEDIT;
+        (*screenMode) = menuScreenConstants.SCREEN_MODE_MSEDIT;
     }
 
     (*topSettingsButton).run(mouseData);
     if ((*topSettingsButton).getJustReleased()) {
-        (*screenMode) = SCREEN_MODE_TEDIT;
+        (*screenMode) = menuScreenConstants.SCREEN_MODE_TEDIT;
     }
 }
 
@@ -149,7 +149,7 @@ void Screen_Home::presetSelector()
 
         (*preditButton[i]).run(mouseData);
         if ((*preditButton[i]).getJustReleased() && (*genSettings).mode >= 0 && (*genSettings).mode < modeNum) {
-            (*screenMode) = SCREEN_MODE_PREDIT;
+            (*screenMode) = menuScreenConstants.SCREEN_MODE_PREDIT;
             (*preditScreen).setPreset(i);
         }
     }

@@ -23,33 +23,33 @@ void Screen::begin()
 void Screen::run()
 {
     mouseData = readScreen();
-    if (screenMode == SCREEN_MODE_HOME) {
+    if (screenMode == menuScreenConstants.SCREEN_MODE_HOME) {
         (*homeScreen).run(mouseData);
-        if (screenMode == SCREEN_MODE_PREDIT) {
+        if (screenMode == menuScreenConstants.SCREEN_MODE_PREDIT) {
             (*preditScreen).begin();
         }
-        if (screenMode == SCREEN_MODE_MSEDIT) {
+        if (screenMode == menuScreenConstants.SCREEN_MODE_MSEDIT) {
             (*mseditScreen).begin();
         }
-        if (screenMode == SCREEN_MODE_TEDIT) {
+        if (screenMode == menuScreenConstants.SCREEN_MODE_TEDIT) {
             (*teditScreen).begin();
         }
     }
-    if (screenMode == SCREEN_MODE_PREDIT) {
+    if (screenMode == menuScreenConstants.SCREEN_MODE_PREDIT) {
         (*preditScreen).run(mouseData);
-        if (screenMode == SCREEN_MODE_HOME) {
+        if (screenMode == menuScreenConstants.SCREEN_MODE_HOME) {
             (*homeScreen).begin();
         }
     }
-    if (screenMode == SCREEN_MODE_MSEDIT) {
+    if (screenMode == menuScreenConstants.SCREEN_MODE_MSEDIT) {
         (*mseditScreen).run(mouseData);
-        if (screenMode == SCREEN_MODE_HOME) {
+        if (screenMode == menuScreenConstants.SCREEN_MODE_HOME) {
             (*homeScreen).begin();
         }
     }
-    if (screenMode == SCREEN_MODE_TEDIT) {
+    if (screenMode == menuScreenConstants.SCREEN_MODE_TEDIT) {
         (*teditScreen).run(mouseData);
-        if (screenMode == SCREEN_MODE_HOME) {
+        if (screenMode == menuScreenConstants.SCREEN_MODE_HOME) {
             (*homeScreen).begin();
         }
     }
@@ -68,10 +68,10 @@ MouseData Screen::readScreen()
         mouseData.mouseXUp = mouseData.lastMouseX;
         mouseData.mouseYUp = mouseData.lastMouseY;
     }
-    if (mouseData.mouseRawPressed == true && mouseData.millisSinceRawMouseDown > SCREEN_DEBOUNCE_TIME) {
+    if (mouseData.mouseRawPressed == true && mouseData.millisSinceRawMouseDown > menuScreenConstants.SCREEN_DEBOUNCE_TIME) {
         mouseData.mousePressed = true;
     }
-    if (mouseData.mouseRawPressed == false && mouseData.millisSinceRawMouseUp > SCREEN_DEBOUNCE_TIME) {
+    if (mouseData.mouseRawPressed == false && mouseData.millisSinceRawMouseUp > menuScreenConstants.SCREEN_DEBOUNCE_TIME) {
         mouseData.mousePressed = false;
     }
     if (mouseData.mouseRawPressed) {
@@ -108,13 +108,13 @@ boolean Screen::readMousePressed()
     digitalWrite(SCREEN_TOUCH_Y_M_PIN, LOW);
     pinMode(SCREEN_TOUCH_Y_P_PIN, OUTPUT);
     digitalWrite(SCREEN_TOUCH_Y_P_PIN, LOW);
-    return analogRead(SCREEN_TOUCH_X_M_PIN) < SCREEN_PRESSED_THRESHOLD;
+    return analogRead(SCREEN_TOUCH_X_M_PIN) < menuScreenConstants.SCREEN_PRESSED_THRESHOLD;
 }
 
 float Screen::readMouseY()
 {
     unsigned long sum = 0;
-    for (int i = 0; i < mouseAvgArrNum; i++) {
+    for (int i = 0; i < menuScreenConstants.mouseAvgArrNum; i++) {
         pinMode(SCREEN_TOUCH_Y_M_PIN, INPUT);
         pinMode(SCREEN_TOUCH_Y_P_PIN, INPUT);
         pinMode(SCREEN_TOUCH_X_M_PIN, OUTPUT);
@@ -123,13 +123,13 @@ float Screen::readMouseY()
         digitalWrite(SCREEN_TOUCH_X_P_PIN, LOW);
         sum += analogRead(SCREEN_TOUCH_Y_P_PIN) + analogRead(SCREEN_TOUCH_Y_M_PIN);
     }
-    sum /= mouseAvgArrNum;
-    return map(sum, SCREEN_MIN_Y, SCREEN_MAX_Y, 0, SCREEN_HEIGHT);
+    sum /= menuScreenConstants.mouseAvgArrNum;
+    return map(sum, menuScreenConstants.SCREEN_MIN_Y, menuScreenConstants.SCREEN_MAX_Y, 0, menuScreenConstants.SCREEN_HEIGHT);
 }
 float Screen::readMouseX()
 {
     unsigned long sum = 0;
-    for (int i = 0; i < mouseAvgArrNum; i++) {
+    for (int i = 0; i < menuScreenConstants.mouseAvgArrNum; i++) {
         pinMode(SCREEN_TOUCH_X_M_PIN, INPUT);
         pinMode(SCREEN_TOUCH_X_P_PIN, INPUT);
         pinMode(SCREEN_TOUCH_Y_M_PIN, OUTPUT);
@@ -138,6 +138,6 @@ float Screen::readMouseX()
         digitalWrite(SCREEN_TOUCH_Y_P_PIN, LOW);
         sum += analogRead(SCREEN_TOUCH_X_M_PIN) + analogRead(SCREEN_TOUCH_X_P_PIN);
     }
-    sum /= mouseAvgArrNum;
-    return map(sum, SCREEN_MIN_X, SCREEN_MAX_X, 0, SCREEN_WIDTH);
+    sum /= menuScreenConstants.mouseAvgArrNum;
+    return map(sum, menuScreenConstants.SCREEN_MIN_X, menuScreenConstants.SCREEN_MAX_X, 0, menuScreenConstants.SCREEN_WIDTH);
 }

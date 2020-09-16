@@ -1,22 +1,19 @@
 #ifndef MODE_SETTINGS_STRUCTS_H
 #define MODE_SETTINGS_STRUCTS_H
 
-struct tagModeModeSettingsStruct
-{
+struct tagModeModeSettingsStruct {
     int tagsettingA;
     float tagsettingB;
     bool tagsettingC;
 };
 
-struct chaseModeModeSettingsStruct
-{
+struct chaseModeModeSettingsStruct {
     int chasesettingA;
     float chasesettingB;
     bool chasesettingC;
 };
 
-struct raceModeModeSettingsStruct
-{
+struct raceModeModeSettingsStruct {
     int racesettingA;
     float racesettingB;
     bool racesettingC;
@@ -31,16 +28,18 @@ struct raceModeModeSettingsStruct
     bool racesettingL;
 };
 
-struct walkerModeModeSettingsStruct
-{
+struct walkerModeModeSettingsStruct {
     int walkersettingA;
     float walkersettingB;
     bool walkersettingC;
     int walkersettingD;
 };
 
-struct demoModeModeSettingsStruct
-{
+struct stillModeModeSettingsStruct {
+    bool stillsettingA;
+};
+
+struct demoModeModeSettingsStruct {
     bool demosettingA;
     int demosettingB;
     float demosettingC;

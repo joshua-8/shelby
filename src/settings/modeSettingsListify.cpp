@@ -11,6 +11,8 @@ int modeSettingsListifyGetLength(int mode)
         return 12;
     case WALKER_MODE_ID:
         return 4;
+    case STILL_MODE_ID:
+        return 1;
     case DEMO_MODE_ID:
         return 3;
     }
@@ -79,6 +81,12 @@ int modeSettingsListifyGetIsBIF(int mode, int currVal)
             return MODE_SETTINGS_LISTIFY_BOOLEAN;
         case 3:
             return MODE_SETTINGS_LISTIFY_INT;
+        }
+        break;
+    case STILL_MODE_ID:
+        switch (currVal) {
+        case 0:
+            return MODE_SETTINGS_LISTIFY_BOOLEAN;
         }
         break;
     case DEMO_MODE_ID:
@@ -156,6 +164,12 @@ float modeSettingsListifyGetVal(int mode, int currVal)
             return walkerModeModeSettings.walkersettingC;
         case 3:
             return walkerModeModeSettings.walkersettingD;
+        }
+        break;
+    case STILL_MODE_ID:
+        switch (currVal) {
+        case 0:
+            return stillModeModeSettings.stillsettingA;
         }
         break;
     case DEMO_MODE_ID:
@@ -257,6 +271,13 @@ void modeSettingsListifySetVal(int mode, int currVal, float val)
             break;
         }
         break;
+    case STILL_MODE_ID:
+        switch (currVal) {
+        case 0:
+            stillModeModeSettings.stillsettingA = val;
+            break;
+        }
+        break;
     case DEMO_MODE_ID:
         switch (currVal) {
         case 0:
@@ -334,6 +355,12 @@ String modeSettingsListifyGetName(int mode, int currVal)
             return F("walkersettC");
         case 3:
             return F("walkersettD");
+        }
+        break;
+    case STILL_MODE_ID:
+        switch (currVal) {
+        case 0:
+            return F("stillsetA");
         }
         break;
     case DEMO_MODE_ID:

@@ -3,8 +3,10 @@
 #include "screen/screen.h"
 #include "settings/settings.h"
 #include "settings/settingsSD.h"
+#include "subsystems/subsystems.h"
 
 Screen screen(&genS);
+
 
 void setup() {
   Serial.begin(250000);

@@ -5,9 +5,9 @@ Screen_MSedit::Screen_MSedit(generalSetStruct* _genSettings, short* _screenMode,
     screenMode = _screenMode;
     numPad = _numPad;
     genSettings = _genSettings;
-    saveButton = new sButton(tft, NUMPAD_POS_X + NUMPAD_WIDTH / 3, 0, NUMPAD_WIDTH * 2 / 3, NUMPAD_POS_Y, NUMPAD_YES_COLOR, NUMPAD_ACTIVE_COLOR, NUMPAD_TEXT_COLOR, NUMPAD_YES_COLOR, "save", true);
-    cancelButton = new sButton(tft, NUMPAD_POS_X, 0, NUMPAD_WIDTH / 3, NUMPAD_POS_Y, NUMPAD_DEL_COLOR, NUMPAD_ACTIVE_COLOR, NUMPAD_TEXT_COLOR, NUMPAD_DEL_COLOR, "cancel", true);
-    setlist = new mseditSetList(tft, NUMPAD_WIDTH, 0, SCREEN_WIDTH - NUMPAD_WIDTH, SCREEN_HEIGHT);
+    saveButton = new sButton(tft, menuScreenConstants.NUMPAD_POS_X + menuScreenConstants.NUMPAD_WIDTH / 3, 0, menuScreenConstants.NUMPAD_WIDTH * 2 / 3, menuScreenConstants.NUMPAD_POS_Y, menuScreenConstants.NUMPAD_YES_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, menuScreenConstants.NUMPAD_TEXT_COLOR, menuScreenConstants.NUMPAD_YES_COLOR, "save", true);
+    cancelButton = new sButton(tft, menuScreenConstants.NUMPAD_POS_X, 0, menuScreenConstants.NUMPAD_WIDTH / 3, menuScreenConstants.NUMPAD_POS_Y, menuScreenConstants.NUMPAD_DEL_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, menuScreenConstants.NUMPAD_TEXT_COLOR, menuScreenConstants.NUMPAD_DEL_COLOR, "cancel", true);
+    setlist = new mseditSetList(tft, menuScreenConstants.NUMPAD_WIDTH, 0, menuScreenConstants.SCREEN_WIDTH - menuScreenConstants.NUMPAD_WIDTH, menuScreenConstants.SCREEN_HEIGHT);
 }
 
 void Screen_MSedit::begin()
@@ -24,11 +24,11 @@ void Screen_MSedit::run(MouseData mouseData)
     (*saveButton).run(mouseData);
     if ((*cancelButton).getJustReleased()) {
         recallModeSettingsSD((*genSettings).mode);
-        (*screenMode) = SCREEN_MODE_HOME;
+        (*screenMode) = menuScreenConstants.SCREEN_MODE_HOME;
     }
     if ((*saveButton).getJustReleased()) {
         saveModeSettingsSD((*genSettings).mode);
-        (*screenMode) = SCREEN_MODE_HOME;
+        (*screenMode) = menuScreenConstants.SCREEN_MODE_HOME;
     }
     (*numPad).run(mouseData);
     (*setlist).run(numPad, &mouseData);

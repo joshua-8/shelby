@@ -6,7 +6,7 @@ sButton::sButton(Adafruit_ILI9341 *_tft, int _xPos, int _yPos, int _width, int _
   xPos = _xPos;
   yPos = _yPos;
   width = max(_width, 0);
-  height = max(_height, SCREEN_FONT_HEIGHT + 1);
+  height = max(_height, menuScreenConstants.SCREEN_FONT_HEIGHT + 1);
   standardColor = _standardColor;
   activeColor = _activeColor;
   textColor = _textColor;
@@ -15,7 +15,7 @@ sButton::sButton(Adafruit_ILI9341 *_tft, int _xPos, int _yPos, int _width, int _
   lastState = false;
   undrawn = true;
   secondLabel = "";
-  if (_label.length() * SCREEN_FONT_WIDTH + 4 >= width)
+  if (_label.length() * menuScreenConstants.SCREEN_FONT_WIDTH + 4 >= width)
   {
     label = "";
   }
@@ -90,7 +90,7 @@ void sButton::setState(boolean _state)
 }
 boolean sButton::setText(String _label)
 {
-  if (_label.length() * SCREEN_FONT_WIDTH + 4 >= width)
+  if (_label.length() * menuScreenConstants.SCREEN_FONT_WIDTH + 4 >= width)
   {
     return true;
   }
@@ -101,7 +101,7 @@ boolean sButton::setText(String _label)
 
 boolean sButton::setSubText(String _label)
 {
-  if (_label.length() * SCREEN_FONT_WIDTH + 4 >= width)
+  if (_label.length() * menuScreenConstants.SCREEN_FONT_WIDTH + 4 >= width)
   {
     return true;
   }

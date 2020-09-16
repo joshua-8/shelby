@@ -5,12 +5,16 @@ tagModePresetSettingsStruct tagModePresetSettings[presetNum];
 chaseModePresetSettingsStruct chaseModePresetSettings[presetNum];
 raceModePresetSettingsStruct raceModePresetSettings[presetNum];
 walkerModePresetSettingsStruct walkerModePresetSettings[presetNum];
+stillModePresetSettingsStruct stillModePresetSettings[presetNum];
 demoModePresetSettingsStruct demoModePresetSettings[presetNum];
 
 tagModeModeSettingsStruct tagModeModeSettings;
 chaseModeModeSettingsStruct chaseModeModeSettings;
 raceModeModeSettingsStruct raceModeModeSettings;
 walkerModeModeSettingsStruct walkerModeModeSettings;
+stillModeModeSettingsStruct stillModeModeSettings;
 demoModeModeSettingsStruct demoModeModeSettings;
 
 topSettingsStruct topSettings;
+
+int audioPlaylistPos[audioConstants.musicListNum];
