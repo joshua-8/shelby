@@ -75,7 +75,7 @@ public:
     const uint16_t ENTERTAINMENT_BUTTONS_ACTIVE_COLOR = 65535; //WHITE
     const uint16_t ENTERTAINMENT_BUTTONS_TEXT_COLOR = 0; //BLACK
 
-    const int NUMPAD_STRING_LENGTH = 6;
+    const unsigned int NUMPAD_STRING_LENGTH = 6;
     const int NUMPAD_WIDTH = 150;
     const int NUMPAD_HEIGHT = 200;
     const int NUMPAD_POS_X = 0;
@@ -86,7 +86,7 @@ public:
     const uint16_t NUMPAD_YES_COLOR = 2016; //green
     const uint16_t NUMPAD_NO_COLOR = 64008; //red
     const uint16_t NUMPAD_DEL_COLOR = 65504; //yellow
-    const int NUMPAD_DEL_LONG_HOLD = 333;
+    const unsigned int NUMPAD_DEL_LONG_HOLD = 333;
 
     const int SETTING_LIST_ROW_HEIGHT = 36;
     const uint16_t SETTING_LIST_BACKGROUND_COLOR = 50712; //light grey

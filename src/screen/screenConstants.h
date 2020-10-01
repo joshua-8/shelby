@@ -13,7 +13,7 @@ public:
     const int SCREEN_MIN_X = 7300;
     const int SCREEN_MAX_Y = 7600;
     const int SCREEN_MIN_Y = 900;
-    const int SCREEN_DEBOUNCE_TIME = 35;
+    const unsigned int SCREEN_DEBOUNCE_TIME = 35;
 
     const byte mouseAvgArrNum = 6;
 };

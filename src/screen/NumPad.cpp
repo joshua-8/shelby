@@ -73,7 +73,7 @@ boolean NumPad::run()
         justStarted = false;
     }
 
-    if ((int)str.length() < menuScreenConstants.NUMPAD_STRING_LENGTH + (str.charAt(0) == '-' ? 1 : 0) + (str.indexOf('.') != -1 ? 1 : 0)) {
+    if ((unsigned int)str.length() < menuScreenConstants.NUMPAD_STRING_LENGTH + (str.charAt(0) == '-' ? 1 : 0) + (str.indexOf('.') != -1 ? 1 : 0)) {
         if ((*button0).getJustReleased()) {
             str.append(0);
             change = true;
