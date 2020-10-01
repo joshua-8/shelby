@@ -1,6 +1,12 @@
 #include "Screen_Home.h"
 Screen_Home::Screen_Home(MouseData* _mouseData, Adafruit_ILI9341* _tft, short* _screenMode, Screen_Predit* _preditScreen, Screen_MSedit* _mseditScreen, Screen_Tedit* _teditScreen)
 {
+    screenMode = _screenMode;
+    mouseData = _mouseData;
+    preditScreen = _preditScreen;
+    mseditScreen = _mseditScreen;
+    teditScreen = _teditScreen;
+    tft = _tft;
     modeSettingsButton = new sButton(tft, mouseData, menuScreenConstants.MODE_SETTINGS_BUTTON_POS_X, menuScreenConstants.MODE_SETTINGS_BUTTON_POS_Y, menuScreenConstants.MODE_SETTINGS_BUTTON_WIDTH, menuScreenConstants.MODE_SETTINGS_BUTTON_HEIGHT, menuScreenConstants.MODE_SETTINGS_BUTTON_SC, menuScreenConstants.MODE_SETTINGS_BUTTON_AC, menuScreenConstants.MODE_SETTINGS_BUTTON_TC, menuScreenConstants.MODE_SETTINGS_BUTTON_TC, "m set", true);
     topSettingsButton = new sButton(tft, mouseData, menuScreenConstants.TOP_SETTINGS_BUTTON_POS_X, menuScreenConstants.TOP_SETTINGS_BUTTON_POS_Y, menuScreenConstants.TOP_SETTINGS_BUTTON_WIDTH, menuScreenConstants.TOP_SETTINGS_BUTTON_HEIGHT, menuScreenConstants.TOP_SETTINGS_BUTTON_SC, menuScreenConstants.TOP_SETTINGS_BUTTON_AC, menuScreenConstants.TOP_SETTINGS_BUTTON_TC, menuScreenConstants.TOP_SETTINGS_BUTTON_TC, "g set", true);
 

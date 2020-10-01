@@ -11,6 +11,7 @@ topSetList::topSetList(Adafruit_ILI9341* _tft, MouseData* _mouseData, NumPad* _n
     height = _height;
     drawn = false;
     currVal = -1;
+    scroll = 0;
     mouseStartupUnlocked = false;
     length = (float)topSettingsListifyGetLength() * menuScreenConstants.SETTING_LIST_ROW_HEIGHT / height;
 }

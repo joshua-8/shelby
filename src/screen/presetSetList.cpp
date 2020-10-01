@@ -13,6 +13,7 @@ presetSetList::presetSetList(Adafruit_ILI9341* _tft, NumPad* _numPad, MouseData*
     drawn = false;
     currVal = -1;
     mode = 0;
+    scroll = 0;
     preset = 0;
     mouseStartupUnlocked = false;
 }

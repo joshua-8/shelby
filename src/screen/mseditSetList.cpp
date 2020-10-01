@@ -13,6 +13,7 @@ mseditSetList::mseditSetList(Adafruit_ILI9341* _tft, MouseData* _mouseData, NumP
     drawn = false;
     currVal = -1;
     mode = 0;
+    scroll = 0;
     mouseStartupUnlocked = false;
 }
 

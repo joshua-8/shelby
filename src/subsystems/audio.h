@@ -4,6 +4,7 @@
 #include <wavTrigger.h>
 class Audio {
 public:
+    Audio();
     void begin();
     void run();
     void playLong();

@@ -1,6 +1,11 @@
 #include "audio.h"
 #include "constants/audioConstants.h"
 #include "settings/settings.h"
+
+Audio::Audio()
+{
+}
+
 void Audio::begin()
 {
     lastVolume = audioConstants.AUDIO_BOARD_VOLUME_MIN - 1;
