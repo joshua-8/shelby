@@ -4,15 +4,15 @@
 #include "MouseData.h"
 #include "NumPad.h"
 #include "menuScreenConstants.h"
-#include "topSetList.h"
 #include "sButton.h"
 #include "settings/topSettingsSD.h"
+#include "topSetList.h"
 #include <Arduino.h>
 
 class Screen_Tedit {
 public:
     void begin();
-    void run(MouseData);
+    void run();
 
 private:
     Adafruit_ILI9341* tft;
@@ -25,6 +25,6 @@ private:
     void setUndrawn();
 
 public:
-    Screen_Tedit(short* _screenMode, Adafruit_ILI9341* _tft, NumPad* _numpad);
+    Screen_Tedit(MouseData* _mouseData, Adafruit_ILI9341* _tft, NumPad* _numpad, short* _screenMode);
 };
 #endif

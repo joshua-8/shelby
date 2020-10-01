@@ -1,7 +1,7 @@
 #ifndef MENU_SCREEN_CONSTANTS_H
 #define MENU_SCREEN_CONSTANTS_H
 #include <Arduino.h>
-
+#include "screenConstants.h"
 class menuScreenConsts {
 public:
     const short SCREEN_MODE_HOME = 0;
@@ -9,8 +9,9 @@ public:
     const short SCREEN_MODE_MSEDIT = 2;
     const short SCREEN_MODE_TEDIT = 3;
 
-    const short SCREEN_WIDTH = 320;
-    const short SCREEN_HEIGHT = 240;
+    const int SCREEN_WIDTH = screenConstants.SCREEN_WIDTH;
+    const int SCREEN_HEIGHT = screenConstants.SCREEN_WIDTH;
+    
     const short SCREEN_FONT_WIDTH = 6;
     const short SCREEN_FONT_HEIGHT = 8;
 
@@ -96,15 +97,6 @@ public:
     const uint16_t SETTING_LIST_TEXT_COLOR = 0; //BLACK
     const float SETTING_LIST_VAL_POS = .63;
     const int SETTING_LIST_SCROLL_BAR_WIDTH = 30;
-
-    const int SCREEN_PRESSED_THRESHOLD = 500;
-    const int SCREEN_MAX_X = 650;
-    const int SCREEN_MIN_X = 7300;
-    const int SCREEN_MAX_Y = 7600;
-    const int SCREEN_MIN_Y = 900;
-    const int SCREEN_DEBOUNCE_TIME = 35;
-
-    const byte mouseAvgArrNum = 6;
 };
 
 static menuScreenConsts menuScreenConstants;

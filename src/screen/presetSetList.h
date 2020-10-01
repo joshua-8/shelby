@@ -9,6 +9,8 @@
 class presetSetList {
 private:
     Adafruit_ILI9341* tft;
+    NumPad* numPad;
+    MouseData* mouseData;
     int xPos;
     int yPos;
     int width;
@@ -20,12 +22,12 @@ private:
     int mode;
     int preset;
     boolean mouseStartupUnlocked;
-    String valToString(float val,boolean integer);
+    String valToString(float val, boolean integer);
 
 public:
-    presetSetList(Adafruit_ILI9341* _tft, int _xPos, int _yPos, int _width, int _height);
+    presetSetList(Adafruit_ILI9341* _tft, NumPad* _numPad, MouseData* _mouseData, int _xPos, int _yPos, int _width, int _height);
     void setUndrawn();
-    void run(NumPad* numpad, MouseData* mouseData);
+    void run();
     void begin();
     void setPresetAndMode(int preset, int mode);
 };

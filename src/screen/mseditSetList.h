@@ -9,6 +9,8 @@
 class mseditSetList {
 private:
     Adafruit_ILI9341* tft;
+    NumPad* numPad;
+    MouseData* mouseData;
     int xPos;
     int yPos;
     int width;
@@ -19,12 +21,12 @@ private:
     int currVal;
     int mode;
     boolean mouseStartupUnlocked;
-    String valToString(float val,boolean integer);
+    String valToString(float val, boolean integer);
 
 public:
-    mseditSetList(Adafruit_ILI9341* _tft, int _xPos, int _yPos, int _width, int _height);
+    mseditSetList(Adafruit_ILI9341* _tft, MouseData* _mouseData, NumPad* _numPad, int _xPos, int _yPos, int _width, int _height);
     void setUndrawn();
-    void run(NumPad* numpad, MouseData* mouseData);
+    void run();
     void begin();
     void setMode(int mode);
 };

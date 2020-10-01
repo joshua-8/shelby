@@ -1,8 +1,10 @@
 #include "topSetList.h"
 
-topSetList::topSetList(Adafruit_ILI9341* _tft, int _xPos, int _yPos, int _width, int _height)
+topSetList::topSetList(Adafruit_ILI9341* _tft, MouseData* _mouseData, NumPad* _numPad, int _xPos, int _yPos, int _width, int _height)
 {
     tft = _tft;
+    mouseData = _mouseData;
+    numPad = _numPad;
     xPos = _xPos;
     yPos = _yPos;
     width = _width - menuScreenConstants.SETTING_LIST_SCROLL_BAR_WIDTH;
@@ -12,12 +14,12 @@ topSetList::topSetList(Adafruit_ILI9341* _tft, int _xPos, int _yPos, int _width,
     mouseStartupUnlocked = false;
     length = (float)topSettingsListifyGetLength() * menuScreenConstants.SETTING_LIST_ROW_HEIGHT / height;
 }
-void topSetList::run(NumPad* numpad, MouseData* mouseData)
+void topSetList::run()
 {
     if (mouseStartupUnlocked && (*mouseData).mouseUp && abs((*mouseData).mouseYDown - (*mouseData).mouseYUp) < menuScreenConstants.SETTING_LIST_ROW_HEIGHT && (*mouseData).mouseXUp > xPos && (*mouseData).mouseXUp < xPos + width && (*mouseData).mouseYUp > yPos && (*mouseData).mouseYUp < yPos + height) {
         currVal = ((*mouseData).mouseYUp - yPos + scroll * height) / menuScreenConstants.SETTING_LIST_ROW_HEIGHT;
-        (*numpad).setVal(topSettingsListifyGetVal(currVal));
-        (*numpad).setInteger(topSettingsListifyGetIsBIF(currVal) == TOP_SETTINGS_LISTIFY_INT);
+        (*numPad).setVal(topSettingsListifyGetVal(currVal));
+        (*numPad).setInteger(topSettingsListifyGetIsBIF(currVal) == TOP_SETTINGS_LISTIFY_INT);
         drawn = false;
     }
     if (length > 1) {
@@ -30,12 +32,12 @@ void topSetList::run(NumPad* numpad, MouseData* mouseData)
     if (!(*mouseData).mousePressed) {
         mouseStartupUnlocked = true;
     }
-    if (currVal != -1 && (*numpad).getChanged()) {
+    if (currVal != -1 && (*numPad).getChanged()) {
         drawn = false;
     }
 
-    if (currVal != -1 && topSettingsListifyGetIsBIF(currVal) != TOP_SETTINGS_LISTIFY_BOOLEAN && (*numpad).getFinalized()) {
-        topSettingsListifySetVal(currVal, (*numpad).getFinalVal());
+    if (currVal != -1 && topSettingsListifyGetIsBIF(currVal) != TOP_SETTINGS_LISTIFY_BOOLEAN && (*numPad).getFinalized()) {
+        topSettingsListifySetVal(currVal, (*numPad).getFinalVal());
         currVal = -1;
         drawn = false;
     }
@@ -66,7 +68,7 @@ void topSetList::run(NumPad* numpad, MouseData* mouseData)
                     if (currVal == i) {
                         (*tft).fillRect(xPos, y, width, menuScreenConstants.SETTING_LIST_ROW_HEIGHT, menuScreenConstants.SETTING_LIST_SEL_COLOR);
                         (*tft).setCursor(xPos + width * menuScreenConstants.SETTING_LIST_VAL_POS, y + menuScreenConstants.SETTING_LIST_ROW_HEIGHT / 2 - menuScreenConstants.SCREEN_FONT_HEIGHT);
-                        (*tft).print((*numpad).getString());
+                        (*tft).print((*numPad).getString());
                     } else {
                         (*tft).fillRect(xPos, y, width, menuScreenConstants.SETTING_LIST_ROW_HEIGHT, menuScreenConstants.SETTING_LIST_BACKGROUND_COLOR);
                         (*tft).setCursor(xPos + width * menuScreenConstants.SETTING_LIST_VAL_POS, y + menuScreenConstants.SETTING_LIST_ROW_HEIGHT / 2 - menuScreenConstants.SCREEN_FONT_HEIGHT);

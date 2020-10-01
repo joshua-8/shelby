@@ -1,8 +1,10 @@
 #include "mseditSetList.h"
 
-mseditSetList::mseditSetList(Adafruit_ILI9341* _tft, int _xPos, int _yPos, int _width, int _height)
+mseditSetList::mseditSetList(Adafruit_ILI9341* _tft, MouseData* _mouseData, NumPad* _numPad, int _xPos, int _yPos, int _width, int _height)
 {
     tft = _tft;
+    mouseData = _mouseData;
+    numPad = _numPad;
     xPos = _xPos;
     yPos = _yPos;
     width = _width - menuScreenConstants.SETTING_LIST_SCROLL_BAR_WIDTH;
@@ -13,12 +15,13 @@ mseditSetList::mseditSetList(Adafruit_ILI9341* _tft, int _xPos, int _yPos, int _
     mode = 0;
     mouseStartupUnlocked = false;
 }
-void mseditSetList::run(NumPad* numpad, MouseData* mouseData)
+
+void mseditSetList::run()
 {
     if (mouseStartupUnlocked && (*mouseData).mouseUp && abs((*mouseData).mouseYDown - (*mouseData).mouseYUp) < menuScreenConstants.SETTING_LIST_ROW_HEIGHT && (*mouseData).mouseXUp > xPos && (*mouseData).mouseXUp < xPos + width && (*mouseData).mouseYUp > yPos && (*mouseData).mouseYUp < yPos + height) {
         currVal = ((*mouseData).mouseYUp - yPos + scroll * height) / menuScreenConstants.SETTING_LIST_ROW_HEIGHT;
-        (*numpad).setVal(modeSettingsListifyGetVal(mode, currVal));
-        (*numpad).setInteger(modeSettingsListifyGetIsBIF(mode, currVal) == MODE_SETTINGS_LISTIFY_INT);
+        (*numPad).setVal(modeSettingsListifyGetVal(mode, currVal));
+        (*numPad).setInteger(modeSettingsListifyGetIsBIF(mode, currVal) == MODE_SETTINGS_LISTIFY_INT);
         drawn = false;
     }
     if (length > 1) {
@@ -31,12 +34,12 @@ void mseditSetList::run(NumPad* numpad, MouseData* mouseData)
     if (!(*mouseData).mousePressed) {
         mouseStartupUnlocked = true;
     }
-    if (currVal != -1 && (*numpad).getChanged()) {
+    if (currVal != -1 && (*numPad).getChanged()) {
         drawn = false;
     }
 
-    if (currVal != -1 && modeSettingsListifyGetIsBIF(mode, currVal) != MODE_SETTINGS_LISTIFY_BOOLEAN && (*numpad).getFinalized()) {
-        modeSettingsListifySetVal(mode, currVal, (*numpad).getFinalVal());
+    if (currVal != -1 && modeSettingsListifyGetIsBIF(mode, currVal) != MODE_SETTINGS_LISTIFY_BOOLEAN && (*numPad).getFinalized()) {
+        modeSettingsListifySetVal(mode, currVal, (*numPad).getFinalVal());
         currVal = -1;
         drawn = false;
     }
@@ -67,7 +70,7 @@ void mseditSetList::run(NumPad* numpad, MouseData* mouseData)
                     if (currVal == i) {
                         (*tft).fillRect(xPos, y, width, menuScreenConstants.SETTING_LIST_ROW_HEIGHT, menuScreenConstants.SETTING_LIST_SEL_COLOR);
                         (*tft).setCursor(xPos + width * menuScreenConstants.SETTING_LIST_VAL_POS, y + menuScreenConstants.SETTING_LIST_ROW_HEIGHT / 2 - menuScreenConstants.SCREEN_FONT_HEIGHT);
-                        (*tft).print((*numpad).getString());
+                        (*tft).print((*numPad).getString());
                     } else {
                         (*tft).fillRect(xPos, y, width, menuScreenConstants.SETTING_LIST_ROW_HEIGHT, menuScreenConstants.SETTING_LIST_BACKGROUND_COLOR);
                         (*tft).setCursor(xPos + width * menuScreenConstants.SETTING_LIST_VAL_POS, y + menuScreenConstants.SETTING_LIST_ROW_HEIGHT / 2 - menuScreenConstants.SCREEN_FONT_HEIGHT);

@@ -9,6 +9,8 @@
 class topSetList {
 private:
     Adafruit_ILI9341* tft;
+    MouseData* mouseData;
+    NumPad* numPad;
     int xPos;
     int yPos;
     int width;
@@ -18,12 +20,12 @@ private:
     boolean drawn;
     int currVal;
     boolean mouseStartupUnlocked;
-    String valToString(float val,boolean integer);
+    String valToString(float val, boolean integer);
 
 public:
-    topSetList(Adafruit_ILI9341* _tft, int _xPos, int _yPos, int _width, int _height);
+    topSetList(Adafruit_ILI9341* _tft, MouseData* _mouseData, NumPad* _numPad, int _xPos, int _yPos, int _width, int _height);
     void setUndrawn();
-    void run(NumPad* numpad, MouseData* mouseData);
+    void run();
     void begin();
 };
 #endif

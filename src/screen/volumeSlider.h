@@ -8,16 +8,17 @@
 
 class volumeSlider {
 public:
-    volumeSlider(Adafruit_ILI9341* _tft, int _xPos, int _yPos, int _width, int _height, uint16_t _standardColor, uint16_t _activeColor, int _rangeMax, int _boxWidth, int _val);
+    volumeSlider(Adafruit_ILI9341* _tft, MouseData* _mouseData, int _xPos, int _yPos, int _width, int _height, uint16_t _standardColor, uint16_t _activeColor, int _rangeMax, int _boxWidth, int _val);
     int getVal();
     void setVal(int _val);
-    void run(MouseData mouseData);
+    void run();
     void setUndrawn();
     void draw();
     boolean newValue();
 
 private:
     Adafruit_ILI9341* tft;
+    MouseData* mouseData;
     int xPos;
     int yPos;
     int width;
