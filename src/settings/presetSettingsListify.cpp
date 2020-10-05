@@ -11,6 +11,8 @@ int presetSettingsListifyGetLength(int mode)
         return 12;
     case WALKER_MODE_ID:
         return 4;
+    case STILL_MODE_ID:
+        return 2;
     case DEMO_MODE_ID:
         return 3;
     }
@@ -78,6 +80,14 @@ int presetSettingsListifyGetIsBIF(int mode, int currVal)
         case 2:
             return PRESET_SETTINGS_LISTIFY_BOOLEAN;
         case 3:
+            return PRESET_SETTINGS_LISTIFY_INT;
+        }
+        break;
+    case STILL_MODE_ID:
+        switch (currVal) {
+        case 0:
+            return PRESET_SETTINGS_LISTIFY_BOOLEAN;
+        case 1:
             return PRESET_SETTINGS_LISTIFY_INT;
         }
         break;
@@ -156,6 +166,14 @@ float presetSettingsListifyGetVal(int mode, int preset, int currVal)
             return walkerModePresetSettings[preset].walkersettingC;
         case 3:
             return walkerModePresetSettings[preset].walkersettingD;
+        }
+        break;
+    case STILL_MODE_ID:
+        switch (currVal) {
+        case 0:
+            return stillModePresetSettings[preset].stillsettingA;
+        case 1:
+            return stillModePresetSettings[preset].stillsettingB;
         }
         break;
     case DEMO_MODE_ID:
@@ -257,6 +275,16 @@ void presetSettingsListifySetVal(int mode, int preset, int currVal, float val)
             break;
         }
         break;
+    case STILL_MODE_ID:
+        switch (currVal) {
+        case 0:
+            stillModePresetSettings[preset].stillsettingA = val;
+            break;
+        case 1:
+            stillModePresetSettings[preset].stillsettingB = val;
+            break;
+        }
+        break;
     case DEMO_MODE_ID:
         switch (currVal) {
         case 0:
@@ -334,6 +362,14 @@ String presetSettingsListifyGetName(int mode, int currVal)
             return F("walkersettC");
         case 3:
             return F("walkersettD");
+        }
+        break;
+    case STILL_MODE_ID:
+        switch (currVal) {
+        case 0:
+            return F("stillsettA");
+        case 1:
+            return F("stillsettB");
         }
         break;
     case DEMO_MODE_ID:

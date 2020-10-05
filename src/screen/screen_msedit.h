@@ -1,33 +1,31 @@
 #ifndef SCREEN_MSEDIT_H
 #define SCREEN_MSEDIT_H
 
-#include <Arduino.h>
-#include "sButton.h"
 #include "MouseData.h"
-#include "menuScreenConstants.h"
 #include "NumPad.h"
-#include "settings/generalSetStruct.h"
+#include "menuScreenConstants.h"
 #include "mseditSetList.h"
+#include "sButton.h"
+#include "settings/generalSetStruct.h"
 #include "settings/modeSettingsSD.h"
+#include <Arduino.h>
 
-class Screen_MSedit
-{
+class Screen_MSedit {
 public:
-  void begin();
-  void run(MouseData);
+    void begin();
+    void run();
 
 private:
-  Adafruit_ILI9341 *tft;
-  short *screenMode;
-  NumPad *numPad;
-  generalSetStruct *genSettings;
-  sButton *cancelButton;
-  sButton *saveButton;
-  mseditSetList *setlist;
+    Adafruit_ILI9341* tft;
+    short* screenMode;
+    NumPad* numPad;
+    sButton* cancelButton;
+    sButton* saveButton;
+    mseditSetList* setlist;
 
-  void setUndrawn();
+    void setUndrawn();
 
 public:
-  Screen_MSedit(generalSetStruct *_genSettings, short *_screenMode, Adafruit_ILI9341 *_tft, NumPad *_numpad);
+    Screen_MSedit(MouseData* _mouseData, Adafruit_ILI9341* _tft, NumPad* _numPad, short* _screenMode);
 };
 #endif

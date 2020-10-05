@@ -14,14 +14,13 @@ class Screen_Predit {
 public:
     void begin();
     void setPreset(byte _presetID);
-    void run(MouseData);
+    void run();
 
 private:
     Adafruit_ILI9341* tft;
     short* screenMode;
     byte presetID;
     NumPad* numPad;
-    generalSetStruct* genSettings;
     sButton* cancelButton;
     sButton* saveButton;
     presetSetList* setlist;
@@ -29,6 +28,6 @@ private:
     void setUndrawn();
 
 public:
-    Screen_Predit(generalSetStruct* _genSettings, short* _screenMode, Adafruit_ILI9341* _tft, NumPad* _numpad);
+    Screen_Predit(MouseData* _mouseData, Adafruit_ILI9341* _tft, NumPad* _numpad, short* _screenMode);
 };
 #endif

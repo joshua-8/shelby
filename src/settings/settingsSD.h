@@ -6,13 +6,14 @@
 #include "modeSettingsSD.h"
 #include "topSettingsSD.h"
 #include "genSettingsSD.h"
+#include "settings.h"
 
 extern SdFatSdio sd;
 extern SdFile file;
 
 void setupSettingsSD();
 
-void recallAllSettingsSD(generalSetStruct* gs);
+void recallAllSettingsSD();
 
 
 #endif

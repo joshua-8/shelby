@@ -16,7 +16,7 @@ void saveModeSettingsSD(int mode)
     sd.remove(fileName);
     file.open(fileName, O_WRITE | O_CREAT);
     for (int i = 0; i < modeSettingsListifyGetLength(mode); i++) {
-        file.println(modeSettingsListifyGetVal(mode, i), NUMPAD_STRING_LENGTH);
+        file.println(modeSettingsListifyGetVal(mode, i), menuScreenConstants.NUMPAD_STRING_LENGTH);
     }
     file.close();
 }
@@ -32,7 +32,7 @@ void recallModeSettingsSD(int mode)
         int readval = file.read();
         int charCounter = 0;
         int valCounter = 0;
-        char num[NUMPAD_STRING_LENGTH * 2 + 3];
+        char num[menuScreenConstants.NUMPAD_STRING_LENGTH * 2 + 3];
         while (readval != -1) {
             if (readval == 13) { //newline
                 file.read(); //toss second part of newline

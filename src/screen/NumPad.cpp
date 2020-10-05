@@ -1,25 +1,26 @@
 #include "NumPad.h"
 
-NumPad::NumPad(Adafruit_ILI9341* _tft)
+NumPad::NumPad(Adafruit_ILI9341* _tft, MouseData* _mouseData)
 {
     tft = _tft;
-    button0 = new sButton(tft, NUMPAD_POS_X + NUMPAD_WIDTH * 0 / 3, NUMPAD_POS_Y + NUMPAD_HEIGHT * 3 / 5, NUMPAD_WIDTH / 3, NUMPAD_HEIGHT / 5, NUMPAD_BACKGROUND_COLOR, NUMPAD_ACTIVE_COLOR, NUMPAD_TEXT_COLOR, NUMPAD_ACTIVE_COLOR, "0", true);
-    button1 = new sButton(tft, NUMPAD_POS_X + NUMPAD_WIDTH * 0 / 3, NUMPAD_POS_Y + NUMPAD_HEIGHT * 2 / 5, NUMPAD_WIDTH / 3, NUMPAD_HEIGHT / 5, NUMPAD_BACKGROUND_COLOR, NUMPAD_ACTIVE_COLOR, NUMPAD_TEXT_COLOR, NUMPAD_ACTIVE_COLOR, "1", true);
-    button2 = new sButton(tft, NUMPAD_POS_X + NUMPAD_WIDTH * 1 / 3, NUMPAD_POS_Y + NUMPAD_HEIGHT * 2 / 5, NUMPAD_WIDTH / 3, NUMPAD_HEIGHT / 5, NUMPAD_BACKGROUND_COLOR, NUMPAD_ACTIVE_COLOR, NUMPAD_TEXT_COLOR, NUMPAD_ACTIVE_COLOR, "2", true);
-    button3 = new sButton(tft, NUMPAD_POS_X + NUMPAD_WIDTH * 2 / 3, NUMPAD_POS_Y + NUMPAD_HEIGHT * 2 / 5, NUMPAD_WIDTH / 3, NUMPAD_HEIGHT / 5, NUMPAD_BACKGROUND_COLOR, NUMPAD_ACTIVE_COLOR, NUMPAD_TEXT_COLOR, NUMPAD_ACTIVE_COLOR, "3", true);
-    button4 = new sButton(tft, NUMPAD_POS_X + NUMPAD_WIDTH * 0 / 3, NUMPAD_POS_Y + NUMPAD_HEIGHT * 1 / 5, NUMPAD_WIDTH / 3, NUMPAD_HEIGHT / 5, NUMPAD_BACKGROUND_COLOR, NUMPAD_ACTIVE_COLOR, NUMPAD_TEXT_COLOR, NUMPAD_ACTIVE_COLOR, "4", true);
-    button5 = new sButton(tft, NUMPAD_POS_X + NUMPAD_WIDTH * 1 / 3, NUMPAD_POS_Y + NUMPAD_HEIGHT * 1 / 5, NUMPAD_WIDTH / 3, NUMPAD_HEIGHT / 5, NUMPAD_BACKGROUND_COLOR, NUMPAD_ACTIVE_COLOR, NUMPAD_TEXT_COLOR, NUMPAD_ACTIVE_COLOR, "5", true);
-    button6 = new sButton(tft, NUMPAD_POS_X + NUMPAD_WIDTH * 2 / 3, NUMPAD_POS_Y + NUMPAD_HEIGHT * 1 / 5, NUMPAD_WIDTH / 3, NUMPAD_HEIGHT / 5, NUMPAD_BACKGROUND_COLOR, NUMPAD_ACTIVE_COLOR, NUMPAD_TEXT_COLOR, NUMPAD_ACTIVE_COLOR, "6", true);
-    button7 = new sButton(tft, NUMPAD_POS_X + NUMPAD_WIDTH * 0 / 3, NUMPAD_POS_Y + NUMPAD_HEIGHT * 0 / 5, NUMPAD_WIDTH / 3, NUMPAD_HEIGHT / 5, NUMPAD_BACKGROUND_COLOR, NUMPAD_ACTIVE_COLOR, NUMPAD_TEXT_COLOR, NUMPAD_ACTIVE_COLOR, "7", true);
-    button8 = new sButton(tft, NUMPAD_POS_X + NUMPAD_WIDTH * 1 / 3, NUMPAD_POS_Y + NUMPAD_HEIGHT * 0 / 5, NUMPAD_WIDTH / 3, NUMPAD_HEIGHT / 5, NUMPAD_BACKGROUND_COLOR, NUMPAD_ACTIVE_COLOR, NUMPAD_TEXT_COLOR, NUMPAD_ACTIVE_COLOR, "8", true);
-    button9 = new sButton(tft, NUMPAD_POS_X + NUMPAD_WIDTH * 2 / 3, NUMPAD_POS_Y + NUMPAD_HEIGHT * 0 / 5, NUMPAD_WIDTH / 3, NUMPAD_HEIGHT / 5, NUMPAD_BACKGROUND_COLOR, NUMPAD_ACTIVE_COLOR, NUMPAD_TEXT_COLOR, NUMPAD_ACTIVE_COLOR, "9", true);
+    mouseData = _mouseData;
+    button0 = new sButton(tft, _mouseData, menuScreenConstants.NUMPAD_POS_X + menuScreenConstants.NUMPAD_WIDTH * 0 / 3, menuScreenConstants.NUMPAD_POS_Y + menuScreenConstants.NUMPAD_HEIGHT * 3 / 5, menuScreenConstants.NUMPAD_WIDTH / 3, menuScreenConstants.NUMPAD_HEIGHT / 5, menuScreenConstants.NUMPAD_BACKGROUND_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, menuScreenConstants.NUMPAD_TEXT_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, "0", true);
+    button1 = new sButton(tft, _mouseData, menuScreenConstants.NUMPAD_POS_X + menuScreenConstants.NUMPAD_WIDTH * 0 / 3, menuScreenConstants.NUMPAD_POS_Y + menuScreenConstants.NUMPAD_HEIGHT * 2 / 5, menuScreenConstants.NUMPAD_WIDTH / 3, menuScreenConstants.NUMPAD_HEIGHT / 5, menuScreenConstants.NUMPAD_BACKGROUND_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, menuScreenConstants.NUMPAD_TEXT_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, "1", true);
+    button2 = new sButton(tft, _mouseData, menuScreenConstants.NUMPAD_POS_X + menuScreenConstants.NUMPAD_WIDTH * 1 / 3, menuScreenConstants.NUMPAD_POS_Y + menuScreenConstants.NUMPAD_HEIGHT * 2 / 5, menuScreenConstants.NUMPAD_WIDTH / 3, menuScreenConstants.NUMPAD_HEIGHT / 5, menuScreenConstants.NUMPAD_BACKGROUND_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, menuScreenConstants.NUMPAD_TEXT_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, "2", true);
+    button3 = new sButton(tft, _mouseData, menuScreenConstants.NUMPAD_POS_X + menuScreenConstants.NUMPAD_WIDTH * 2 / 3, menuScreenConstants.NUMPAD_POS_Y + menuScreenConstants.NUMPAD_HEIGHT * 2 / 5, menuScreenConstants.NUMPAD_WIDTH / 3, menuScreenConstants.NUMPAD_HEIGHT / 5, menuScreenConstants.NUMPAD_BACKGROUND_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, menuScreenConstants.NUMPAD_TEXT_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, "3", true);
+    button4 = new sButton(tft, _mouseData, menuScreenConstants.NUMPAD_POS_X + menuScreenConstants.NUMPAD_WIDTH * 0 / 3, menuScreenConstants.NUMPAD_POS_Y + menuScreenConstants.NUMPAD_HEIGHT * 1 / 5, menuScreenConstants.NUMPAD_WIDTH / 3, menuScreenConstants.NUMPAD_HEIGHT / 5, menuScreenConstants.NUMPAD_BACKGROUND_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, menuScreenConstants.NUMPAD_TEXT_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, "4", true);
+    button5 = new sButton(tft, _mouseData, menuScreenConstants.NUMPAD_POS_X + menuScreenConstants.NUMPAD_WIDTH * 1 / 3, menuScreenConstants.NUMPAD_POS_Y + menuScreenConstants.NUMPAD_HEIGHT * 1 / 5, menuScreenConstants.NUMPAD_WIDTH / 3, menuScreenConstants.NUMPAD_HEIGHT / 5, menuScreenConstants.NUMPAD_BACKGROUND_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, menuScreenConstants.NUMPAD_TEXT_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, "5", true);
+    button6 = new sButton(tft, _mouseData, menuScreenConstants.NUMPAD_POS_X + menuScreenConstants.NUMPAD_WIDTH * 2 / 3, menuScreenConstants.NUMPAD_POS_Y + menuScreenConstants.NUMPAD_HEIGHT * 1 / 5, menuScreenConstants.NUMPAD_WIDTH / 3, menuScreenConstants.NUMPAD_HEIGHT / 5, menuScreenConstants.NUMPAD_BACKGROUND_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, menuScreenConstants.NUMPAD_TEXT_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, "6", true);
+    button7 = new sButton(tft, _mouseData, menuScreenConstants.NUMPAD_POS_X + menuScreenConstants.NUMPAD_WIDTH * 0 / 3, menuScreenConstants.NUMPAD_POS_Y + menuScreenConstants.NUMPAD_HEIGHT * 0 / 5, menuScreenConstants.NUMPAD_WIDTH / 3, menuScreenConstants.NUMPAD_HEIGHT / 5, menuScreenConstants.NUMPAD_BACKGROUND_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, menuScreenConstants.NUMPAD_TEXT_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, "7", true);
+    button8 = new sButton(tft, _mouseData, menuScreenConstants.NUMPAD_POS_X + menuScreenConstants.NUMPAD_WIDTH * 1 / 3, menuScreenConstants.NUMPAD_POS_Y + menuScreenConstants.NUMPAD_HEIGHT * 0 / 5, menuScreenConstants.NUMPAD_WIDTH / 3, menuScreenConstants.NUMPAD_HEIGHT / 5, menuScreenConstants.NUMPAD_BACKGROUND_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, menuScreenConstants.NUMPAD_TEXT_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, "8", true);
+    button9 = new sButton(tft, _mouseData, menuScreenConstants.NUMPAD_POS_X + menuScreenConstants.NUMPAD_WIDTH * 2 / 3, menuScreenConstants.NUMPAD_POS_Y + menuScreenConstants.NUMPAD_HEIGHT * 0 / 5, menuScreenConstants.NUMPAD_WIDTH / 3, menuScreenConstants.NUMPAD_HEIGHT / 5, menuScreenConstants.NUMPAD_BACKGROUND_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, menuScreenConstants.NUMPAD_TEXT_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, "9", true);
 
-    buttonDec = new sButton(tft, NUMPAD_POS_X + NUMPAD_WIDTH * 1 / 3, NUMPAD_POS_Y + NUMPAD_HEIGHT * 3 / 5, NUMPAD_WIDTH / 3, NUMPAD_HEIGHT / 5, NUMPAD_BACKGROUND_COLOR, NUMPAD_ACTIVE_COLOR, NUMPAD_TEXT_COLOR, NUMPAD_ACTIVE_COLOR, ".", true);
-    buttonNeg = new sButton(tft, NUMPAD_POS_X + NUMPAD_WIDTH * 2 / 3, NUMPAD_POS_Y + NUMPAD_HEIGHT * 3 / 5, NUMPAD_WIDTH / 3, NUMPAD_HEIGHT / 5, NUMPAD_BACKGROUND_COLOR, NUMPAD_ACTIVE_COLOR, NUMPAD_TEXT_COLOR, NUMPAD_ACTIVE_COLOR, "-", true);
-    buttonY = new sButton(tft, NUMPAD_POS_X + NUMPAD_WIDTH * 0 / 3, NUMPAD_POS_Y + NUMPAD_HEIGHT * 4 / 5, NUMPAD_WIDTH / 3, NUMPAD_HEIGHT / 5, NUMPAD_YES_COLOR, NUMPAD_ACTIVE_COLOR, NUMPAD_TEXT_COLOR, NUMPAD_ACTIVE_COLOR, "Y", true);
-    buttonN = new sButton(tft, NUMPAD_POS_X + NUMPAD_WIDTH * 1 / 3, NUMPAD_POS_Y + NUMPAD_HEIGHT * 4 / 5, NUMPAD_WIDTH / 3, NUMPAD_HEIGHT / 5, NUMPAD_NO_COLOR, NUMPAD_ACTIVE_COLOR, NUMPAD_TEXT_COLOR, NUMPAD_ACTIVE_COLOR, "N", true);
-    buttonDel = new sButton(tft, NUMPAD_POS_X + NUMPAD_WIDTH * 2 / 3, NUMPAD_POS_Y + NUMPAD_HEIGHT * 4 / 5, NUMPAD_WIDTH / 3, NUMPAD_HEIGHT / 5, NUMPAD_DEL_COLOR, NUMPAD_ACTIVE_COLOR, NUMPAD_TEXT_COLOR, NUMPAD_ACTIVE_COLOR, "<", true);
-    str.reserve(NUMPAD_STRING_LENGTH + 1);
+    buttonDec = new sButton(tft, _mouseData, menuScreenConstants.NUMPAD_POS_X + menuScreenConstants.NUMPAD_WIDTH * 1 / 3, menuScreenConstants.NUMPAD_POS_Y + menuScreenConstants.NUMPAD_HEIGHT * 3 / 5, menuScreenConstants.NUMPAD_WIDTH / 3, menuScreenConstants.NUMPAD_HEIGHT / 5, menuScreenConstants.NUMPAD_BACKGROUND_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, menuScreenConstants.NUMPAD_TEXT_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, ".", true);
+    buttonNeg = new sButton(tft, _mouseData, menuScreenConstants.NUMPAD_POS_X + menuScreenConstants.NUMPAD_WIDTH * 2 / 3, menuScreenConstants.NUMPAD_POS_Y + menuScreenConstants.NUMPAD_HEIGHT * 3 / 5, menuScreenConstants.NUMPAD_WIDTH / 3, menuScreenConstants.NUMPAD_HEIGHT / 5, menuScreenConstants.NUMPAD_BACKGROUND_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, menuScreenConstants.NUMPAD_TEXT_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, "-", true);
+    buttonY = new sButton(tft, _mouseData, menuScreenConstants.NUMPAD_POS_X + menuScreenConstants.NUMPAD_WIDTH * 0 / 3, menuScreenConstants.NUMPAD_POS_Y + menuScreenConstants.NUMPAD_HEIGHT * 4 / 5, menuScreenConstants.NUMPAD_WIDTH / 3, menuScreenConstants.NUMPAD_HEIGHT / 5, menuScreenConstants.NUMPAD_YES_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, menuScreenConstants.NUMPAD_TEXT_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, "Y", true);
+    buttonN = new sButton(tft, _mouseData, menuScreenConstants.NUMPAD_POS_X + menuScreenConstants.NUMPAD_WIDTH * 1 / 3, menuScreenConstants.NUMPAD_POS_Y + menuScreenConstants.NUMPAD_HEIGHT * 4 / 5, menuScreenConstants.NUMPAD_WIDTH / 3, menuScreenConstants.NUMPAD_HEIGHT / 5, menuScreenConstants.NUMPAD_NO_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, menuScreenConstants.NUMPAD_TEXT_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, "N", true);
+    buttonDel = new sButton(tft, _mouseData, menuScreenConstants.NUMPAD_POS_X + menuScreenConstants.NUMPAD_WIDTH * 2 / 3, menuScreenConstants.NUMPAD_POS_Y + menuScreenConstants.NUMPAD_HEIGHT * 4 / 5, menuScreenConstants.NUMPAD_WIDTH / 3, menuScreenConstants.NUMPAD_HEIGHT / 5, menuScreenConstants.NUMPAD_DEL_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, menuScreenConstants.NUMPAD_TEXT_COLOR, menuScreenConstants.NUMPAD_ACTIVE_COLOR, "<", true);
+    str.reserve(menuScreenConstants.NUMPAD_STRING_LENGTH + 1);
     val = 0;
     finalVal = 0;
     str = "#";
@@ -39,28 +40,28 @@ void NumPad::begin()
     justStarted = true;
 }
 
-boolean NumPad::run(MouseData mouseData)
+boolean NumPad::run()
 {
     change = false;
     if (str == "#") {
         change = true;
         str = getValString();
     }
-    (*button0).run(mouseData);
-    (*button1).run(mouseData);
-    (*button2).run(mouseData);
-    (*button3).run(mouseData);
-    (*button4).run(mouseData);
-    (*button5).run(mouseData);
-    (*button6).run(mouseData);
-    (*button7).run(mouseData);
-    (*button8).run(mouseData);
-    (*button9).run(mouseData);
-    (*buttonDec).run(mouseData);
-    (*buttonNeg).run(mouseData);
-    (*buttonY).run(mouseData);
-    (*buttonN).run(mouseData);
-    (*buttonDel).run(mouseData);
+    (*button0).run();
+    (*button1).run();
+    (*button2).run();
+    (*button3).run();
+    (*button4).run();
+    (*button5).run();
+    (*button6).run();
+    (*button7).run();
+    (*button8).run();
+    (*button9).run();
+    (*buttonDec).run();
+    (*buttonNeg).run();
+    (*buttonY).run();
+    (*buttonN).run();
+    (*buttonDel).run();
     if (justStarted) {
         if ((*button0).getJustReleased() || (*button1).getJustReleased() || (*button2).getJustReleased() || (*button3).getJustReleased() || (*button4).getJustReleased() || (*button5).getJustReleased() || (*button6).getJustReleased() || (*button7).getJustReleased() || (*button8).getJustReleased() || (*button9).getJustReleased() || (*buttonNeg).getJustReleased() || (*buttonDec).getJustReleased()) {
             justStarted = false;
@@ -72,7 +73,7 @@ boolean NumPad::run(MouseData mouseData)
         justStarted = false;
     }
 
-    if ((int)str.length() < NUMPAD_STRING_LENGTH + (str.charAt(0) == '-' ? 1 : 0) + (str.indexOf('.') != -1 ? 1 : 0)) {
+    if ((unsigned int)str.length() < menuScreenConstants.NUMPAD_STRING_LENGTH + (str.charAt(0) == '-' ? 1 : 0) + (str.indexOf('.') != -1 ? 1 : 0)) {
         if ((*button0).getJustReleased()) {
             str.append(0);
             change = true;
@@ -114,7 +115,7 @@ boolean NumPad::run(MouseData mouseData)
             change = true;
         }
     }
-    if ((*buttonDec).getJustReleased() && !constrainInteger && str.length() < NUMPAD_STRING_LENGTH + (str.charAt(0) == '-' ? 1 : 0)) {
+    if ((*buttonDec).getJustReleased() && !constrainInteger && str.length() < menuScreenConstants.NUMPAD_STRING_LENGTH + (str.charAt(0) == '-' ? 1 : 0)) {
         if (str == "") {
             str = "0";
         }
@@ -124,7 +125,7 @@ boolean NumPad::run(MouseData mouseData)
         str.append(".");
         change = true;
     }
-    if ((*buttonDel).getState() && mouseData.millisSinceMouseDown > NUMPAD_DEL_LONG_HOLD) {
+    if ((*buttonDel).getState() && (*mouseData).millisSinceMouseDown > menuScreenConstants.NUMPAD_DEL_LONG_HOLD) {
         (*buttonDel).setState(false);
         change = true;
         str = "";
@@ -210,7 +211,7 @@ String NumPad::getValString()
     if (constrainInteger) {
         return String(int(val));
     }
-    return String(val, NUMPAD_STRING_LENGTH - 1 - max(int(log10(abs(val))), 0));
+    return String(val, menuScreenConstants.NUMPAD_STRING_LENGTH - 1 - max(int(log10(abs(val))), 0));
 }
 String NumPad::getString()
 {

@@ -1,58 +1,25 @@
 #include "screen.h"
-
-Screen::Screen(generalSetStruct* _genSettings)
+Screen::Screen()
 {
-    numPad = new NumPad(&tft);
-    preditScreen = new Screen_Predit(_genSettings, &screenMode, &tft, numPad);
-    mseditScreen = new Screen_MSedit(_genSettings, &screenMode, &tft, numPad);
-    teditScreen = new Screen_Tedit(&screenMode, &tft, numPad);
-    homeScreen = new Screen_Home(_genSettings, &screenMode, &tft, preditScreen, mseditScreen, teditScreen);
+    tft = new Adafruit_ILI9341(SCREEN_CS_PIN, SCREEN_DC_PIN, SCREEN_MOSI_PIN, SCREEN_CLK_PIN, 255, SCREEN_MISO_PIN);
+    mouseData = { -1.0, -1.0, 0.0, 0.0, 0.0, 0.0, 0, false, false, false, false };
+    menuScreen = new MenuScreen(&mouseData, tft);
 }
 
 void Screen::begin()
 {
     pinMode(SCREEN_LIGHT_PIN, OUTPUT);
     digitalWrite(SCREEN_LIGHT_PIN, HIGH);
-    tft.begin();
-    tft.setRotation(3);
-    tft.setTextWrap(false);
-    (*homeScreen).begin();
-    screenMode = 0;
+    (*tft).begin();
+    (*tft).setRotation(3);
+    (*tft).setTextWrap(false);
+    (*menuScreen).begin();
 }
 
 void Screen::run()
 {
     mouseData = readScreen();
-    if (screenMode == SCREEN_MODE_HOME) {
-        (*homeScreen).run(mouseData);
-        if (screenMode == SCREEN_MODE_PREDIT) {
-            (*preditScreen).begin();
-        }
-        if (screenMode == SCREEN_MODE_MSEDIT) {
-            (*mseditScreen).begin();
-        }
-        if (screenMode == SCREEN_MODE_TEDIT) {
-            (*teditScreen).begin();
-        }
-    }
-    if (screenMode == SCREEN_MODE_PREDIT) {
-        (*preditScreen).run(mouseData);
-        if (screenMode == SCREEN_MODE_HOME) {
-            (*homeScreen).begin();
-        }
-    }
-    if (screenMode == SCREEN_MODE_MSEDIT) {
-        (*mseditScreen).run(mouseData);
-        if (screenMode == SCREEN_MODE_HOME) {
-            (*homeScreen).begin();
-        }
-    }
-    if (screenMode == SCREEN_MODE_TEDIT) {
-        (*teditScreen).run(mouseData);
-        if (screenMode == SCREEN_MODE_HOME) {
-            (*homeScreen).begin();
-        }
-    }
+    (*menuScreen).run();
 }
 
 MouseData Screen::readScreen()
@@ -68,10 +35,10 @@ MouseData Screen::readScreen()
         mouseData.mouseXUp = mouseData.lastMouseX;
         mouseData.mouseYUp = mouseData.lastMouseY;
     }
-    if (mouseData.mouseRawPressed == true && mouseData.millisSinceRawMouseDown > SCREEN_DEBOUNCE_TIME) {
+    if (mouseData.mouseRawPressed == true && mouseData.millisSinceRawMouseDown > screenConstants.SCREEN_DEBOUNCE_TIME) {
         mouseData.mousePressed = true;
     }
-    if (mouseData.mouseRawPressed == false && mouseData.millisSinceRawMouseUp > SCREEN_DEBOUNCE_TIME) {
+    if (mouseData.mouseRawPressed == false && mouseData.millisSinceRawMouseUp > screenConstants.SCREEN_DEBOUNCE_TIME) {
         mouseData.mousePressed = false;
     }
     if (mouseData.mouseRawPressed) {
@@ -108,13 +75,13 @@ boolean Screen::readMousePressed()
     digitalWrite(SCREEN_TOUCH_Y_M_PIN, LOW);
     pinMode(SCREEN_TOUCH_Y_P_PIN, OUTPUT);
     digitalWrite(SCREEN_TOUCH_Y_P_PIN, LOW);
-    return analogRead(SCREEN_TOUCH_X_M_PIN) < SCREEN_PRESSED_THRESHOLD;
+    return analogRead(SCREEN_TOUCH_X_M_PIN) < screenConstants.SCREEN_PRESSED_THRESHOLD;
 }
 
 float Screen::readMouseY()
 {
     unsigned long sum = 0;
-    for (int i = 0; i < mouseAvgArrNum; i++) {
+    for (int i = 0; i < screenConstants.mouseAvgArrNum; i++) {
         pinMode(SCREEN_TOUCH_Y_M_PIN, INPUT);
         pinMode(SCREEN_TOUCH_Y_P_PIN, INPUT);
         pinMode(SCREEN_TOUCH_X_M_PIN, OUTPUT);
@@ -123,13 +90,13 @@ float Screen::readMouseY()
         digitalWrite(SCREEN_TOUCH_X_P_PIN, LOW);
         sum += analogRead(SCREEN_TOUCH_Y_P_PIN) + analogRead(SCREEN_TOUCH_Y_M_PIN);
     }
-    sum /= mouseAvgArrNum;
-    return map(sum, SCREEN_MIN_Y, SCREEN_MAX_Y, 0, SCREEN_HEIGHT);
+    sum /= screenConstants.mouseAvgArrNum;
+    return map(sum, screenConstants.SCREEN_MIN_Y, screenConstants.SCREEN_MAX_Y, 0, screenConstants.SCREEN_HEIGHT);
 }
 float Screen::readMouseX()
 {
     unsigned long sum = 0;
-    for (int i = 0; i < mouseAvgArrNum; i++) {
+    for (int i = 0; i < screenConstants.mouseAvgArrNum; i++) {
         pinMode(SCREEN_TOUCH_X_M_PIN, INPUT);
         pinMode(SCREEN_TOUCH_X_P_PIN, INPUT);
         pinMode(SCREEN_TOUCH_Y_M_PIN, OUTPUT);
@@ -138,6 +105,6 @@ float Screen::readMouseX()
         digitalWrite(SCREEN_TOUCH_Y_P_PIN, LOW);
         sum += analogRead(SCREEN_TOUCH_X_M_PIN) + analogRead(SCREEN_TOUCH_X_P_PIN);
     }
-    sum /= mouseAvgArrNum;
-    return map(sum, SCREEN_MIN_X, SCREEN_MAX_X, 0, SCREEN_WIDTH);
+    sum /= screenConstants.mouseAvgArrNum;
+    return map(sum, screenConstants.SCREEN_MIN_X, screenConstants.SCREEN_MAX_X, 0, screenConstants.SCREEN_WIDTH);
 }

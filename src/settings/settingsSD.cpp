@@ -1,12 +1,12 @@
 #include "settingsSD.h"
 SdFatSdio sd;
 SdFile file;
-void recallAllSettingsSD(generalSetStruct* gs)
+void recallAllSettingsSD()
 {
     recallAllPresetSettingsSd();
     recallAllModeSettingsSd();
     recallTopSettingsSD();
-    recallGenSettingsSD(gs);
+    recallGenSettingsSD();
 }
 void setupSettingsSD()
 {

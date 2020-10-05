@@ -1,54 +1,58 @@
 #ifndef SCREEN_HOME_H
 #define SCREEN_HOME_H
 
-#include <Arduino.h>
-#include "constants/constants.h"
-#include "sButton.h"
-#include "menuScreenConstants.h"
 #include "MouseData.h"
-#include "settings/generalSetStruct.h"
-#include "volumeSlider.h"
-#include "constants/hardwareConstants.h"
-#include "screen_predit.h"
+#include "constants/audioConstants.h"
+#include "constants/constants.h"
+#include "menuScreenConstants.h"
+#include "sButton.h"
 #include "screen_msedit.h"
+#include "screen_predit.h"
 #include "screen_tedit.h"
+#include "settings/generalSetStruct.h"
 #include "settings/settingsSD.h"
+#include "shelbytron_globs.h"
+#include "volumeSlider.h"
+#include <Arduino.h>
 
-class Screen_Home
-{
+class Screen_Home {
 public:
-  Screen_Home(generalSetStruct *_genSettings, short *_screenMode, Adafruit_ILI9341 *_tft, Screen_Predit *_preditScreen,Screen_MSedit *_mseditScreen,Screen_Tedit *_);
+    Screen_Home(MouseData* _mouseData, Adafruit_ILI9341* _tft, short* _screenMode, Screen_Predit* _preditScreen, Screen_MSedit* _mseditScreen, Screen_Tedit* _teditScreen);
 
 public:
-  void begin();
-  void run(MouseData);
+    void begin();
+    void run();
 
 private:
-  generalSetStruct *genSettings;
-  Adafruit_ILI9341 *tft;
-  MouseData mouseData;
-  short *screenMode;
+    MouseData* mouseData;
+    Adafruit_ILI9341* tft;
+    short* screenMode;
 
-  sButton *modeButton[modeNum];
-  sButton *presetButton[presetNum];
-  sButton *preditButton[presetNum];
-  volumeSlider *volSl;
+    volumeSlider* volSl;
 
-  sButton *modeSettingsButton;
-  sButton *topSettingsButton;
+    sButton* modeButton[modeNum];
+    sButton* presetButton[presetNum];
+    sButton* preditButton[presetNum];
 
-  sButton *wordModeButton;
-  sButton *lightsModeButton;
-  sButton *musicModeButton;
-  sButton *musicPlaylistButton;
+    sButton* modeSettingsButton;
+    sButton* topSettingsButton;
 
-  Screen_Predit *preditScreen;
-  Screen_MSedit *mseditScreen;
-  Screen_Tedit *teditScreen;
+    sButton* wordModeButton;
+    sButton* lightsModeButton;
+    sButton* musicModeButton;
+    sButton* musicPlaylistButton;
 
-  void modeSelector();
-  void presetSelector();
-  void genericButtons();
-  void setUndrawn();
+    Screen_Predit* preditScreen;
+    Screen_MSedit* mseditScreen;
+    Screen_Tedit* teditScreen;
+
+    float lastBatVolt;
+    unsigned long lastBatDispUpdateMillis;
+
+    void modeSelector();
+    void presetSelector();
+    void genericButtons();
+    void setUndrawn();
+    void batteryDisplay();
 };
 #endif

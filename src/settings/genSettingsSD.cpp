@@ -1,19 +1,19 @@
 #include "genSettingsSD.h"
 
-void saveGenSettingsSD(generalSetStruct* genSet)
+void saveGenSettingsSD()
 {
     sd.remove("gset.txt");
     file.open("gset.txt", O_WRITE | O_CREAT);
-    file.println((*genSet).mode);
-    file.println((*genSet).preset);
-    file.println((*genSet).musicMode);
-    file.println((*genSet).lightsMode);
-    file.println((*genSet).wordsMode);
-    file.println((*genSet).musicList);
-    file.println((*genSet).volume);
+    file.println(genS.mode);
+    file.println(genS.preset);
+    file.println(genS.musicMode);
+    file.println(genS.lightsMode);
+    file.println(genS.wordsMode);
+    file.println(genS.musicList);
+    file.println(genS.volume);
     file.close();
 }
-void recallGenSettingsSD(generalSetStruct* genSet)
+void recallGenSettingsSD()
 {
     if (file.open("gset.txt")) {
         file.rewind();
@@ -27,25 +27,25 @@ void recallGenSettingsSD(generalSetStruct* genSet)
                 num[charCounter] = '\0';
                 switch (valCounter) {
                 case 0:
-                    (*genSet).mode = atoi(num);
+                    genS.mode = atoi(num);
                     break;
                 case 1:
-                    (*genSet).preset = atoi(num);
+                    genS.preset = atoi(num);
                     break;
                 case 2:
-                    (*genSet).musicMode = atoi(num);
+                    genS.musicMode = atoi(num);
                     break;
                 case 3:
-                    (*genSet).lightsMode = atoi(num);
+                    genS.lightsMode = atoi(num);
                     break;
                 case 4:
-                    (*genSet).wordsMode = atoi(num);
+                    genS.wordsMode = atoi(num);
                     break;
                 case 5:
-                    (*genSet).musicList = atoi(num);
+                    genS.musicList = atoi(num);
                     break;
                 case 6:
-                    (*genSet).volume = atoi(num);
+                    genS.volume = atoi(num);
                     break;
                 }
                 valCounter++;
