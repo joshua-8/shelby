@@ -11,6 +11,7 @@ void Audio::begin()
     wTrig.stopAllTracks();
     wTrig.samplerateOffset(0);
     wTrig.setReporting(true);
+    wTrig.masterGain(audioConstants.AUDIO_BOARD_VOLUME_MIN);
 }
 void Audio::run()
 {
