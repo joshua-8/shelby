@@ -1,9 +1,8 @@
 #include "screen.h"
-
 Screen::Screen()
 {
+    tft = new Adafruit_ILI9341(SCREEN_CS_PIN, SCREEN_DC_PIN, SCREEN_MOSI_PIN, SCREEN_CLK_PIN, 255, SCREEN_MISO_PIN);
     mouseData = { -1.0, -1.0, 0.0, 0.0, 0.0, 0.0, 0, false, false, false, false };
-    tft = new Adafruit_ILI9341(SCREEN_CS_PIN, SCREEN_DC_PIN);
     menuScreen = new MenuScreen(&mouseData, tft);
 }
 

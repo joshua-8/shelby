@@ -1,7 +1,7 @@
 #ifndef MENU_SCREEN_CONSTANTS_H
 #define MENU_SCREEN_CONSTANTS_H
-#include <Arduino.h>
 #include "screenConstants.h"
+#include <Arduino.h>
 class menuScreenConsts {
 public:
     const short SCREEN_MODE_HOME = 0;
@@ -11,7 +11,7 @@ public:
 
     const int SCREEN_WIDTH = screenConstants.SCREEN_WIDTH;
     const int SCREEN_HEIGHT = screenConstants.SCREEN_WIDTH;
-    
+
     const short SCREEN_FONT_WIDTH = 6;
     const short SCREEN_FONT_HEIGHT = 8;
 
@@ -97,6 +97,15 @@ public:
     const uint16_t SETTING_LIST_TEXT_COLOR = 0; //BLACK
     const float SETTING_LIST_VAL_POS = .63;
     const int SETTING_LIST_SCROLL_BAR_WIDTH = 30;
+
+    const unsigned int BATTERY_DISPLAY_INTERVAL = 250;
+    const float BATTERY_DISPLAY_ERROR = .05;
+    const uint16_t BATTERY_DISPLAY_BACKGROUND_COLOR = 0;
+    const uint16_t BATTERY_DISPLAY_TEXT_COLOR = 65535;
+    const int BATTERY_DISPLAY_X_POS = 216;
+    const int BATTERY_DISPLAY_Y_POS = 0;
+    const int BATTERY_DISPLAY_WIDTH = 104;
+    const int BATTERY_DISPLAY_HEIGHT = PRESET_SELECTOR_POS_Y + PRESET_SELECTOR_HEIGHT * PRESET_SELECTOR_TOP_PERCENT / 100;
 };
 
 static menuScreenConsts menuScreenConstants;

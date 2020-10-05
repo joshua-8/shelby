@@ -1,6 +1,4 @@
 #include "audio.h"
-#include "constants/audioConstants.h"
-#include "settings/settings.h"
 
 Audio::Audio()
 {
@@ -16,8 +14,9 @@ void Audio::begin()
 }
 void Audio::run()
 {
+    wTrig.update();
     if (lastVolume != genS.volume) {
         lastVolume = genS.volume;
-        wTrig.masterGain(genS.volume - audioConstants.AUDIO_BOARD_VOLUME_MIN);
+        wTrig.masterGain(genS.volume + audioConstants.AUDIO_BOARD_VOLUME_MIN);
     }
 }

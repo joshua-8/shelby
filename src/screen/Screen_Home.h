@@ -11,6 +11,7 @@
 #include "screen_tedit.h"
 #include "settings/generalSetStruct.h"
 #include "settings/settingsSD.h"
+#include "shelbytron_globs.h"
 #include "volumeSlider.h"
 #include <Arduino.h>
 
@@ -45,9 +46,13 @@ private:
     Screen_MSedit* mseditScreen;
     Screen_Tedit* teditScreen;
 
+    float lastBatVolt;
+    unsigned long lastBatDispUpdateMillis;
+
     void modeSelector();
     void presetSelector();
     void genericButtons();
     void setUndrawn();
+    void batteryDisplay();
 };
 #endif

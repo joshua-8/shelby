@@ -1,7 +1,8 @@
 #ifndef AUDIO_H
 #define AUDIO_H
 #include "constants/audioConstants.h"
-#include <wavTrigger.h>
+#include "settings/settings.h"
+#include "wavTrigger.h"
 class Audio {
 public:
     Audio();

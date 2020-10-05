@@ -1,7 +1,12 @@
+#ifndef SUBSYSTEMS_H
+#define SUBSYSTEMS_H
 #include "audio.h"
-class subsystems {
+#include "batMonitor.h"
+class Subsystems {
 public:
     Audio audio;
+    BatMonitor batMonitor;
     void begin();
     void run();
 };
+#endif

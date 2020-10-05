@@ -22,6 +22,8 @@ Screen_Home::Screen_Home(MouseData* _mouseData, Adafruit_ILI9341* _tft, short* _
     musicModeButton = new sButton(tft, mouseData, menuScreenConstants.MUSIC_MODE_BUTTON_POS_X, menuScreenConstants.ENTERTAINMENT_BUTTONS_POS_Y, menuScreenConstants.MUSIC_MODE_BUTTON_WIDTH, menuScreenConstants.ENTERTAINMENT_BUTTONS_HEIGHT, menuScreenConstants.ENTERTAINMENT_BUTTONS_COLOR, menuScreenConstants.ENTERTAINMENT_BUTTONS_ACTIVE_COLOR, menuScreenConstants.ENTERTAINMENT_BUTTONS_TEXT_COLOR, menuScreenConstants.ENTERTAINMENT_BUTTONS_TEXT_COLOR, "music: ", true);
     musicPlaylistButton = new sButton(tft, mouseData, menuScreenConstants.MUSIC_PLAYLIST_BUTTON_POS_X, menuScreenConstants.ENTERTAINMENT_BUTTONS_POS_Y, menuScreenConstants.MUSIC_PLAYLIST_BUTTON_WIDTH, menuScreenConstants.ENTERTAINMENT_BUTTONS_HEIGHT, menuScreenConstants.ENTERTAINMENT_BUTTONS_COLOR, menuScreenConstants.ENTERTAINMENT_BUTTONS_ACTIVE_COLOR, menuScreenConstants.ENTERTAINMENT_BUTTONS_TEXT_COLOR, menuScreenConstants.ENTERTAINMENT_BUTTONS_TEXT_COLOR, "music", true);
     volSl = new volumeSlider(tft, mouseData, menuScreenConstants.VOLUME_SLIDER_POS_X, menuScreenConstants.VOLUME_SLIDER_POS_Y, menuScreenConstants.VOLUME_SLIDER_WIDTH, menuScreenConstants.VOLUME_SLIDER_HEIGHT, menuScreenConstants.VOLUME_SLIDER_BACKGROUND_COLOR, menuScreenConstants.VOLUME_SLIDER_BOX_COLOR, audioConstants.AUDIO_BOARD_VOLUME_RANGE, menuScreenConstants.VOLUME_SLIDER_BOX_WIDTH, 0);
+    lastBatVolt = -1;
+    lastBatDispUpdateMillis = -1;
 }
 
 void Screen_Home::begin()
@@ -46,10 +48,28 @@ void Screen_Home::run()
     if ((*volSl).newValue()) {
         saveGenSettingsSD();
     }
+    batteryDisplay();
+}
+
+void Screen_Home::batteryDisplay()
+{
+    if (millis() - lastBatDispUpdateMillis > menuScreenConstants.BATTERY_DISPLAY_INTERVAL) {
+        lastBatDispUpdateMillis = millis();
+        if (abs(subsystems.batMonitor.getBatVolt() - lastBatVolt) >= menuScreenConstants.BATTERY_DISPLAY_ERROR) {
+            lastBatVolt = subsystems.batMonitor.getBatVolt();
+            (*tft).fillRect(menuScreenConstants.BATTERY_DISPLAY_X_POS, menuScreenConstants.BATTERY_DISPLAY_Y_POS, menuScreenConstants.BATTERY_DISPLAY_WIDTH, menuScreenConstants.BATTERY_DISPLAY_HEIGHT, menuScreenConstants.BATTERY_DISPLAY_BACKGROUND_COLOR);
+            (*tft).setTextColor(menuScreenConstants.BATTERY_DISPLAY_TEXT_COLOR);
+            (*tft).setTextSize(3);
+            (*tft).setCursor(menuScreenConstants.BATTERY_DISPLAY_X_POS, menuScreenConstants.BATTERY_DISPLAY_Y_POS + .25 * menuScreenConstants.BATTERY_DISPLAY_HEIGHT);
+            (*tft).print(subsystems.batMonitor.getBatVolt(), 2);
+        }
+    }
 }
 
 void Screen_Home::setUndrawn()
 {
+    lastBatDispUpdateMillis = -1;
+    lastBatVolt = -1;
     for (int i = 0; i < modeNum; i++) {
         if (genS.mode == i) {
             (*modeButton[i]).setState(true);
@@ -78,7 +98,7 @@ void Screen_Home::genericButtons()
     (*wordModeButton).run();
     if ((*wordModeButton).getJustPushed()) {
         genS.wordsMode++;
-        if (genS.wordsMode == numWordModes) {
+        if (genS.wordsMode >= numWordModes) {
             genS.wordsMode = 0;
         }
         (*wordModeButton).setSubText(wordModeName[genS.wordsMode]);
@@ -88,7 +108,7 @@ void Screen_Home::genericButtons()
     (*lightsModeButton).run();
     if ((*lightsModeButton).getJustPushed()) {
         genS.lightsMode++;
-        if (genS.lightsMode == numGenericModes) {
+        if (genS.lightsMode >= numLightsModes) {
             genS.lightsMode = 0;
         }
         (*lightsModeButton).setSubText(lightsModeName[genS.lightsMode]);
@@ -98,7 +118,7 @@ void Screen_Home::genericButtons()
     (*musicModeButton).run();
     if ((*musicModeButton).getJustPushed()) {
         genS.musicMode++;
-        if (genS.musicMode == numGenericModes) {
+        if (genS.musicMode >= numMusicModes) {
             genS.musicMode = 0;
         }
         (*musicModeButton).setSubText(musicModeName[genS.musicMode]);
@@ -108,7 +128,7 @@ void Screen_Home::genericButtons()
     (*musicPlaylistButton).run();
     if ((*musicPlaylistButton).getJustPushed()) {
         genS.musicList++;
-        if (genS.musicList == sizeof(audioConstants.musicListName) / sizeof(audioConstants.musicListName[0]) - 1) {
+        if (genS.musicList >= audioConstants.musicListNum) {
             genS.musicList = 0;
         }
         (*musicPlaylistButton).setSubText(audioConstants.musicListName[genS.musicList]);
@@ -129,7 +149,9 @@ void Screen_Home::genericButtons()
 void Screen_Home::presetSelector()
 {
     for (int i = 0; i < presetNum; i++) {
-        (*presetButton[i]).run();
+        if (i != genS.preset) {
+            (*presetButton[i]).run();
+        }
         if ((*presetButton[i]).getJustPushed()) {
             (*presetButton[i]).setState(true);
             genS.preset = i;
@@ -140,9 +162,6 @@ void Screen_Home::presetSelector()
             }
             recallPresetSettingsSD(genS.mode, i);
             saveGenSettingsSD();
-        }
-        if ((*presetButton)[i].getJustReleased() && i == genS.preset) {
-            (*presetButton)[i].setState(true);
         }
 
         (*preditButton[i]).run();

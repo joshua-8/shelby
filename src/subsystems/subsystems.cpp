@@ -1,7 +1,11 @@
 #include "subsystems.h"
-void subsystems::begin(){
+void Subsystems::begin()
+{
     audio.begin();
+    batMonitor.begin();
 }
-void subsystems::run(){
+void Subsystems::run()
+{
     audio.run();
+    batMonitor.run();
 }

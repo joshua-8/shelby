@@ -1,4 +1,4 @@
-#include "menuscreen.h"
+#include "menuScreen.h"
 
 MenuScreen::MenuScreen(MouseData* _mouseData, Adafruit_ILI9341* _tft)
 {

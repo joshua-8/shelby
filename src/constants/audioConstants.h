@@ -3,8 +3,8 @@
 #include <Arduino.h>
 class audioConsts {
 public:
-    const int AUDIO_BOARD_VOLUME_RANGE = 74; //-70 to +4 dB
-    const int AUDIO_BOARD_VOLUME_MIN = -70;
+    const int AUDIO_BOARD_VOLUME_RANGE = 50; //-70 to +4 dB
+    const int AUDIO_BOARD_VOLUME_MIN = -46;
     const static byte musicListNum = 2;
     const char musicListName[musicListNum][6] = { "listA", "listB" };
 

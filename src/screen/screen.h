@@ -1,17 +1,16 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
+#include "Adafruit_GFX.h"
+#include "Adafruit_ILI9341.h"
+#include "menuScreen.h"
 #include "MouseData.h"
+#include "SPI.h"
 #include "constants/constants.h"
 #include "constants/pinout.h"
 #include "screenConstants.h"
 #include "settings/settings.h"
 #include <Arduino.h>
-//#include "SPI.h"
-//#include "Wire.h"
-#include "Adafruit_GFX.h"
-#include "Adafruit_ILI9341.h"
-#include "MenuScreen.h"
 
 class Screen {
 private:

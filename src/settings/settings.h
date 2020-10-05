@@ -25,6 +25,4 @@ extern demoModeModeSettingsStruct demoModeModeSettings;
 
 extern topSettingsStruct topSettings;
 
-extern int audioPlaylistPos[audioConstants.musicListNum];
-
 #endif
