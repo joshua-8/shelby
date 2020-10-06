@@ -3,7 +3,7 @@
 #include "settings/settings.h"
 #include "settings/settingsSD.h"
 #include "shelbytron_globs.h"
-#include "subsystems/subsystems.h"
+#include "subsystems/!subsystems.h"
 #include <Arduino.h>
 
 Screen screen = Screen();
@@ -16,6 +16,7 @@ void setup()
     recallAllSettingsSD();
     screen.begin();
     subsystems.begin();
+    Serial.begin(9600);
 }
 
 void loop()
