@@ -18,11 +18,14 @@ GoButton::GoButton()
 }
 void GoButton::begin()
 {
+    color = CRGB(0, 0, 0);
     pinMode(GO_STOP_BUTTON_PIN, INPUT_PULLDOWN);
     pinMode(GO_BUTTON_RED_PIN, OUTPUT);
     pinMode(GO_BUTTON_GREEN_PIN, OUTPUT);
     pinMode(GO_BUTTON_BLUE_PIN, OUTPUT);
-    color = CRGB(0, 0, 0);
+    analogWrite(GO_BUTTON_RED_PIN, 255 - color.r);
+    analogWrite(GO_BUTTON_GREEN_PIN, 255 - color.g);
+    analogWrite(GO_BUTTON_BLUE_PIN, 255 - color.b);
     mode = Modes::NOT_ANIMATED;
     state = false;
     lastState = false;

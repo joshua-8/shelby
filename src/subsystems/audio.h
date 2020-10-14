@@ -17,6 +17,5 @@ private:
     boolean playingMusic;
     wavTrigger wTrig;
     int lastVolume;
-    int playlistPos[audioConstants.musicListNum] = { 0 };
 };
 #endif

@@ -11,12 +11,12 @@ Subsystems subsystems = Subsystems();
 
 void setup()
 {
+    Serial.begin(9600);
     analogReadResolution(12);
     setupSettingsSD();
     recallAllSettingsSD();
     screen.begin();
     subsystems.begin();
-    Serial.begin(9600);
 }
 
 void loop()
