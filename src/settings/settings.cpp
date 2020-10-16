@@ -1,5 +1,6 @@
 #include "settings.h"
-generalSetStruct genS = { -1, -1, 1, 0, 0, 0, 0, 1 };
+generalSetStruct genS = { -1, 1, 0, 0, 0, 0, 1 };
+generalSetStruct lastGenS = genS;
 
 tagModePresetSettingsStruct tagModePresetSettings[presetNum];
 chaseModePresetSettingsStruct chaseModePresetSettings[presetNum];
@@ -17,4 +18,5 @@ demoModeModeSettingsStruct demoModeModeSettings;
 
 topSettingsStruct topSettings;
 
-int audioPlaylistPos[audioConstants.musicListNum];
+int shortMusicPlaylistPos[audioConstants.musicListNum];
+int longMusicPlaylistPos[audioConstants.musicListNum];

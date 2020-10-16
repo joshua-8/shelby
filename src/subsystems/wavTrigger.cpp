@@ -166,7 +166,6 @@ bool wavTrigger::isTrackPlaying(int trk) {
 int i;
 bool fResult = false;
 
-	update();
 	for (i = 0; i < MAX_NUM_VOICES; i++) {
 		if (voiceTable[i] == trk)
 			fResult = true;

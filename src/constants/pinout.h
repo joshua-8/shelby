@@ -53,8 +53,8 @@ const byte RIGHT_WHEEL_LIGHTS_CLOCK_PIN = 54;
 const byte RIGHT_WHEEL_LIGHTS_DATA_PIN = 55;
 const byte LEFT_WHEEL_LIGHTS_CLOCK_PIN = 56;
 const byte LEFT_WHEEL_LIGHTS_DATA_PIN = 57;
-const byte BACK_DIST_PIN = 64; //a10
-const byte FRONT_DIST_PIN = 65; //a11
-const byte RIGHT_DIST_PIN = 66; //dac0
-const byte LEFT_DIST_PIN = 67; //dac1
+const byte BACK_DIST_PIN = A10; //a10
+const byte FRONT_DIST_PIN = A11; //a11
+const byte RIGHT_DIST_PIN = A21; //dac0
+const byte LEFT_DIST_PIN = A22; //dac1
 #endif

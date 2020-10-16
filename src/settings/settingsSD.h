@@ -6,6 +6,7 @@
 #include "modeSettingsSD.h"
 #include "topSettingsSD.h"
 #include "genSettingsSD.h"
+#include "musicSD.h"
 #include "settings.h"
 
 extern SdFatSdio sd;

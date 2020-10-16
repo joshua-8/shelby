@@ -4,7 +4,6 @@
 struct generalSetStruct
 {
   int8_t mode;
-  int8_t lastMode;
   int8_t preset;
   int8_t musicMode;
   int8_t lightsMode;

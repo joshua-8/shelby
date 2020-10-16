@@ -3,7 +3,7 @@
 #include "settings/settings.h"
 #include "settings/settingsSD.h"
 #include "shelbytron_globs.h"
-#include "subsystems/subsystems.h"
+#include "subsystems/!subsystems.h"
 #include <Arduino.h>
 
 Screen screen = Screen();
@@ -11,6 +11,7 @@ Subsystems subsystems = Subsystems();
 
 void setup()
 {
+    Serial.begin(9600);
     analogReadResolution(12);
     setupSettingsSD();
     recallAllSettingsSD();
@@ -20,7 +21,8 @@ void setup()
 
 void loop()
 {
-    genS.lastMode = genS.mode;
     screen.run();
     subsystems.run();
+
+    lastGenS = genS;
 }
