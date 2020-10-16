@@ -3,7 +3,7 @@
 void recallAllModeSettingsSd()
 {
     for (int i = 0; i < modeNum; i++) {
-        recallModeSettingsSD(i); //TODO: CHANGE BACK TO RECALL
+        recallModeSettingsSD(i);
     }
 }
 

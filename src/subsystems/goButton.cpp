@@ -5,6 +5,7 @@ GoButton::GoButton()
     mode = Modes::NOT_ANIMATED;
     state = false;
     lastState = false;
+    usablePress = false;
     pushedMillis = 0;
     releasedMillis = 0;
     animationMillis = 0;
@@ -29,6 +30,7 @@ void GoButton::begin()
     mode = Modes::NOT_ANIMATED;
     state = false;
     lastState = false;
+    usablePress = false;
     pushedMillis = 0;
     releasedMillis = 0;
     animationMillis = 0;
@@ -39,8 +41,9 @@ void GoButton::run()
 {
     lastState = state;
     state = rawToState(!digitalRead(GO_STOP_BUTTON_PIN));
-    if (justPushed()) {
+    if (justPressed()) {
         pushedMillis = millis();
+        usablePress = true;
     }
     if (justReleased()) {
         releasedMillis = millis();
@@ -68,7 +71,20 @@ void GoButton::run()
     analogWrite(GO_BUTTON_GREEN_PIN, 255 - color.g);
     analogWrite(GO_BUTTON_BLUE_PIN, 255 - color.b);
 }
+    
 
+boolean GoButton::usePress()
+{
+    if (usablePress) {
+        usablePress = false;
+        return true;
+    }
+    return false;
+}
+boolean GoButton::usablePressState()
+{
+    return usablePress;
+}
 void GoButton::blink(CRGB ca, unsigned int ta, CRGB cb, unsigned int tb)
 {
     colorInputA = ca;
@@ -117,7 +133,7 @@ boolean GoButton::isPressed()
 {
     return state;
 }
-boolean GoButton::justPushed()
+boolean GoButton::justPressed()
 {
     return state == true && lastState == false;
 }

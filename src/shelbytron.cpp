@@ -21,7 +21,28 @@ void setup()
 
 void loop()
 {
-    genS.lastMode = genS.mode;
     screen.run();
     subsystems.run();
+
+    if (genS.musicMode == 1) { //music low
+        if (subsystems.goButton.justPressed()) {
+            subsystems.audio.stopShort();
+        }
+        if (subsystems.goButton.isPressed() && (subsystems.goButton.getTimeSincePressed() > 500 || !subsystems.audio.isPlayingShort())) {
+            if (subsystems.goButton.usePress()) {
+                subsystems.audio.playNextShort();
+            }
+        }
+    }
+    if (genS.musicMode == 2) { //music high
+        if (subsystems.goButton.justPressed()) {
+            subsystems.audio.stopLong();
+        }
+        if (subsystems.goButton.isPressed() && (subsystems.goButton.getTimeSincePressed() > 500 || !subsystems.audio.isPlayingLong())) {
+            if (subsystems.goButton.usePress()) {
+                subsystems.audio.playNextLong();
+            }
+        }
+    }
+    lastGenS = genS;
 }

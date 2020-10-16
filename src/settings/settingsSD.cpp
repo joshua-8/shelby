@@ -7,6 +7,7 @@ void recallAllSettingsSD()
     recallAllModeSettingsSd();
     recallTopSettingsSD();
     recallGenSettingsSD();
+    recallMusicSettingsSD();
 }
 void setupSettingsSD()
 {

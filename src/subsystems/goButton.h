@@ -17,8 +17,10 @@ public:
 
     CRGB getColor();
     boolean isPressed();
-    boolean justPushed();
+    boolean justPressed();
     boolean justReleased();
+    boolean usePress();
+    boolean usablePressState();
     unsigned long getTimeSincePressed();
     unsigned long getTimeSinceReleased();
     void resetAnimationTimer();
@@ -32,6 +34,7 @@ private:
     CRGB color;
     boolean state;
     boolean lastState;
+    boolean usablePress;
     unsigned long rawStateSwitchMillis;
     boolean rawLastState;
     boolean rawToState(boolean rs);
