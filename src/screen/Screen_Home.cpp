@@ -60,7 +60,7 @@ void Screen_Home::batteryDisplay()
             (*tft).fillRect(menuScreenConstants.BATTERY_DISPLAY_X_POS, menuScreenConstants.BATTERY_DISPLAY_Y_POS, menuScreenConstants.BATTERY_DISPLAY_WIDTH, menuScreenConstants.BATTERY_DISPLAY_HEIGHT, menuScreenConstants.BATTERY_DISPLAY_BACKGROUND_COLOR);
             (*tft).setTextColor(menuScreenConstants.BATTERY_DISPLAY_TEXT_COLOR);
             (*tft).setTextSize(3);
-            (*tft).setCursor(menuScreenConstants.BATTERY_DISPLAY_X_POS, menuScreenConstants.BATTERY_DISPLAY_Y_POS + .25 * menuScreenConstants.BATTERY_DISPLAY_HEIGHT);
+            (*tft).setCursor(menuScreenConstants.BATTERY_DISPLAY_X_POS, menuScreenConstants.BATTERY_DISPLAY_Y_POS + .6 * menuScreenConstants.BATTERY_DISPLAY_HEIGHT);
             (*tft).print(subsystems.batMonitor.getBatVolt(), 2);
         }
     }

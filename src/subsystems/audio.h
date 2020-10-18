@@ -18,7 +18,8 @@ public:
     void stopShort();
     void stopLong();
 
-    // void playTrack(int t);
+    void playTrack(int t);
+    void stopTrack(int t);
 
 private:
     boolean playingMusic;

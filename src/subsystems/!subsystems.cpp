@@ -5,6 +5,7 @@ void Subsystems::begin()
     batMonitor.begin();
     goButton.begin();
     distanceSensors.begin();
+    nineDOFSensor.begin();
 }
 void Subsystems::run()
 {
@@ -12,4 +13,5 @@ void Subsystems::run()
     batMonitor.run();
     goButton.run();
     distanceSensors.run();
+    nineDOFSensor.run();
 }

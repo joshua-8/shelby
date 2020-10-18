@@ -22,7 +22,7 @@ void Audio::run()
         stopShort();
         stopLong();
     }
-    
+
     wTrig.update();
     if (lastVolume != genS.volume) {
         lastVolume = genS.volume;
@@ -108,4 +108,13 @@ boolean Audio::isPlayingShort()
         shortTrackPlaying = wTrig.isTrackPlaying(shortMusicPlaying);
     }
     return shortTrackPlaying;
+}
+void Audio::playTrack(int t)
+{
+    wTrig.trackPlayPoly(t);
+}
+
+void Audio::stopTrack(int t)
+{
+    wTrig.trackPlayPoly(t);
 }

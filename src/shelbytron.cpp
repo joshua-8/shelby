@@ -23,6 +23,5 @@ void loop()
 {
     screen.run();
     subsystems.run();
-
     lastGenS = genS;
 }
