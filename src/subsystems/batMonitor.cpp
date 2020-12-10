@@ -8,6 +8,7 @@ BatMonitor::BatMonitor()
 void BatMonitor::begin()
 {
     pinMode(BAT_MONITOR_PIN, INPUT);
+    run();
 }
 void BatMonitor::run()
 {

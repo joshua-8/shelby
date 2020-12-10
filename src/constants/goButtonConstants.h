@@ -5,5 +5,5 @@ class goButtonConsts {
 public:
     const byte switchDebounceTime = 4;
 };
-static goButtonConsts goButtonConstants;
+static const goButtonConsts goButtonConstants;
 #endif

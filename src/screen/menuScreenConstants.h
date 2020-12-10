@@ -106,6 +106,7 @@ public:
     const int BATTERY_DISPLAY_Y_POS = 0;
     const int BATTERY_DISPLAY_WIDTH = 104;
     const int BATTERY_DISPLAY_HEIGHT = PRESET_SELECTOR_POS_Y + PRESET_SELECTOR_HEIGHT * PRESET_SELECTOR_TOP_PERCENT / 100;
+    const float BATTERY_GAUGE_PORTION = .4;
 };
 
 static menuScreenConsts menuScreenConstants;

@@ -7,10 +7,8 @@ const byte BNO055_SCL_PIN = 3;
 const byte BNO055_SDA_PIN = 4;
 const byte SCREEN_DC_PIN = 5;
 const byte SCREEN_LIGHT_PIN = 6;
-const byte LEFT_TOF_TX_PIN = 7;
-const byte LEFT_TOF_RX_PIN = 8;
-const byte RIGHT_TOF_TX_PIN = 9;
-const byte RIGHT_TOF_RX_PIN = 10;
+#define RIGHT_TOF_SERIAL_PORT Serial2
+#define LEFT_TOF_SERIAL_PORT Serial3
 const byte SCREEN_MOSI_PIN = 11;
 const byte SCREEN_MISO_PIN = 12;
 const byte SCREEN_CLK_PIN = 13;

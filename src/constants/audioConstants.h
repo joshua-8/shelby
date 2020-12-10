@@ -25,5 +25,5 @@ public:
     const short musicShortPlaylistListOlder[51] = { 1554, 1541, 1553, 1555, 1552, 1562, 1528, 1532, 1570, 1567, 1563, 1527, 1536, 1514, 1521, 1551, 1529, 1559, 1518, 1566, 1533, 1560, 1547, 1520, 1534, 1544, 1558, 1519, 1565, 1549, 1524, 1538, 1542, 1526, 1568, 1510, 1513, 1569, 1530, 1545, 1561, 1531, 1571, 1543, 1525, 1564, 1515, 1537, 1546, 1509, 1540 };
     const short* musicShortPlaylist[musicListNum] = { musicShortPlaylistListYoung, musicShortPlaylistListChase, musicShortPlaylistListCalm };
 };
-static audioConsts audioConstants;
+static const audioConsts audioConstants;
 #endif

@@ -15,8 +15,8 @@ void setup()
     analogReadResolution(12);
     setupSettingsSD();
     recallAllSettingsSD();
-    screen.begin();
     subsystems.begin();
+    screen.begin();
 }
 
 void loop()
