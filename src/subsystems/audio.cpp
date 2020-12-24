@@ -22,6 +22,10 @@ void Audio::run()
         stopShort();
         stopLong();
     }
+    if (genS.musicList != lastGenS.musicList) {
+        stopShort();
+        stopLong();
+    }
 
     wTrig.update();
     if (lastVolume != genS.volume) {
@@ -59,7 +63,7 @@ void Audio::playLastLong()
     longTrackStartMillis = millis();
     longTrackPlaying = true;
     wTrig.trackPlayPoly(longMusicPlaying);
-    saveShortMusicSettingsSD();
+    saveLongMusicSettingsSD();
 }
 boolean Audio::isPlayingLong()
 {

@@ -13,6 +13,7 @@ public:
     boolean repeat;
     boolean newMsg;
     void irInternalISR();
+    unsigned long lastNewMsgMillis;
 
 private:
     volatile unsigned long lastRiseMicros = 0;

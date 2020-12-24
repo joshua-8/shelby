@@ -36,6 +36,13 @@ void Screen_Home::begin()
     (*lightsModeButton).setSubText(lightsModeName[genS.lightsMode]);
     (*musicModeButton).setSubText(musicModeName[genS.musicMode]);
     (*volSl).setVal(genS.volume);
+    for (int j = 0; j < modeNum; j++) {
+        if (j != genS.mode) {
+            (*modeButton[j]).setState(false);
+        } else {
+            (*modeButton[j]).setState(true);
+        }
+    }
 }
 
 void Screen_Home::run()
@@ -43,6 +50,9 @@ void Screen_Home::run()
     modeSelector();
     presetSelector();
     genericButtons();
+    if (genS.volume != (*volSl).getVal()) {
+        (*volSl).setVal(genS.volume);
+    }
     (*volSl).run();
     genS.volume = (*volSl).getVal();
     if ((*volSl).newValue()) {
@@ -182,6 +192,7 @@ void Screen_Home::modeSelector()
         (*modeButton[i]).run();
         if ((*modeButton[i]).getJustPushed()) {
             genS.mode = i;
+            go = false;
             (*modeButton[i]).setState(true);
             for (int j = 0; j < modeNum; j++) {
                 if (j != i) {
@@ -192,6 +203,7 @@ void Screen_Home::modeSelector()
         }
         if ((*modeButton[i]).getJustReleased()) {
             genS.mode = -1;
+            go = false;
         }
     }
 }

@@ -5,6 +5,7 @@ IR::IR()
     message = 0;
     repeat = 0;
     newMsg = 0;
+    lastNewMsgMillis = 0;
 }
 
 void IR::begin()
@@ -23,10 +24,14 @@ void IR::run()
                 message1 |= msg[i] << i;
                 message2 |= (!msg[i + 8]) << i;
             }
-            repeat = (msg[7] == 1 && msg[15] == 0);
             if (message1 == message2) { //valid
                 message = message1;
                 newMsg = true;
+                lastNewMsgMillis = millis();
+                repeat = (msg[7] == 1 && msg[15] == 0);
+                if (message == 66) { //wierd inconsistency in ir remote's protocol
+                    repeat = !repeat;
+                }
             }
         }
         pos = 0;

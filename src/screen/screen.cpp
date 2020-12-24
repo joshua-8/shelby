@@ -1,9 +1,11 @@
 #include "screen.h"
-Screen::Screen()
+Screen::Screen(MsgScreen* _msgScreen)
 {
     tft = new Adafruit_ILI9341(SCREEN_CS_PIN, SCREEN_DC_PIN, SCREEN_MOSI_PIN, SCREEN_CLK_PIN, 255, SCREEN_MISO_PIN);
     mouseData = { -1.0, -1.0, 0.0, 0.0, 0.0, 0.0, 0, false, false, false, false };
     menuScreen = new MenuScreen(&mouseData, tft);
+    msgScreen = _msgScreen;
+    (*msgScreen).setTFT(tft);
 }
 
 void Screen::begin()
@@ -19,9 +21,13 @@ void Screen::begin()
 void Screen::run()
 {
     mouseData = readScreen();
-    (*menuScreen).run();
+    if (!(*msgScreen).display()) {
+        if ((*msgScreen).wasShowing()) {
+            (*menuScreen).begin();
+        }
+        (*menuScreen).run();
+    }
 }
-
 MouseData Screen::readScreen()
 {
     mouseData.lastMousePressed = mouseData.mousePressed;

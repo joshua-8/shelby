@@ -21,7 +21,4 @@ void Subsystems::run()
     //    Serial.println(LTurret.getDist());
     //    RTurret.run();
     ir.run();
-    if (ir.newMsg == true) {
-        Serial.println(ir.message);
-    }
 }
