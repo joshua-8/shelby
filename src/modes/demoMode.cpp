@@ -20,6 +20,18 @@ void DemoMode::run()
         }
     }
 
-    runGenIR();
+    ////////////////////////////////////////////////////////manual track select
+    if (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.AUX) {
+        messageScreen.dispValSelector("trk", 4, 0);
+    }
+    if (messageScreen.valSelectorDone()) {
+        if (subsystems.audio.isPlayingTrack(messageScreen.valSelectorValue())) {
+            subsystems.audio.stopTrack(messageScreen.valSelectorValue());
+        } else {
+            subsystems.audio.playTrack(messageScreen.valSelectorValue());
+        }
+    }
+
+    runGenIR(); //remove for demo mode?
     runGenGoStopButton();
 }

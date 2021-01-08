@@ -3,8 +3,8 @@
 #include "screen/msgScreen.h"
 #include "subsystems/!subsystems.h"
 
-extern MsgScreen messageScreen;
 extern Subsystems subsystems;
+extern MsgScreen messageScreen;
 extern boolean go;
 
 #endif

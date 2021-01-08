@@ -8,10 +8,10 @@
 #include "subsystems/!subsystems.h"
 #include <Arduino.h>
 
-MsgScreen messageScreen = MsgScreen();
 Screen screen = Screen(&messageScreen);
 Subsystems subsystems = Subsystems();
 boolean go = false;
+MsgScreen messageScreen = MsgScreen(&subsystems.ir);
 
 void setup()
 {
@@ -19,10 +19,9 @@ void setup()
     analogReadResolution(12);
     setupSettingsSD();
     recallAllSettingsSD();
-    go=false;
+    go = false;
     subsystems.begin();
     screen.begin();
-    demomode.begin();
 }
 
 void loop()
@@ -30,5 +29,5 @@ void loop()
     screen.run();
     subsystems.run();
     lastGenS = genS;
-    demomode.run();
+    modesRun();
 }

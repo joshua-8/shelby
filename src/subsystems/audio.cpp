@@ -116,9 +116,14 @@ boolean Audio::isPlayingShort()
 void Audio::playTrack(int t)
 {
     wTrig.trackPlayPoly(t);
+    wTrig.trackGain(t, audioConstants.MUSIC_NORMAL_GAIN);
+}
+boolean Audio::isPlayingTrack(int t)
+{
+    return wTrig.isTrackPlaying(t);
 }
 
 void Audio::stopTrack(int t)
 {
-    wTrig.trackPlayPoly(t);
+    wTrig.trackStop(t);
 }

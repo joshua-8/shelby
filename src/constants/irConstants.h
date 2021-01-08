@@ -11,7 +11,7 @@ public:
         GO = 102,
         STOP = 3,
         UP = 25,
-        BACK = 51,
+        DOWN = 51,
         LEFT = 30,
         RIGHT = 45,
         OK = 42,
