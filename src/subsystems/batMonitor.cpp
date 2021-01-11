@@ -10,7 +10,7 @@ BatMonitor::BatMonitor()
 void BatMonitor::begin()
 {
     pinMode(BAT_MONITOR_PIN, INPUT);
-    //    voltage = readRawVoltage();
+    voltage = readRawVoltage();
     run();
 }
 void BatMonitor::run()
