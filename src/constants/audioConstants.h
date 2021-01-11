@@ -5,7 +5,6 @@ class audioConsts {
 public:
     const short AUDIO_BOARD_VOLUME_RANGE = 50; //-70 to +4 dB (but I cut the quietist values off)
     const short AUDIO_BOARD_VOLUME_MIN = -46;
-    const byte MUSIC_NORMAL_GAIN = 0;
     const unsigned short WTRIG_LAG = 100; //milliseconds between starting a song and the board reporting it is playing the track
 
     const static byte musicListNum = 4;

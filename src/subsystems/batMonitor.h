@@ -9,8 +9,10 @@ public:
     void begin();
     void run();
     float getBatVolt();
+    float readRawVoltage();
 
 private:
     float voltage;
+    float rawVoltage;
 };
 #endif

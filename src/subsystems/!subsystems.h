@@ -1,12 +1,12 @@
 #ifndef SUBSYSTEMS_H
 #define SUBSYSTEMS_H
+#include <Arduino.h>
 #include "audio.h"
 #include "batMonitor.h"
-#include "distanceSensors.h"
+#include "distanceSensors/distanceSensors.h"
 #include "goButton.h"
-#include "nineDOFSensor.h"
-#include "turret.h"
 #include "ir.h"
+#include "nineDOFSensor.h"
 class Subsystems {
 public:
     Audio audio;
@@ -14,8 +14,6 @@ public:
     GoButton goButton;
     DistanceSensors distanceSensors;
     NineDOFSensor nineDOFSensor;
-    Turret LTurret;
-    Turret RTurret;
     IR ir;
 
     void begin();

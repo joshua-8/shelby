@@ -16,14 +16,14 @@ void Turret::run()
     if (readDist()) {
         readAngle();
     }
-    int interval = 3000;
-    if (millis() % interval < interval / 2) {
-        //    myservo1.write(140);
-        servo.write(map(millis() % interval, 0, interval / 2, 0, 180));
-    } else {
-        //    myservo1.write(50);
-        servo.write(map(millis() % interval, interval / 2, interval, 180, 0));
-    }
+    // int interval = 3000;
+    // if (millis() % interval < interval / 2) {
+    //     //    myservo1.write(140);
+    //     servo.write(map(millis() % interval, 0, interval / 2, 0, 180));
+    // } else {
+    //     //    myservo1.write(50);
+    //     servo.write(map(millis() % interval, interval / 2, interval, 180, 0));
+    // }
 }
 boolean Turret::readDist()
 {

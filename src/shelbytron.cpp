@@ -12,6 +12,8 @@ Screen screen = Screen(&messageScreen);
 Subsystems subsystems = Subsystems();
 boolean go = false;
 MsgScreen messageScreen = MsgScreen(&subsystems.ir);
+elapsedMicros microsTimerVal = 0;
+unsigned long lastLoopTimeMicros = 0;
 
 void setup()
 {
@@ -30,4 +32,6 @@ void loop()
     subsystems.run();
     lastGenS = genS;
     modesRun();
+    lastLoopTimeMicros = microsTimerVal;
+    microsTimerVal = 0;
 }

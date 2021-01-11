@@ -3,5 +3,12 @@
 
 struct topSettingsStruct {
     float magneticDeclination;
+    float musicNormalGain;
+    float highVoltThresh;
+    float lowVoltThresh;
+    float criticalVoltThresh;
+    float encoderTicksPerMPS;
+    float leftWheelFF;
+    float rightWheelFF;
 };
 #endif
