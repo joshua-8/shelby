@@ -7,7 +7,6 @@ struct topSettingsStruct {
     float highVoltThresh;
     float lowVoltThresh;
     float criticalVoltThresh;
-    float encoderTicksPerMPS;
     float leftWheelFF;
     float rightWheelFF;
 };

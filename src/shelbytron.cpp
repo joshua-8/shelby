@@ -30,8 +30,9 @@ void loop()
 {
     screen.run();
     subsystems.run();
-    lastGenS = genS;
     modesRun();
+
+    lastGenS = genS;
     lastLoopTimeMicros = microsTimerVal;
     microsTimerVal = 0;
 }

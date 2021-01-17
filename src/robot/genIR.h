@@ -71,7 +71,7 @@ static void runGenIR()
     if (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.GO) {
         go = true;
     }
-    if (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.STOP) {
+    if (subsystems.ir.newMsg && subsystems.ir.message == irConstants.STOP) {
         go = false;
     }
 }

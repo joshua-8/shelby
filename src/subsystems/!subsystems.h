@@ -7,6 +7,7 @@
 #include "goButton.h"
 #include "ir.h"
 #include "nineDOFSensor.h"
+#include "drivetrain/drivetrain.h"
 class Subsystems {
 public:
     Audio audio;
@@ -15,6 +16,7 @@ public:
     DistanceSensors distanceSensors;
     NineDOFSensor nineDOFSensor;
     IR ir;
+    Drivetrain drivetrain;
 
     void begin();
     void run();

@@ -10,7 +10,7 @@ public:
     const short SCREEN_MODE_TEDIT = 3;
 
     const int SCREEN_WIDTH = screenConstants.SCREEN_WIDTH;
-    const int SCREEN_HEIGHT = screenConstants.SCREEN_WIDTH;
+    const int SCREEN_HEIGHT = screenConstants.SCREEN_HEIGHT;
 
     const short SCREEN_FONT_WIDTH = 6;
     const short SCREEN_FONT_HEIGHT = 8;

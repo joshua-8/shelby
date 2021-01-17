@@ -2,7 +2,7 @@
 
 int topSettingsListifyGetLength()
 {
-    return 8;
+    return 7;
 }
 
 int topSettingsListifyGetIsBIF(int currVal)
@@ -22,8 +22,6 @@ int topSettingsListifyGetIsBIF(int currVal)
         return TOP_SETTINGS_LISTIFY_FLOAT;
     case 6:
         return TOP_SETTINGS_LISTIFY_FLOAT;
-    case 7:
-        return TOP_SETTINGS_LISTIFY_FLOAT;
     }
     return 0;
 }
@@ -42,10 +40,8 @@ float topSettingsListifyGetVal(int currVal)
     case 4:
         return topSettings.criticalVoltThresh;
     case 5:
-        return topSettings.encoderTicksPerMPS;
-    case 6:
         return topSettings.leftWheelFF;
-    case 7:
+    case 6:
         return topSettings.rightWheelFF;
     }
     return 0;
@@ -70,12 +66,9 @@ void topSettingsListifySetVal(int currVal, float val)
         topSettings.criticalVoltThresh = val;
         break;
     case 5:
-        topSettings.encoderTicksPerMPS = val;
-        break;
-    case 6:
         topSettings.leftWheelFF = val;
         break;
-    case 7:
+    case 6:
         topSettings.rightWheelFF = val;
         break;
     }
@@ -95,10 +88,8 @@ String topSettingsListifyGetName(int currVal)
     case 4:
         return F("CritBat");
     case 5:
-        return F("EncTPMPS");
-    case 6:
         return F("LWheelFF");
-    case 7:
+    case 6:
         return F("RWheelFF");
     }
     return "";

@@ -3,8 +3,8 @@
 
 BatMonitor::BatMonitor()
 {
-    voltage = 0;
-    rawVoltage = 0;
+    voltage = 10;
+    rawVoltage = 10;
 }
 
 void BatMonitor::begin()
