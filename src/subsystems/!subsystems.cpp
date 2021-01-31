@@ -1,4 +1,5 @@
 #include "!subsystems.h"
+
 void Subsystems::begin()
 {
     audio.begin();
@@ -7,6 +8,7 @@ void Subsystems::begin()
     distanceSensors.begin();
     nineDOFSensor.begin();
     ir.begin();
+    lights.begin();
     drivetrain.begin();
 }
 void Subsystems::run()
@@ -18,4 +20,5 @@ void Subsystems::run()
     distanceSensors.run();
     nineDOFSensor.run();
     ir.run();
+    lights.run();
 }

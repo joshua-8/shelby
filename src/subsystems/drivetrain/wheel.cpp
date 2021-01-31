@@ -14,7 +14,6 @@ Wheel::Wheel()
     newSpeed = false;
     velSet = 0;
     velWrite = 0;
-    accel = .025;
     powerAllowed = 15.0;
 }
 void Wheel::begin(byte _speedPin, byte _dirPin, byte _encoderAPin, byte _encoderBPin, byte _magPin, boolean _revMot, boolean _revEnc, boolean _left)
@@ -29,6 +28,7 @@ void Wheel::begin(byte _speedPin, byte _dirPin, byte _encoderAPin, byte _encoder
     left = _left;
     pinMode(speedPin, OUTPUT);
     pinMode(dirPin, OUTPUT);
+    analogWriteFrequency(speedPin, 20000);
     pinMode(encoderAPin, INPUT);
     pinMode(encoderBPin, INPUT);
     pinMode(magPin, INPUT);
@@ -46,7 +46,7 @@ void Wheel::begin(byte _speedPin, byte _dirPin, byte _encoderAPin, byte _encoder
 void Wheel::run()
 {
     // magOrientedTickCounter = (((tickCounter) % wheelConstants.ticksPerRevolution) + wheelConstants.ticksPerRevolution) % wheelConstants.ticksPerRevolution;
-    velWrite += constrain(velSet - velWrite, -accel * lastLoopTimeMicros / 1000000, accel * lastLoopTimeMicros / 1000000);
+    velWrite += constrain(velSet - velWrite, -topSettings.wheelAccel * lastLoopTimeMicros / 1000000, topSettings.wheelAccel * lastLoopTimeMicros / 1000000);
     vel = getVel();
     if (go) {
         if (newSpeedData() || vel == 0) {
@@ -105,10 +105,13 @@ void Wheel::setVolt(float volt)
 void Wheel::setOutput(float val)
 {
     int output = constrain(val * 255, -255, 255);
+    if (!go) {
+        output = 0;
+    }
     if (output > 0) {
         digitalWrite(dirPin, revMot);
         analogWrite(speedPin, output);
-    } else if (val < 0) {
+    } else if (output < 0) {
         digitalWrite(dirPin, !revMot);
         analogWrite(speedPin, -output);
     } else {
@@ -131,10 +134,6 @@ long Wheel::getRawPosition()
 void Wheel::resetPosition()
 {
     tickCounter = 0;
-}
-void Wheel::setAccel(float _accel)
-{
-    accel = _accel;
 }
 void Wheel::setVoltageAllowed(float _v)
 {

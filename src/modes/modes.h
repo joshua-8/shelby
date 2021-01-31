@@ -21,6 +21,8 @@ void modesRun()
             break;
         }
     }
+    lastGenS = genS;
+
     switch (genS.mode) {
     case TAG_MODE_ID:
         break;

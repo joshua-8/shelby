@@ -23,14 +23,24 @@ void DemoMode::run()
     if (mainMode) {
         if (millis() - subsystems.ir.lastNewMsgMillis < 150 && go) {
             if (subsystems.ir.message == irConstants.UP) {
-                subsystems.drivetrain.WheelL.setVel(.1);
+                subsystems.drivetrain.WheelL.setVel(.5);
+                subsystems.drivetrain.WheelR.setVel(.5);
             } else if (subsystems.ir.message == irConstants.DOWN) {
-                subsystems.drivetrain.WheelL.setVel(-.1);
+                subsystems.drivetrain.WheelL.setVel(-.5);
+                subsystems.drivetrain.WheelR.setVel(-.5);
+            } else if (subsystems.ir.message == irConstants.RIGHT) {
+                subsystems.drivetrain.WheelL.setVel(.5);
+                subsystems.drivetrain.WheelR.setVel(-.5);
+            } else if (subsystems.ir.message == irConstants.LEFT) {
+                subsystems.drivetrain.WheelL.setVel(-.5);
+                subsystems.drivetrain.WheelR.setVel(.5);
             } else {
                 subsystems.drivetrain.WheelL.setVel(0);
+                subsystems.drivetrain.WheelR.setVel(0);
             }
         } else {
             subsystems.drivetrain.WheelL.setVel(0);
+            subsystems.drivetrain.WheelR.setVel(0);
         }
     }
 

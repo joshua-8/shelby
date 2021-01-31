@@ -2,7 +2,7 @@
 
 int topSettingsListifyGetLength()
 {
-    return 7;
+    return 8;
 }
 
 int topSettingsListifyGetIsBIF(int currVal)
@@ -21,6 +21,8 @@ int topSettingsListifyGetIsBIF(int currVal)
     case 5:
         return TOP_SETTINGS_LISTIFY_FLOAT;
     case 6:
+        return TOP_SETTINGS_LISTIFY_FLOAT;
+    case 7:
         return TOP_SETTINGS_LISTIFY_FLOAT;
     }
     return 0;
@@ -43,6 +45,8 @@ float topSettingsListifyGetVal(int currVal)
         return topSettings.leftWheelFF;
     case 6:
         return topSettings.rightWheelFF;
+    case 7:
+        return topSettings.wheelAccel;
     }
     return 0;
 }
@@ -71,6 +75,9 @@ void topSettingsListifySetVal(int currVal, float val)
     case 6:
         topSettings.rightWheelFF = val;
         break;
+    case 7:
+        topSettings.wheelAccel = val;
+        break;
     }
 }
 
@@ -91,6 +98,8 @@ String topSettingsListifyGetName(int currVal)
         return F("LWheelFF");
     case 6:
         return F("RWheelFF");
+    case 7:
+        return F("wheelAccel");
     }
     return "";
 }

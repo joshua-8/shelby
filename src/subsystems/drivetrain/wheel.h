@@ -22,7 +22,6 @@ public:
     float getPosition();
     long getRawPosition();
     void resetPosition();
-    void setAccel(float _accel);
     void setVoltageAllowed(float _v);
 
 private:
@@ -51,7 +50,6 @@ private:
     boolean newSpeed;
     float velSet;
     float velWrite;
-    float accel;
     float powerAllowed;
 };
 #endif

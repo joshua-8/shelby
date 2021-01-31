@@ -9,5 +9,6 @@ struct topSettingsStruct {
     float criticalVoltThresh;
     float leftWheelFF;
     float rightWheelFF;
+    float wheelAccel;
 };
 #endif
