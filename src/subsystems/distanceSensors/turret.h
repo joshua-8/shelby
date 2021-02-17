@@ -6,10 +6,11 @@
 class Turret {
 public:
     Turret();
-    void begin(HardwareSerial* _serial, byte _servoControlPin, byte _servoPositionPin);
+    void begin(HardwareSerial* _serial, byte _servoControlPin, byte _servoPositionPin, float _minAngle, float _maxAngle, int _minPulse, int _maxPulse);
     void run();
     float getDist();
     float getAngle();
+    boolean setAngle(float angle);
 
 private:
     HardwareSerial* distSerial;
@@ -18,10 +19,15 @@ private:
     float distance;
     int signalStrength;
 
-    void readAngle();
+    // void readAngle();
     byte servoControlPin;
     byte servoPositionPin;
     Servo servo;
     float angle;
+
+    float minAngle;
+    float maxAngle;
+    int minPulse;
+    int maxPulse;
 };
 #endif

@@ -40,9 +40,8 @@ struct stillModePresetSettingsStruct {
     int stillsettingB;
 };
 struct demoModePresetSettingsStruct {
-    bool demosettingA;
-    int demosettingB;
-    float demosettingC;
+    float manualDriveSpeed;
+    float manualTurnSpeed;
 };
 
 #endif

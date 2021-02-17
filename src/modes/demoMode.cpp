@@ -12,7 +12,12 @@ void DemoMode::begin()
 void DemoMode::run()
 {
     if (genS.musicMode == 2) {
-        entertainment.playConstantMusicLongIR();
+        robot.entertainment.playConstantMusicLongIR();
+    }
+
+    if (genS.lightsMode != DURINGmodeLastGenS.lightsMode) {
+        subsystems.lights.WheelLightL.allOff(true);
+        subsystems.lights.WheelLightR.allOff(true);
     }
 
     if (genS.musicMode == 1) { //short
@@ -22,22 +27,7 @@ void DemoMode::run()
     }
     if (mainMode) {
         if (millis() - subsystems.ir.lastNewMsgMillis < 150 && go) {
-            if (subsystems.ir.message == irConstants.UP) {
-                subsystems.drivetrain.WheelL.setVel(.5);
-                subsystems.drivetrain.WheelR.setVel(.5);
-            } else if (subsystems.ir.message == irConstants.DOWN) {
-                subsystems.drivetrain.WheelL.setVel(-.5);
-                subsystems.drivetrain.WheelR.setVel(-.5);
-            } else if (subsystems.ir.message == irConstants.RIGHT) {
-                subsystems.drivetrain.WheelL.setVel(.5);
-                subsystems.drivetrain.WheelR.setVel(-.5);
-            } else if (subsystems.ir.message == irConstants.LEFT) {
-                subsystems.drivetrain.WheelL.setVel(-.5);
-                subsystems.drivetrain.WheelR.setVel(.5);
-            } else {
-                subsystems.drivetrain.WheelL.setVel(0);
-                subsystems.drivetrain.WheelR.setVel(0);
-            }
+            robot.moveSafe.setVelsSafe(demoModePresetSettings[genS.preset].manualDriveSpeed * (1 * (subsystems.ir.message == irConstants.UP) - 1 * (subsystems.ir.message == irConstants.DOWN)), demoModePresetSettings[genS.preset].manualTurnSpeed * (1 * (subsystems.ir.message == irConstants.RIGHT) - 1 * (subsystems.ir.message == irConstants.LEFT)));
         } else {
             subsystems.drivetrain.WheelL.setVel(0);
             subsystems.drivetrain.WheelR.setVel(0);
@@ -57,7 +47,7 @@ void DemoMode::run()
             subsystems.audio.playTrack(messageScreen.valSelectorValue());
         }
     }
-
+    DURINGmodeLastGenS = genS;
     runGenIR(); //remove for demo mode?
     runGenGoStopButton();
 }

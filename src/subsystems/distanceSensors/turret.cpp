@@ -2,11 +2,15 @@
 Turret::Turret()
 {
 }
-void Turret::begin(HardwareSerial* _serial, byte _servoControlPin, byte _servoPositionPin)
+void Turret::begin(HardwareSerial* _serial, byte _servoControlPin, byte _servoPositionPin, float _minAngle, float _maxAngle, int _minPulse, int _maxPulse)
 {
     servoControlPin = _servoControlPin;
     servoPositionPin = _servoPositionPin;
     distSerial = _serial;
+    minAngle = _minAngle;
+    maxAngle = _maxAngle;
+    minPulse = _minPulse;
+    maxPulse = _maxPulse;
     (*distSerial).begin(turretConstants.baud);
     servo.attach(servoControlPin);
     pinMode(servoPositionPin, INPUT);
@@ -14,16 +18,8 @@ void Turret::begin(HardwareSerial* _serial, byte _servoControlPin, byte _servoPo
 void Turret::run()
 {
     if (readDist()) {
-        readAngle();
+        // readAngle();
     }
-    // int interval = 3000;
-    // if (millis() % interval < interval / 2) {
-    //     //    myservo1.write(140);
-    //     servo.write(map(millis() % interval, 0, interval / 2, 0, 180));
-    // } else {
-    //     //    myservo1.write(50);
-    //     servo.write(map(millis() % interval, interval / 2, interval, 180, 0));
-    // }
 }
 boolean Turret::readDist()
 {
@@ -44,10 +40,10 @@ boolean Turret::readDist()
     }
     return false;
 }
-void Turret::readAngle()
-{
-    angle = analogRead(servoPositionPin);
-}
+// void Turret::readAngle()
+// {
+//     angle = analogRead(servoPositionPin);
+// }
 
 float Turret::getDist()
 {
@@ -56,4 +52,13 @@ float Turret::getDist()
 float Turret::getAngle()
 {
     return angle;
+}
+boolean Turret::setAngle(float set)
+{
+    if (set > maxAngle || set < minAngle) {
+        return false;
+    }
+    angle = set;
+    servo.writeMicroseconds(map(angle, minAngle, maxAngle, minPulse, maxPulse));
+    return true;
 }

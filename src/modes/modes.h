@@ -4,7 +4,7 @@
 
 void modesRun()
 {
-    if (genS.mode != lastGenS.mode) {
+    if (genS.mode != premodeLastGenS.mode) {
         switch (genS.mode) {
         case TAG_MODE_ID:
             break;
@@ -21,7 +21,7 @@ void modesRun()
             break;
         }
     }
-    lastGenS = genS;
+    premodeLastGenS = genS;
 
     switch (genS.mode) {
     case TAG_MODE_ID:

@@ -8,6 +8,7 @@ public:
     void begin(byte _pin, irDistConsts _consts);
     void run();
     float getDist();
+    boolean getValid();
 
 private:
     byte pin;

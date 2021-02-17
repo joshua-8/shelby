@@ -1,6 +1,7 @@
 #include "settings.h"
 generalSetStruct genS = { -1, 1, 0, 0, 0, 0, 1 };
-generalSetStruct lastGenS = genS;
+generalSetStruct premodeLastGenS = genS;
+generalSetStruct DURINGmodeLastGenS = genS;
 
 tagModePresetSettingsStruct tagModePresetSettings[presetNum];
 chaseModePresetSettingsStruct chaseModePresetSettings[presetNum];

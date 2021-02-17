@@ -18,11 +18,11 @@ void Audio::begin()
 }
 void Audio::run()
 {
-    if (genS.musicMode != lastGenS.musicMode) {
+    if (genS.musicMode != premodeLastGenS.musicMode) {
         stopShort();
         stopLong();
     }
-    if (genS.musicList != lastGenS.musicList) {
+    if (genS.musicList != premodeLastGenS.musicList) {
         stopShort();
         stopLong();
     }

@@ -4,11 +4,12 @@
 struct irDistConsts {
     float A;
     float B;
+    float max;
 };
 const irDistConsts irDistConstants[] {
-    { 390.0, -.0382 }, //right
-    { 390.0, -.0382 }, //front
-    { 390.0, -.0382 }, //left
-    { 390.0, -.0382 } //back
+    { 390.0, -.0382, .4 }, //right
+    { 390.0, -.0382, .4 }, //front
+    { 390.0, -.0382, .4 }, //left
+    { 390.0, -.0382, .4 } //back
 };
 #endif

@@ -8,7 +8,8 @@
 #include "topSettingsStruct.h"
 #include <Arduino.h>
 extern generalSetStruct genS;
-extern generalSetStruct lastGenS;
+extern generalSetStruct premodeLastGenS;
+extern generalSetStruct DURINGmodeLastGenS;
 
 extern tagModePresetSettingsStruct tagModePresetSettings[presetNum];
 extern chaseModePresetSettingsStruct chaseModePresetSettings[presetNum];

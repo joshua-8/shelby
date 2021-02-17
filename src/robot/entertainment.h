@@ -7,6 +7,5 @@ public:
 
 private:
 };
-static Entertainment entertainment = Entertainment();
 
 #endif
