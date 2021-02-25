@@ -20,6 +20,12 @@ void DemoMode::run()
         subsystems.lights.WheelLightR.allOff(true);
     }
 
+    if (genS.musicMode == 0) { //off
+        if (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK) {
+            subsystems.audio.playTrack(30); //say hi to Luca
+        }
+    }
+
     if (genS.musicMode == 1) { //short
         if (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK) {
             subsystems.audio.playNextShort();
