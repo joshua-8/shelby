@@ -12,8 +12,13 @@ public:
     void setVels(float forward, float rotation);
     void setVelRot(float rotation);
     void setVelTurnRad(float forward, float radius);
+    float getDist();
+    void resetWheelCounters();
+    float getRotation();
     Wheel WheelL;
     Wheel WheelR;
+
+private:
 };
 
 #endif

@@ -1,5 +1,6 @@
 #ifndef MODES_H
 #define MODES_H
+#include "chaseMode.h"
 #include "demoMode.h"
 
 void modesRun()
@@ -9,6 +10,7 @@ void modesRun()
         case TAG_MODE_ID:
             break;
         case CHASE_MODE_ID:
+            chasemode.begin();
             break;
         case RACE_MODE_ID:
             break;
@@ -27,6 +29,7 @@ void modesRun()
     case TAG_MODE_ID:
         break;
     case CHASE_MODE_ID:
+        chasemode.run();
         break;
     case RACE_MODE_ID:
         break;

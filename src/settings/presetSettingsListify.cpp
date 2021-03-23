@@ -285,6 +285,7 @@ void presetSettingsListifySetVal(int mode, int preset, int currVal, float val)
         switch (currVal) {
         case 0:
             demoModePresetSettings[preset].manualDriveSpeed = val;
+            break;
         case 1:
             demoModePresetSettings[preset].manualTurnSpeed = val;
             break;

@@ -42,3 +42,16 @@ void Drivetrain::setVelTurnRad(float forward, float radius)
 {
     setVels(forward, forward / (radius * DEG_TO_RAD));
 }
+void Drivetrain::resetWheelCounters()
+{
+    WheelL.resetPosition();
+    WheelR.resetPosition();
+}
+float Drivetrain::getDist()
+{
+    return (WheelL.getPosition() + WheelR.getPosition()) / 2.0;
+}
+float Drivetrain::getRotation()
+{
+    return (WheelL.getPosition() - WheelR.getPosition()) / drivetrainConstants.wheelbase * RAD_TO_DEG;
+}

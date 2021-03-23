@@ -10,6 +10,7 @@ void Subsystems::begin()
     ir.begin();
     lights.begin();
     drivetrain.begin();
+    tail.begin();
 }
 void Subsystems::run()
 {
@@ -21,4 +22,5 @@ void Subsystems::run()
     nineDOFSensor.run();
     ir.run();
     lights.run();
+    tail.run();
 }

@@ -1,9 +1,11 @@
 #ifndef ROBOT_H
 #define ROBOT_H
-#include "move/moveSafely.h"
 #include "entertainment.h"
+#include "move/moveDrive.h"
+#include "move/moveSafely.h"
 class Robot {
 public:
+    MoveDrive moveDrive;
     MoveSafe moveSafe;
     Entertainment entertainment;
 };

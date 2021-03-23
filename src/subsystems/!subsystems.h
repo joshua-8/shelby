@@ -8,6 +8,7 @@
 #include "ir.h"
 #include "lights/lights.h"
 #include "nineDOFSensor.h"
+#include "tail.h"
 #include <Arduino.h>
 class Subsystems {
 public:
@@ -19,6 +20,7 @@ public:
     IR ir;
     Drivetrain drivetrain;
     Lights lights;
+    Tail tail;
 
     void begin();
     void run();

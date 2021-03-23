@@ -8,11 +8,43 @@ void DemoMode::begin()
     mainMode = true;
     subsystems.audio.stopLong();
     subsystems.audio.stopShort();
+    subsystems.lights.eyeLight.setStandard(CRGB(100, 120, 255));
+    subsystems.lights.eyeLight.setBlink(CRGB(100, 0, 0), 0);
 }
 void DemoMode::run()
 {
     if (genS.musicMode == 2) {
         robot.entertainment.playConstantMusicLongIR();
+    }
+
+    if (genS.lightsMode == 0) {
+        subsystems.lights.eyeLight.setBlinkOff();
+        subsystems.lights.eyeLight.setMode(EyeLight::OFF);
+    }
+    if (genS.lightsMode == 1) {
+        subsystems.lights.eyeLight.setMode(EyeLight::NORMAL);
+        subsystems.lights.eyeLight.setBlinkOff();
+        if (subsystems.audio.isPlayingShort() || subsystems.audio.isPlayingTrack(30)) {
+            subsystems.lights.eyeLight.setStandard(CRGB(255, 0, 0));
+        } else if (subsystems.audio.isPlayingLong()) {
+            subsystems.lights.eyeLight.setStandard(CRGB(0, 55, 0));
+        } else {
+            subsystems.lights.eyeLight.setStandard(CRGB(0, 0, 0));
+        }
+    }
+    if (genS.lightsMode == 2) {
+        subsystems.lights.eyeLight.setBlink(CRGB(0, 0, 0), 2000);
+        if (subsystems.audio.isPlayingShort() || subsystems.audio.isPlayingTrack(30)) {
+            subsystems.lights.eyeLight.setMode(EyeLight::RAINBOW);
+        } else {
+            subsystems.lights.eyeLight.setMode(EyeLight::NORMAL);
+            subsystems.lights.eyeLight.setStandard(CRGB(50, 100, 255));
+        }
+    }
+    if (subsystems.audio.isPlayingTrack(30)) {
+        subsystems.tail.wag(2000); //wag to Luca
+    } else {
+        subsystems.tail.stopWag();
     }
 
     if (genS.lightsMode != DURINGmodeLastGenS.lightsMode) {
@@ -21,18 +53,18 @@ void DemoMode::run()
     }
 
     if (genS.musicMode == 0) { //off
-        if (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK) {
+        if (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK && mainMode) {
             subsystems.audio.playTrack(30); //say hi to Luca
         }
     }
 
     if (genS.musicMode == 1) { //short
-        if (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK) {
+        if (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK && mainMode) {
             subsystems.audio.playNextShort();
         }
     }
     if (mainMode) {
-        if (millis() - subsystems.ir.lastNewMsgMillis < 150 && go) {
+        if (millis() - subsystems.ir.lastNewMsgMillis < 800 && go) {
             robot.moveSafe.setVelsSafe(demoModePresetSettings[genS.preset].manualDriveSpeed * (1 * (subsystems.ir.message == irConstants.UP) - 1 * (subsystems.ir.message == irConstants.DOWN)), demoModePresetSettings[genS.preset].manualTurnSpeed * (1 * (subsystems.ir.message == irConstants.RIGHT) - 1 * (subsystems.ir.message == irConstants.LEFT)));
         } else {
             subsystems.drivetrain.WheelL.setVel(0);
@@ -54,6 +86,6 @@ void DemoMode::run()
         }
     }
     DURINGmodeLastGenS = genS;
-    runGenIR(); //remove for demo mode?
+    runGenIR();
     runGenGoStopButton();
 }

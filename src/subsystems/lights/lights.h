@@ -2,6 +2,7 @@
 #define LIGHTS_H
 #include "constants/wheelLightConstants.h"
 #include "wheelLight.h"
+#include "eyeLight.h"
 #include <Arduino.h>
 class Lights {
 public:
@@ -10,5 +11,6 @@ public:
     void run();
     WheelLight WheelLightL;
     WheelLight WheelLightR;
+    EyeLight eyeLight;
 };
 #endif

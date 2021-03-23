@@ -1,19 +1,18 @@
-#ifndef DEMO_MODE_H
-#define DEMO_MODE_H
+#ifndef CHASE_MODE_H
+#define CHASE_MODE_H
 #include "constants/irConstants.h"
 #include "robot/genGoStopButton.h"
 #include "robot/genIR.h"
 #include "robot/robot.h"
 #include "shelbytron_globs.h"
 #include <Arduino.h>
-class DemoMode {
+class ChaseMode {
 public:
-    DemoMode();
+    ChaseMode();
     void begin();
     void run();
 
 private:
-    boolean mainMode = true;
 };
-static DemoMode demomode = DemoMode();
+static ChaseMode chasemode = ChaseMode();
 #endif

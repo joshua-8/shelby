@@ -7,11 +7,13 @@ void Lights::begin()
 {
     WheelLightL.begin(true);
     WheelLightR.begin(false);
+    eyeLight.begin();
 }
 void Lights::run()
 {
     WheelLightL.run();
     WheelLightR.run();
+    eyeLight.run();
     // WheelLightL.allOff(false);
     // WheelLightR.allOff(false);
     // WheelLightL.dropRipple(millis() % 10000 - 3000, 4000, 500, 190, 255, 195, 2, 255 * 2 / 10);
