@@ -21,16 +21,6 @@ void EyeLight::run()
         if (millis() - lastBlinkedMillis > blinkInterval + eyeLightConstants.BLINK_TIME_MILLIS) {
             lastBlinkedMillis = millis();
             blinking = false;
-            switch (mode) {
-            case OFF:
-                allOff(true);
-                break;
-            case NORMAL:
-                allColor(standardColor, true);
-                break;
-            case RAINBOW:
-                break;
-            }
         }
 
         if (millis() - lastBlinkedMillis > blinkInterval && !blinking) {
@@ -45,8 +35,10 @@ void EyeLight::run()
     } else {
         switch (mode) {
         case OFF:
+            allOff(true);
             break;
         case NORMAL:
+            allColor(standardColor, true);
             break;
         case RAINBOW:
             allColor(CHSV((millis() / 10) % 256, 255, 255), true);

@@ -25,7 +25,7 @@ void DemoMode::run()
         subsystems.lights.eyeLight.setMode(EyeLight::NORMAL);
         subsystems.lights.eyeLight.setBlinkOff();
         if (subsystems.audio.isPlayingShort() || subsystems.audio.isPlayingTrack(30)) {
-            subsystems.lights.eyeLight.setStandard(CRGB(255, 0, 0));
+            subsystems.lights.eyeLight.setStandard(CRGB(255, 0, 255));
         } else if (subsystems.audio.isPlayingLong()) {
             subsystems.lights.eyeLight.setStandard(CRGB(0, 55, 0));
         } else {
@@ -33,11 +33,12 @@ void DemoMode::run()
         }
     }
     if (genS.lightsMode == 2) {
-        subsystems.lights.eyeLight.setBlink(CRGB(0, 0, 0), 2000);
         if (subsystems.audio.isPlayingShort() || subsystems.audio.isPlayingTrack(30)) {
             subsystems.lights.eyeLight.setMode(EyeLight::RAINBOW);
+            subsystems.lights.eyeLight.setBlinkOff();
         } else {
             subsystems.lights.eyeLight.setMode(EyeLight::NORMAL);
+            subsystems.lights.eyeLight.setBlink(CRGB(0, 0, 0), 2000);
             subsystems.lights.eyeLight.setStandard(CRGB(50, 100, 255));
         }
     }

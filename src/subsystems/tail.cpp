@@ -17,7 +17,7 @@ void Tail::run()
 {
     if (period > 0) {
 
-        float movement = constrain(1.0 * (tailConstants.rightRange - tailConstants.leftRange) * lastLoopTimeMicros / period * 2, -(tailConstants.rightRange - tailConstants.leftRange) / 5, (tailConstants.rightRange - tailConstants.leftRange) / 5);
+        float movement = constrain(1.0 * (tailConstants.rightRange - tailConstants.leftRange) * lastLoopTimeMicros / 1000 / period * 2, -(tailConstants.rightRange - tailConstants.leftRange) / 5, (tailConstants.rightRange - tailConstants.leftRange) / 5);
 
         if (increa) {
             if (pos + movement > max(tailConstants.rightRange, tailConstants.leftRange)) {
