@@ -10,5 +10,8 @@ struct topSettingsStruct {
     float leftWheelFF;
     float rightWheelFF;
     float wheelAccel;
+    float debugA;
+    float debugB;
+    float debugC;
 };
 #endif

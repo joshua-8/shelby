@@ -11,6 +11,7 @@ void Subsystems::begin()
     lights.begin();
     drivetrain.begin();
     tail.begin();
+    head.begin();
 }
 void Subsystems::run()
 {
@@ -23,4 +24,5 @@ void Subsystems::run()
     ir.run();
     lights.run();
     tail.run();
+    head.run();
 }

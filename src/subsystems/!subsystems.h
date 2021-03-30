@@ -5,6 +5,7 @@
 #include "distanceSensors/distanceSensors.h"
 #include "drivetrain/drivetrain.h"
 #include "goButton.h"
+#include "head.h"
 #include "ir.h"
 #include "lights/lights.h"
 #include "nineDOFSensor.h"
@@ -21,6 +22,7 @@ public:
     Drivetrain drivetrain;
     Lights lights;
     Tail tail;
+    Head head;
 
     void begin();
     void run();
