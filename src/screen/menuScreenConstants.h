@@ -10,7 +10,7 @@ public:
     const short SCREEN_MODE_TEDIT = 3;
 
     const int SCREEN_WIDTH = screenConstants.SCREEN_WIDTH;
-    const int SCREEN_HEIGHT = screenConstants.SCREEN_WIDTH;
+    const int SCREEN_HEIGHT = screenConstants.SCREEN_HEIGHT;
 
     const short SCREEN_FONT_WIDTH = 6;
     const short SCREEN_FONT_HEIGHT = 8;
@@ -106,6 +106,7 @@ public:
     const int BATTERY_DISPLAY_Y_POS = 0;
     const int BATTERY_DISPLAY_WIDTH = 104;
     const int BATTERY_DISPLAY_HEIGHT = PRESET_SELECTOR_POS_Y + PRESET_SELECTOR_HEIGHT * PRESET_SELECTOR_TOP_PERCENT / 100;
+    const float BATTERY_GAUGE_PORTION = .4;
 };
 
 static menuScreenConsts menuScreenConstants;

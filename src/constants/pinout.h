@@ -7,10 +7,8 @@ const byte BNO055_SCL_PIN = 3;
 const byte BNO055_SDA_PIN = 4;
 const byte SCREEN_DC_PIN = 5;
 const byte SCREEN_LIGHT_PIN = 6;
-const byte LEFT_TOF_TX_PIN = 7;
-const byte LEFT_TOF_RX_PIN = 8;
-const byte RIGHT_TOF_TX_PIN = 9;
-const byte RIGHT_TOF_RX_PIN = 10;
+#define RIGHT_TOF_SERIAL_PORT Serial2
+#define LEFT_TOF_SERIAL_PORT Serial3
 const byte SCREEN_MOSI_PIN = 11;
 const byte SCREEN_MISO_PIN = 12;
 const byte SCREEN_CLK_PIN = 13;
@@ -49,10 +47,10 @@ const byte LEFT_TOF_SERVO_POSITION_PIN = 50;
 const byte EYE_LIGHTS_CLOCK_PIN = 51;
 const byte EYE_LIGHTS_DATA_PIN = 52;
 const byte GO_STOP_BUTTON_PIN = 53;
-const byte RIGHT_WHEEL_LIGHTS_CLOCK_PIN = 54;
-const byte RIGHT_WHEEL_LIGHTS_DATA_PIN = 55;
-const byte LEFT_WHEEL_LIGHTS_CLOCK_PIN = 56;
-const byte LEFT_WHEEL_LIGHTS_DATA_PIN = 57;
+const byte RIGHT_WHEEL_LIGHTS_CLOCK_PIN = 55;
+const byte RIGHT_WHEEL_LIGHTS_DATA_PIN = 54;
+const byte LEFT_WHEEL_LIGHTS_CLOCK_PIN = 57;
+const byte LEFT_WHEEL_LIGHTS_DATA_PIN = 56;
 const byte BACK_DIST_PIN = A10; //a10
 const byte FRONT_DIST_PIN = A11; //a11
 const byte RIGHT_DIST_PIN = A21; //dac0

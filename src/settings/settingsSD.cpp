@@ -1,5 +1,5 @@
 #include "settingsSD.h"
-SdFatSdio sd;
+SdFat sd;
 SdFile file;
 void recallAllSettingsSD()
 {
@@ -11,5 +11,5 @@ void recallAllSettingsSD()
 }
 void setupSettingsSD()
 {
-    sd.begin();
+    sd.begin(SdioConfig(FIFO_SDIO));
 }

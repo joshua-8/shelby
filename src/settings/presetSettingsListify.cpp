@@ -14,7 +14,7 @@ int presetSettingsListifyGetLength(int mode)
     case STILL_MODE_ID:
         return 2;
     case DEMO_MODE_ID:
-        return 3;
+        return 2;
     }
     return 0;
 }
@@ -94,10 +94,8 @@ int presetSettingsListifyGetIsBIF(int mode, int currVal)
     case DEMO_MODE_ID:
         switch (currVal) {
         case 0:
-            return PRESET_SETTINGS_LISTIFY_BOOLEAN;
+            return PRESET_SETTINGS_LISTIFY_FLOAT;
         case 1:
-            return PRESET_SETTINGS_LISTIFY_INT;
-        case 2:
             return PRESET_SETTINGS_LISTIFY_FLOAT;
         }
         break;
@@ -179,11 +177,9 @@ float presetSettingsListifyGetVal(int mode, int preset, int currVal)
     case DEMO_MODE_ID:
         switch (currVal) {
         case 0:
-            return demoModePresetSettings[preset].demosettingA;
+            return demoModePresetSettings[preset].manualDriveSpeed;
         case 1:
-            return demoModePresetSettings[preset].demosettingB;
-        case 2:
-            return demoModePresetSettings[preset].demosettingC;
+            return demoModePresetSettings[preset].manualTurnSpeed;
         }
         break;
     }
@@ -288,13 +284,10 @@ void presetSettingsListifySetVal(int mode, int preset, int currVal, float val)
     case DEMO_MODE_ID:
         switch (currVal) {
         case 0:
-            demoModePresetSettings[preset].demosettingA = val;
+            demoModePresetSettings[preset].manualDriveSpeed = val;
             break;
         case 1:
-            demoModePresetSettings[preset].demosettingB = val;
-            break;
-        case 2:
-            demoModePresetSettings[preset].demosettingC = val;
+            demoModePresetSettings[preset].manualTurnSpeed = val;
             break;
         }
         break;
@@ -375,11 +368,9 @@ String presetSettingsListifyGetName(int mode, int currVal)
     case DEMO_MODE_ID:
         switch (currVal) {
         case 0:
-            return F("demosettA");
+            return F("drvSpd");
         case 1:
-            return F("demosettB");
-        case 2:
-            return F("demosettC");
+            return F("drvTrn");
         }
         break;
     }

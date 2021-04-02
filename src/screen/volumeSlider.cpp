@@ -40,12 +40,12 @@ void volumeSlider::run()
         newVal = true;
     }
     if (state) {
-        lastVal = val;
         val = constrain(map((*mouseData).mouseX, xPos + boxWidth / 2, xPos + width - boxWidth / 2, 0, rangeMax), 0, rangeMax);
-        if (val != lastVal) {
-            draw();
-        }
     }
+    if (val != lastVal) {
+        draw();
+    }
+    lastVal = val;
 }
 void volumeSlider::draw()
 {

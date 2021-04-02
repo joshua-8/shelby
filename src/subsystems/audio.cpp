@@ -18,11 +18,15 @@ void Audio::begin()
 }
 void Audio::run()
 {
-    if (genS.musicMode != lastGenS.musicMode) {
+    if (genS.musicMode != premodeLastGenS.musicMode) {
         stopShort();
         stopLong();
     }
-    
+    if (genS.musicList != premodeLastGenS.musicList) {
+        stopShort();
+        stopLong();
+    }
+
     wTrig.update();
     if (lastVolume != genS.volume) {
         lastVolume = genS.volume;
@@ -37,7 +41,7 @@ void Audio::playNextLong()
         longMusicPlaylistPos[genS.musicList] = 0;
     }
     longMusicPlaying = audioConstants.musicLongPlaylist[genS.musicList][longMusicPlaylistPos[genS.musicList]];
-    wTrig.trackGain(longMusicPlaying, audioConstants.MUSIC_NORMAL_GAIN);
+    wTrig.trackGain(longMusicPlaying, topSettings.musicNormalGain);
     longTrackStartMillis = millis();
     longTrackPlaying = true;
     wTrig.trackPlayPoly(longMusicPlaying);
@@ -55,11 +59,11 @@ void Audio::playLastLong()
         longMusicPlaylistPos[genS.musicList] = audioConstants.musicLongPlaylistLength[genS.musicList] - 1;
     }
     longMusicPlaying = audioConstants.musicLongPlaylist[genS.musicList][longMusicPlaylistPos[genS.musicList]];
-    wTrig.trackGain(longMusicPlaying, audioConstants.MUSIC_NORMAL_GAIN);
+    wTrig.trackGain(longMusicPlaying, topSettings.musicNormalGain);
     longTrackStartMillis = millis();
     longTrackPlaying = true;
     wTrig.trackPlayPoly(longMusicPlaying);
-    saveShortMusicSettingsSD();
+    saveLongMusicSettingsSD();
 }
 boolean Audio::isPlayingLong()
 {
@@ -78,7 +82,7 @@ void Audio::playNextShort()
         shortMusicPlaylistPos[genS.musicList] = 0;
     }
     shortMusicPlaying = audioConstants.musicShortPlaylist[genS.musicList][shortMusicPlaylistPos[genS.musicList]];
-    wTrig.trackGain(shortMusicPlaying, audioConstants.MUSIC_NORMAL_GAIN);
+    wTrig.trackGain(shortMusicPlaying, topSettings.musicNormalGain);
     shortTrackStartMillis = millis();
     shortTrackPlaying = true;
     wTrig.trackPlayPoly(shortMusicPlaying);
@@ -96,7 +100,7 @@ void Audio::playLastShort()
         shortMusicPlaylistPos[genS.musicList] = audioConstants.musicShortPlaylistLength[genS.musicList] - 1;
     }
     shortMusicPlaying = audioConstants.musicShortPlaylist[genS.musicList][shortMusicPlaylistPos[genS.musicList]];
-    wTrig.trackGain(shortMusicPlaying, audioConstants.MUSIC_NORMAL_GAIN);
+    wTrig.trackGain(shortMusicPlaying, topSettings.musicNormalGain);
     shortTrackStartMillis = millis();
     shortTrackPlaying = true;
     wTrig.trackPlayPoly(shortMusicPlaying);
@@ -108,4 +112,18 @@ boolean Audio::isPlayingShort()
         shortTrackPlaying = wTrig.isTrackPlaying(shortMusicPlaying);
     }
     return shortTrackPlaying;
+}
+void Audio::playTrack(int t)
+{
+    wTrig.trackPlayPoly(t);
+    wTrig.trackGain(t, topSettings.musicNormalGain);
+}
+boolean Audio::isPlayingTrack(int t)
+{
+    return wTrig.isTrackPlaying(t);
+}
+
+void Audio::stopTrack(int t)
+{
+    wTrig.trackStop(t);
 }

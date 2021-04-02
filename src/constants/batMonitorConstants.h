@@ -4,6 +4,7 @@
 class batMonitorConsts {
 public:
     const float voltsPerDAC = .00785;
+    const float smoothingParameter = .67;
 };
-static batMonitorConsts batMonitorConstants;
+static const batMonitorConsts batMonitorConstants;
 #endif

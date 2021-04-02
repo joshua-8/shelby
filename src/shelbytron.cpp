@@ -1,4 +1,6 @@
 //code for Shelbytron, a robot to encourage patients during physical therapy
+#include "modes/modes.h"
+#include "screen/msgScreen.h"
 #include "screen/screen.h"
 #include "settings/settings.h"
 #include "settings/settingsSD.h"
@@ -6,8 +8,12 @@
 #include "subsystems/!subsystems.h"
 #include <Arduino.h>
 
-Screen screen = Screen();
+Screen screen = Screen(&messageScreen);
 Subsystems subsystems = Subsystems();
+boolean go = false;
+MsgScreen messageScreen = MsgScreen(&subsystems.ir);
+elapsedMicros microsTimerVal = 0;
+unsigned long lastLoopTimeMicros = 0;
 
 void setup()
 {
@@ -15,8 +21,9 @@ void setup()
     analogReadResolution(12);
     setupSettingsSD();
     recallAllSettingsSD();
-    screen.begin();
+    go = false;
     subsystems.begin();
+    screen.begin();
 }
 
 void loop()
@@ -24,5 +31,8 @@ void loop()
     screen.run();
     subsystems.run();
 
-    lastGenS = genS;
+    modesRun();
+
+    lastLoopTimeMicros = microsTimerVal;
+    microsTimerVal = 0;
 }

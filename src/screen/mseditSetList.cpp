@@ -25,7 +25,7 @@ void mseditSetList::run()
         (*numPad).setInteger(modeSettingsListifyGetIsBIF(mode, currVal) == MODE_SETTINGS_LISTIFY_INT);
         drawn = false;
     }
-    if (length > 1) {
+    if (length > 1.0) {
         if ((*mouseData).mousePressed && (*mouseData).lastMouseX > xPos + width && (*mouseData).lastMouseX < xPos + width + menuScreenConstants.SETTING_LIST_SCROLL_BAR_WIDTH && (*mouseData).lastMouseY > yPos && (*mouseData).lastMouseY < yPos + height) {
             scroll = map((*mouseData).lastMouseY, yPos + .05 * height, yPos + .95 * height, 0, length - 1);
             drawn = false;
@@ -84,7 +84,7 @@ void mseditSetList::run()
             }
         }
         (*tft).fillRect(xPos + width, yPos, menuScreenConstants.SETTING_LIST_SCROLL_BAR_WIDTH, height, menuScreenConstants.SETTING_LIST_BACKGROUND_COLOR);
-        if (length < 1) {
+        if (length < 1.0) {
             (*tft).fillRect(xPos, yPos + height * (length), width, height * (1.0 - length), menuScreenConstants.SETTING_LIST_BACKGROUND_COLOR);
         } else {
             (*tft).fillRect(xPos + width, yPos + map(scroll, 0, length - 1, 0, height * .9), menuScreenConstants.SETTING_LIST_SCROLL_BAR_WIDTH, height * .1, menuScreenConstants.SETTING_LIST_SEL_COLOR);

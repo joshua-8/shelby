@@ -2,36 +2,34 @@
 
 int topSettingsListifyGetLength()
 {
-    return 12;
+    return 11;
 }
 
 int topSettingsListifyGetIsBIF(int currVal)
 {
     switch (currVal) {
     case 0:
-        return TOP_SETTINGS_LISTIFY_INT;
-    case 1:
         return TOP_SETTINGS_LISTIFY_FLOAT;
-    case 2:
-        return TOP_SETTINGS_LISTIFY_BOOLEAN;
-    case 3:
+    case 1:
         return TOP_SETTINGS_LISTIFY_INT;
+    case 2:
+        return TOP_SETTINGS_LISTIFY_FLOAT;
+    case 3:
+        return TOP_SETTINGS_LISTIFY_FLOAT;
     case 4:
         return TOP_SETTINGS_LISTIFY_FLOAT;
     case 5:
-        return TOP_SETTINGS_LISTIFY_BOOLEAN;
+        return TOP_SETTINGS_LISTIFY_FLOAT;
     case 6:
-        return TOP_SETTINGS_LISTIFY_INT;
+        return TOP_SETTINGS_LISTIFY_FLOAT;
     case 7:
         return TOP_SETTINGS_LISTIFY_FLOAT;
     case 8:
-        return TOP_SETTINGS_LISTIFY_BOOLEAN;
+        return TOP_SETTINGS_LISTIFY_FLOAT;
     case 9:
-        return TOP_SETTINGS_LISTIFY_INT;
+        return TOP_SETTINGS_LISTIFY_FLOAT;
     case 10:
         return TOP_SETTINGS_LISTIFY_FLOAT;
-    case 11:
-        return TOP_SETTINGS_LISTIFY_BOOLEAN;
     }
     return 0;
 }
@@ -40,29 +38,27 @@ float topSettingsListifyGetVal(int currVal)
 {
     switch (currVal) {
     case 0:
-        return topSettings.settingA;
+        return topSettings.magneticDeclination;
     case 1:
-        return topSettings.settingB;
+        return topSettings.musicNormalGain;
     case 2:
-        return topSettings.settingC;
+        return topSettings.highVoltThresh;
     case 3:
-        return topSettings.settingD;
+        return topSettings.lowVoltThresh;
     case 4:
-        return topSettings.settingE;
+        return topSettings.criticalVoltThresh;
     case 5:
-        return topSettings.settingF;
+        return topSettings.leftWheelFF;
     case 6:
-        return topSettings.settingG;
+        return topSettings.rightWheelFF;
     case 7:
-        return topSettings.settingH;
+        return topSettings.wheelAccel;
     case 8:
-        return topSettings.settingI;
+        return topSettings.debugA;
     case 9:
-        return topSettings.settingJ;
+        return topSettings.debugB;
     case 10:
-        return topSettings.settingK;
-    case 11:
-        return topSettings.settingL;
+        return topSettings.debugC;
     }
     return 0;
 }
@@ -71,40 +67,37 @@ void topSettingsListifySetVal(int currVal, float val)
 {
     switch (currVal) {
     case 0:
-        topSettings.settingA = val;
+        topSettings.magneticDeclination = val;
         break;
     case 1:
-        topSettings.settingB = val;
+        topSettings.musicNormalGain = val;
         break;
     case 2:
-        topSettings.settingC = val;
+        topSettings.highVoltThresh = val;
         break;
     case 3:
-        topSettings.settingD = val;
+        topSettings.lowVoltThresh = val;
         break;
     case 4:
-        topSettings.settingE = val;
+        topSettings.criticalVoltThresh = val;
         break;
     case 5:
-        topSettings.settingF = val;
+        topSettings.leftWheelFF = val;
         break;
     case 6:
-        topSettings.settingG = val;
+        topSettings.rightWheelFF = val;
         break;
     case 7:
-        topSettings.settingH = val;
+        topSettings.wheelAccel = val;
         break;
     case 8:
-        topSettings.settingI = val;
+        topSettings.debugA = val;
         break;
     case 9:
-        topSettings.settingJ = val;
+        topSettings.debugB = val;
         break;
     case 10:
-        topSettings.settingK = val;
-        break;
-    case 11:
-        topSettings.settingL = val;
+        topSettings.debugC = val;
         break;
     }
 }
@@ -113,29 +106,27 @@ String topSettingsListifyGetName(int currVal)
 {
     switch (currVal) {
     case 0:
-        return F("settA");
+        return F("MagDecln");
     case 1:
-        return F("settB");
+        return F("MusicGain");
     case 2:
-        return F("settC");
+        return F("HighBat");
     case 3:
-        return F("settD");
+        return F("LowBat");
     case 4:
-        return F("settE");
+        return F("CritBat");
     case 5:
-        return F("settF");
+        return F("LWheelFF");
     case 6:
-        return F("settG");
+        return F("RWheelFF");
     case 7:
-        return F("settH");
+        return F("wheelAccel");
     case 8:
-        return F("settI");
+        return F("debugA");
     case 9:
-        return F("settJ");
+        return F("debugB");
     case 10:
-        return F("settK");
-    case 11:
-        return F("settL");
+        return F("debugC");
     }
     return "";
 }

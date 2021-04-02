@@ -9,7 +9,7 @@
 #include "musicSD.h"
 #include "settings.h"
 
-extern SdFatSdio sd;
+extern SdFat sd;
 extern SdFile file;
 
 void setupSettingsSD();

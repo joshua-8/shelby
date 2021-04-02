@@ -16,6 +16,10 @@ void IRDist::run()
     int read = analogRead(pin);
     dist = ((float)consts.A / (float)read) + consts.B;
 }
+boolean IRDist::getValid()
+{
+    return (dist < consts.max);
+}
 float IRDist::getDist()
 {
     return dist;
