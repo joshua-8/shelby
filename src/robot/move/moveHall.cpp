@@ -1,9 +1,6 @@
 #include "moveHall.h"
 #include "robot/robot.h"
-MoveDrive::MoveDrive()
+MoveHall::MoveHall()
 {
 
-}
-void MoveDrive::run()
-{
 }
