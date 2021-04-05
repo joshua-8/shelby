@@ -13,6 +13,7 @@ public:
     void run();
 
 private:
+    int mode = 0;
 };
 static ChaseMode chasemode = ChaseMode();
 #endif

@@ -1,5 +1,8 @@
 #include "moveDrive.h"
 #include "robot/robot.h"
+/**
+ * @brief  drive specific distance and rotation in set time (obstacle detection safe mode option available)
+ */
 MoveDrive::MoveDrive()
 {
     navigating = false;
