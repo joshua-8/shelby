@@ -65,7 +65,7 @@ void DemoMode::run()
         }
     }
     if (mainMode) {
-        if (millis() - subsystems.ir.lastNewMsgMillis < 800 && go) {
+        if (millis() - subsystems.ir.lastNewMsgMillis < 400 && go) {
             robot.moveSafe.setVelsSafe(demoModePresetSettings[genS.preset].manualDriveSpeed * (1 * (subsystems.ir.message == irConstants.UP) - 1 * (subsystems.ir.message == irConstants.DOWN)), demoModePresetSettings[genS.preset].manualTurnSpeed * (1 * (subsystems.ir.message == irConstants.RIGHT) - 1 * (subsystems.ir.message == irConstants.LEFT)));
         } else {
             subsystems.drivetrain.WheelL.setVel(0);

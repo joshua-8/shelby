@@ -10,7 +10,7 @@ void ChaseMode::begin()
 }
 void ChaseMode::run()
 {
-    if (go && !lastGo) {
+    if ((go && !lastGo) || (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK)) {
         robot.moveHeading.resetZero();
     }
     robot.entertainment.playConstantMusicLongIR();
@@ -42,8 +42,10 @@ void ChaseMode::run()
             robot.moveHeading.driveHeading(90, topSettings.debugC, true);
         }
     }
-    // subsystems.distanceSensors.LTurret.setAngle(-90 - subsystems.drivetrain.getRotation());
-    // subsystems.distanceSensors.RTurret.setAngle(90 - subsystems.drivetrain.getRotation());
+    if (abs(subsystems.drivetrain.getRotation()) < 45) {
+        subsystems.distanceSensors.LTurret.setAngle(-90 - subsystems.drivetrain.getRotation());
+        subsystems.distanceSensors.RTurret.setAngle(90 - subsystems.drivetrain.getRotation());
+    }
 
     DURINGmodeLastGenS = genS;
     runGenIR();
