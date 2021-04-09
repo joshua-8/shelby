@@ -16,5 +16,9 @@ struct topSettingsStruct {
     float wheelAccel;
     float mHeadMxRtErr;
     float mHeadPterm;
+    float mHallPterm;
+    float mHallHeadRng;
+    float mHallHallAdj;
+    float mHallHeadAdj;
 };
 #endif

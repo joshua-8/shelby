@@ -26,6 +26,9 @@ void setup()
     lastGo = false;
     subsystems.begin();
     screen.begin();
+
+    lastLoopTimeMicros = 0;
+    microsTimerVal = 0;
 }
 
 void loop()

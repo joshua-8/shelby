@@ -5,7 +5,7 @@
 class MoveHall {
 public:
     MoveHall();
-    void run();
+    void run(float speed, boolean safe);
     void begin();
 
 private:
@@ -13,10 +13,10 @@ private:
     float hallError;
     float processedHallError;
     float targetRobotHeadingHall;
+    float targetRobotHeading;
     float processedTargetRobotHeading;
     float hallHeading;
     float robotHeading;
-    float wheelDifferential;
     float leftTurretAngle;
     float rightTurretAngle;
 };

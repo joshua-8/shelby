@@ -5,6 +5,7 @@
 #include "robot/genIR.h"
 #include "robot/robot.h"
 #include "shelbytron_globs.h"
+#include "settings/settings.h"
 #include <Arduino.h>
 class ChaseMode {
 public:

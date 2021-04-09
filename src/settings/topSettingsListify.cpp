@@ -2,7 +2,7 @@
 
 int topSettingsListifyGetLength()
 {
-    return 14;
+    return 18;
 }
 
 int topSettingsListifyGetIsBIF(int currVal)
@@ -35,6 +35,14 @@ int topSettingsListifyGetIsBIF(int currVal)
     case 12:
         return TOP_SETTINGS_LISTIFY_FLOAT;
     case 13:
+        return TOP_SETTINGS_LISTIFY_FLOAT;
+    case 14:
+        return TOP_SETTINGS_LISTIFY_FLOAT;
+    case 15:
+        return TOP_SETTINGS_LISTIFY_FLOAT;
+    case 16:
+        return TOP_SETTINGS_LISTIFY_FLOAT;
+    case 17:
         return TOP_SETTINGS_LISTIFY_FLOAT;
     }
     return 0;
@@ -71,6 +79,14 @@ float topSettingsListifyGetVal(int currVal)
         return topSettings.mHeadMxRtErr;
     case 13:
         return topSettings.mHeadPterm;
+    case 14:
+        return topSettings.mHallPterm;
+    case 15:
+        return topSettings.mHallHeadRng;
+    case 16:
+        return topSettings.mHallHallAdj;
+    case 17:
+        return topSettings.mHallHeadAdj;
     }
     return 0;
 }
@@ -120,6 +136,18 @@ void topSettingsListifySetVal(int currVal, float val)
     case 13:
         topSettings.mHeadPterm = val;
         break;
+    case 14:
+        topSettings.mHallPterm = val;
+        break;
+    case 15:
+        topSettings.mHallHeadRng = val;
+        break;
+    case 16:
+        topSettings.mHallHallAdj = val;
+        break;
+    case 17:
+        topSettings.mHallHeadAdj = val;
+        break;
     }
 }
 
@@ -154,6 +182,14 @@ String topSettingsListifyGetName(int currVal)
         return F("mHeadMxRtErr");
     case 13:
         return F("mHeadPterm");
+    case 14:
+        return F("mHallPterm");
+    case 15:
+        return F("mHallHeadRng");
+    case 16:
+        return F("mHallHallAdj");
+    case 17:
+        return F("mHallHeadAdj");
     }
     return "";
 }

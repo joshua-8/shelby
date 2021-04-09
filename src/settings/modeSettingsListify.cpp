@@ -6,7 +6,7 @@ int modeSettingsListifyGetLength(int mode)
     case TAG_MODE_ID:
         return 3;
     case CHASE_MODE_ID:
-        return 3;
+        return 1;
     case RACE_MODE_ID:
         return 12;
     case WALKER_MODE_ID:
@@ -36,10 +36,6 @@ int modeSettingsListifyGetIsBIF(int mode, int currVal)
     case CHASE_MODE_ID:
         switch (currVal) {
         case 0:
-            return MODE_SETTINGS_LISTIFY_INT;
-        case 1:
-            return MODE_SETTINGS_LISTIFY_FLOAT;
-        case 2:
             return MODE_SETTINGS_LISTIFY_BOOLEAN;
         }
         break;
@@ -119,11 +115,7 @@ float modeSettingsListifyGetVal(int mode, int currVal)
     case CHASE_MODE_ID:
         switch (currVal) {
         case 0:
-            return chaseModeModeSettings.chasesettingA;
-        case 1:
-            return chaseModeModeSettings.chasesettingB;
-        case 2:
-            return chaseModeModeSettings.chasesettingC;
+            return chaseModeModeSettings.safe;
         }
         break;
     case RACE_MODE_ID:
@@ -205,13 +197,7 @@ void modeSettingsListifySetVal(int mode, int currVal, float val)
     case CHASE_MODE_ID:
         switch (currVal) {
         case 0:
-            chaseModeModeSettings.chasesettingA = val;
-            break;
-        case 1:
-            chaseModeModeSettings.chasesettingB = val;
-            break;
-        case 2:
-            chaseModeModeSettings.chasesettingC = val;
+            chaseModeModeSettings.safe = val;
             break;
         }
         break;
@@ -310,11 +296,7 @@ String modeSettingsListifyGetName(int mode, int currVal)
     case CHASE_MODE_ID:
         switch (currVal) {
         case 0:
-            return F("chasesettA");
-        case 1:
-            return F("chasesettB");
-        case 2:
-            return F("chasesettC");
+            return F("safe");
         }
         break;
     case RACE_MODE_ID:

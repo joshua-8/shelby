@@ -6,7 +6,7 @@ int presetSettingsListifyGetLength(int mode)
     case TAG_MODE_ID:
         return 3;
     case CHASE_MODE_ID:
-        return 3;
+        return 1;
     case RACE_MODE_ID:
         return 12;
     case WALKER_MODE_ID:
@@ -36,11 +36,7 @@ int presetSettingsListifyGetIsBIF(int mode, int currVal)
     case CHASE_MODE_ID:
         switch (currVal) {
         case 0:
-            return PRESET_SETTINGS_LISTIFY_INT;
-        case 1:
             return PRESET_SETTINGS_LISTIFY_FLOAT;
-        case 2:
-            return PRESET_SETTINGS_LISTIFY_BOOLEAN;
         }
         break;
     case RACE_MODE_ID:
@@ -119,11 +115,7 @@ float presetSettingsListifyGetVal(int mode, int preset, int currVal)
     case CHASE_MODE_ID:
         switch (currVal) {
         case 0:
-            return chaseModePresetSettings[preset].chasesettingA;
-        case 1:
-            return chaseModePresetSettings[preset].chasesettingB;
-        case 2:
-            return chaseModePresetSettings[preset].chasesettingC;
+            return chaseModePresetSettings[preset].speed;
         }
         break;
     case RACE_MODE_ID:
@@ -205,13 +197,7 @@ void presetSettingsListifySetVal(int mode, int preset, int currVal, float val)
     case CHASE_MODE_ID:
         switch (currVal) {
         case 0:
-            chaseModePresetSettings[preset].chasesettingA = val;
-            break;
-        case 1:
-            chaseModePresetSettings[preset].chasesettingB = val;
-            break;
-        case 2:
-            chaseModePresetSettings[preset].chasesettingC = val;
+            chaseModePresetSettings[preset].speed = val;
             break;
         }
         break;
@@ -310,11 +296,7 @@ String presetSettingsListifyGetName(int mode, int currVal)
     case CHASE_MODE_ID:
         switch (currVal) {
         case 0:
-            return F("chasesettA");
-        case 1:
-            return F("chasesettB");
-        case 2:
-            return F("chasesettC");
+            return F("speed");
         }
         break;
     case RACE_MODE_ID:

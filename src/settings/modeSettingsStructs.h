@@ -8,9 +8,7 @@ struct tagModeModeSettingsStruct {
 };
 
 struct chaseModeModeSettingsStruct {
-    int chasesettingA;
-    float chasesettingB;
-    bool chasesettingC;
+    boolean safe;
 };
 
 struct raceModeModeSettingsStruct {
