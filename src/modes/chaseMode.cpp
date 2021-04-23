@@ -5,24 +5,32 @@ ChaseMode::ChaseMode()
 }
 void ChaseMode::begin()
 {
-    mode = 0;
+    forwards = true;
     robot.moveHall.begin();
 }
 void ChaseMode::run()
 {
-    if (go && !lastGo) {
+
+    if (genS.musicMode == 2) {
+        robot.entertainment.playConstantMusicLongIR();
+    }
+
+    if (go && !DURINGModeLastGo) {
+        robot.moveHeading.resetZero();
         robot.moveHall.begin();
     }
+    if (subsystems.ir.newMsg && subsystems.ir.message == irConstants.OK && !subsystems.ir.repeat) {
+        forwards = !forwards;
+    }
     if (go) {
-        if (millis() - subsystems.ir.lastNewMsgMillis < 400 && subsystems.ir.message == irConstants.OK) {
-            robot.moveHall.run(-chaseModePresetSettings[genS.preset].speed, chaseModeModeSettings.safe);
-        } else {
+        if (forwards) {
             robot.moveHall.run(chaseModePresetSettings[genS.preset].speed, chaseModeModeSettings.safe);
+        } else {
+            robot.moveHall.run(-chaseModePresetSettings[genS.preset].speed, chaseModeModeSettings.safe);
         }
     }
 
-    robot.entertainment.playConstantMusicLongIR();
-
+    DURINGModeLastGo = go;
     DURINGmodeLastGenS = genS;
     runGenIR();
     runGenGoStopButton();

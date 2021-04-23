@@ -11,7 +11,7 @@
 Screen screen = Screen(&messageScreen);
 Subsystems subsystems = Subsystems();
 boolean go = false;
-boolean lastGo = false;
+boolean DURINGModeLastGo = false;
 MsgScreen messageScreen = MsgScreen(&subsystems.ir);
 elapsedMicros microsTimerVal = 0;
 unsigned long lastLoopTimeMicros = 0;
@@ -23,7 +23,7 @@ void setup()
     setupSettingsSD();
     recallAllSettingsSD();
     go = false;
-    lastGo = false;
+    DURINGModeLastGo = false;
     subsystems.begin();
     screen.begin();
 
@@ -38,7 +38,6 @@ void loop()
 
     modesRun();
 
-    lastGo = go;
     lastLoopTimeMicros = microsTimerVal;
     microsTimerVal = 0;
 }

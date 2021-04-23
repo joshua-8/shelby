@@ -86,6 +86,8 @@ void DemoMode::run()
             subsystems.audio.playTrack(messageScreen.valSelectorValue());
         }
     }
+
+    DURINGModeLastGo = go;
     DURINGmodeLastGenS = genS;
     runGenIR();
     runGenGoStopButton();

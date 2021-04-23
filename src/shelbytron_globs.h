@@ -4,7 +4,7 @@
 #include "subsystems/!subsystems.h"
 
 extern boolean go;
-extern boolean lastGo;
+extern boolean DURINGModeLastGo;
 extern unsigned long lastLoopTimeMicros;
 extern Subsystems subsystems;
 extern MsgScreen messageScreen;

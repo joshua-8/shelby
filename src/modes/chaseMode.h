@@ -4,8 +4,8 @@
 #include "robot/genGoStopButton.h"
 #include "robot/genIR.h"
 #include "robot/robot.h"
-#include "shelbytron_globs.h"
 #include "settings/settings.h"
+#include "shelbytron_globs.h"
 #include <Arduino.h>
 class ChaseMode {
 public:
@@ -14,7 +14,7 @@ public:
     void run();
 
 private:
-    int mode = 0;
+    boolean forwards = true;
 };
 static ChaseMode chasemode = ChaseMode();
 #endif
