@@ -4,7 +4,10 @@
 #define SENSE_WALL_DERIV_H
 class SenseWallDeriv {
 private:
-    float distInterval = 0.20;
+    float angle = 0;
+    float distInterval = 0.10;
+
+    boolean reverse;
 
     float lastWheel = 0;
     float lastWall = 0;
@@ -12,10 +15,10 @@ private:
     boolean newData;
 
 public:
-    SenseWallDeriv();
-    RingBuf<float, 20> buffer;
+    SenseWallDeriv(boolean _reverse);
+    RingBuf<float, 5> buffer;
 
-    void begin();
+    void begin(float _distInterval);
     void addData(float wall, float wheel);
     float getAngle();
     boolean isDataNew();

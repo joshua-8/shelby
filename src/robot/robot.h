@@ -16,8 +16,8 @@ public:
     MoveHeading moveHeading;
     MoveSafe moveSafe;
 
-    SenseWallDeriv leftWallDerivSensor;
-    SenseWallDeriv rightWallDerivSensor;
+    SenseWallDeriv leftWallDerivSensor = SenseWallDeriv(true);
+    SenseWallDeriv rightWallDerivSensor = SenseWallDeriv(false);
 };
 static Robot robot = Robot();
 #endif

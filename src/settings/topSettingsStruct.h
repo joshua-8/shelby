@@ -20,5 +20,6 @@ struct topSettingsStruct {
     float mHallHeadRng;
     float mHallHallAdj;
     float mHallHeadAdj;
+    float mHallThresh;
 };
 #endif

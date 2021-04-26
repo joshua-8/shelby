@@ -2,7 +2,7 @@
 
 int topSettingsListifyGetLength()
 {
-    return 18;
+    return 19;
 }
 
 int topSettingsListifyGetIsBIF(int currVal)
@@ -43,6 +43,8 @@ int topSettingsListifyGetIsBIF(int currVal)
     case 16:
         return TOP_SETTINGS_LISTIFY_FLOAT;
     case 17:
+        return TOP_SETTINGS_LISTIFY_FLOAT;
+    case 18:
         return TOP_SETTINGS_LISTIFY_FLOAT;
     }
     return 0;
@@ -87,6 +89,8 @@ float topSettingsListifyGetVal(int currVal)
         return topSettings.mHallHallAdj;
     case 17:
         return topSettings.mHallHeadAdj;
+    case 18:
+        return topSettings.mHallThresh;
     }
     return 0;
 }
@@ -148,6 +152,9 @@ void topSettingsListifySetVal(int currVal, float val)
     case 17:
         topSettings.mHallHeadAdj = val;
         break;
+    case 18:
+        topSettings.mHallThresh = val;
+        break;
     }
 }
 
@@ -190,6 +197,8 @@ String topSettingsListifyGetName(int currVal)
         return F("mHallHallAdj");
     case 17:
         return F("mHallHeadAdj");
+    case 18:
+        return F("mHallThresh");
     }
     return "";
 }
