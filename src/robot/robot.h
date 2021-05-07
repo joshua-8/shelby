@@ -6,8 +6,6 @@
 #include "move/moveHeading.h"
 #include "move/moveSafely.h"
 
-#include "sense/senseWallDeriv.h"
-
 class Robot {
 public:
     Entertainment entertainment;
@@ -16,8 +14,6 @@ public:
     MoveHeading moveHeading;
     MoveSafe moveSafe;
 
-    SenseWallDeriv leftWallDerivSensor = SenseWallDeriv(true);
-    SenseWallDeriv rightWallDerivSensor = SenseWallDeriv(false);
 };
 static Robot robot = Robot();
 #endif
