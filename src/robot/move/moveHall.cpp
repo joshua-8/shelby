@@ -66,7 +66,7 @@ void MoveHall::run(float speed, boolean safe)
 
     hallWidth = rightDist + leftDist;
     //left of center=positive, right of center=negative
-    hallError = rightDist - leftDist;
+    hallError = rightDist - .4; //leftDist;
 
     robotHeading = subsystems.drivetrain.getRotation();
 
@@ -78,7 +78,7 @@ void MoveHall::run(float speed, boolean safe)
     processedTargetRobotHeading += constrain(targetRobotHeading - processedTargetRobotHeading, -topSettings.mHallHeadAdj * lastLoopTimeMicros / 1000000.0, topSettings.mHallHeadAdj * lastLoopTimeMicros / 1000000.0);
 
     /////////////////hall Heading calculation
-    if (abs(subsystems.drivetrain.getDist()) - abs(lastDriveDist) > .01) {
+    if (abs(subsystems.drivetrain.getDist()) - abs(lastDriveDist) > topSettings.mHallDinc) {
 
         leftDist = subsystems.distanceSensors.LTurret.getDist();
         rightDist = subsystems.distanceSensors.RTurret.getDist();
@@ -112,6 +112,8 @@ void MoveHall::run(float speed, boolean safe)
         lastLeftDist = leftDist;
         lastRightDist = rightDist;
 
+        Serial.print(subsystems.distanceSensors.FDist.getValid() ? subsystems.distanceSensors.FDist.getDist() : INFINITY);
+        Serial.print(",");
         Serial.print(leftDist, 3);
         Serial.print(",");
         Serial.print(rightDist, 3);
@@ -126,7 +128,7 @@ void MoveHall::run(float speed, boolean safe)
         Serial.print(",");
         Serial.println(hallHeading);
     }
-    hallHeadingProcessed += constrain(hallHeading - hallHeadingProcessed, -topSettings.mHallHallAdj, topSettings.mHallHallAdj);
+    hallHeadingProcessed += constrain(hallHeading - hallHeadingProcessed, -topSettings.mHallHallAdj * lastLoopTimeMicros / 1000000.0, topSettings.mHallHallAdj * lastLoopTimeMicros / 1000000.0);
 
     robot.moveHeading.driveHeading(processedTargetRobotHeading + hallHeadingProcessed, speed, safe);
 

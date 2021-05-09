@@ -7,9 +7,9 @@ struct irDistConsts {
     float max;
 };
 const irDistConsts irDistConstants[] {
-    { 390.0, -.0382, .35 }, //right
-    { 390.0, -.0382, .35 }, //front
-    { 390.0, -.0382, .35 }, //left
-    { 390.0, -.0382, .35 } //back
+    { 390.0, -.0382, .25 }, //right
+    { 390.0, -.0382, .25 }, //front
+    { 390.0, -.0382, .25 }, //left
+    { 390.0, -.0382, .25 } //back
 };
 #endif
