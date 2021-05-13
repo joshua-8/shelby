@@ -112,21 +112,21 @@ void MoveHall::run(float speed, boolean safe)
         lastLeftDist = leftDist;
         lastRightDist = rightDist;
 
-        Serial.print(subsystems.distanceSensors.FDist.getValid() ? subsystems.distanceSensors.FDist.getDist() : INFINITY);
-        Serial.print(",");
-        Serial.print(leftDist, 3);
-        Serial.print(",");
-        Serial.print(rightDist, 3);
-        Serial.print(",");
-        Serial.print(leftDelta, 3);
-        Serial.print(",");
-        Serial.print(rightDelta, 3);
-        Serial.print(",");
-        Serial.print(delta, 3);
-        Serial.print(",");
-        Serial.print(instantAngle);
-        Serial.print(",");
-        Serial.println(hallHeading);
+        // Serial.print(subsystems.distanceSensors.FDist.getValid() ? subsystems.distanceSensors.FDist.getDist() : INFINITY);
+        // Serial.print(",");
+        // Serial.print(leftDist, 3);
+        // Serial.print(",");
+        // Serial.print(rightDist, 3);
+        // Serial.print(",");
+        // Serial.print(leftDelta, 3);
+        // Serial.print(",");
+        // Serial.print(rightDelta, 3);
+        // Serial.print(",");
+        // Serial.print(delta, 3);
+        // Serial.print(",");
+        // Serial.print(instantAngle);
+        // Serial.print(",");
+        // Serial.println(hallHeading);
     }
     hallHeadingProcessed += constrain(hallHeading - hallHeadingProcessed, -topSettings.mHallHallAdj * lastLoopTimeMicros / 1000000.0, topSettings.mHallHallAdj * lastLoopTimeMicros / 1000000.0);
 

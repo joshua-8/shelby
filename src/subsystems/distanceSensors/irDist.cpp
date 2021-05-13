@@ -13,8 +13,7 @@ void IRDist::begin(byte _pin, irDistConsts _consts)
 }
 void IRDist::run()
 {
-    int read = analogRead(pin);
-    dist = ((float)consts.A / (float)read) + consts.B;
+    dist = (((float)consts.A / (float)analogRead(pin)) + consts.B) * consts.smooth + dist * (1 - consts.smooth);
 }
 boolean IRDist::getValid()
 {
