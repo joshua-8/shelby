@@ -282,8 +282,6 @@ String modeSettingsListifyGetName(int mode, int currVal)
             return F("safe");
         case 1:
             return F("turnTime");
-        case 2:
-            return F("tagsettC");
         }
         break;
     case CHASE_MODE_ID:
