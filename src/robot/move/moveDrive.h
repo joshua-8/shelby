@@ -8,7 +8,7 @@ public:
     void run();
     boolean navigating;
     boolean isNavigating();
-    void setDriveTarget(float distance, float rotation, unsigned long timeMillis, boolean _safe);
+    void setDriveTarget(float distance, float rotation, unsigned long timeMillis, boolean _safe, bool reset);
     boolean stopNavigating();
 
 private:

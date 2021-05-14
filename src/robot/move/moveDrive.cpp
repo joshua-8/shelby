@@ -21,7 +21,7 @@ void MoveDrive::run()
         }
     }
 }
-void MoveDrive::setDriveTarget(float distance, float rotation, unsigned long timeMillis, boolean _safe)
+void MoveDrive::setDriveTarget(float distance, float rotation, unsigned long timeMillis, boolean _safe, bool reset)
 {
     if (timeMillis > 0) { //protect against divide by zero
         navTime = timeMillis;
@@ -32,9 +32,10 @@ void MoveDrive::setDriveTarget(float distance, float rotation, unsigned long tim
         doneMoving = false;
         doneTurning = false;
     }
-
-    subsystems.drivetrain.WheelL.resetPosition();
-    subsystems.drivetrain.WheelR.resetPosition();
+    if (reset) {
+        subsystems.drivetrain.WheelL.resetPosition();
+        subsystems.drivetrain.WheelR.resetPosition();
+    }
 }
 
 boolean MoveDrive::navigate()

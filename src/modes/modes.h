@@ -2,6 +2,7 @@
 #define MODES_H
 #include "chaseMode.h"
 #include "demoMode.h"
+#include "raceMode.h"
 
 void modesRun()
 {
@@ -13,6 +14,7 @@ void modesRun()
             chasemode.begin();
             break;
         case RACE_MODE_ID:
+            racemode.begin();
             break;
         case WALKER_MODE_ID:
             break;
@@ -32,6 +34,7 @@ void modesRun()
         chasemode.run();
         break;
     case RACE_MODE_ID:
+        racemode.run();
         break;
     case WALKER_MODE_ID:
         break;

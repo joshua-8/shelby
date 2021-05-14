@@ -11,6 +11,8 @@ public:
     DemoMode();
     void begin();
     void run();
+    void runLights();
+    void runSound();
 
 private:
     boolean mainMode = true;

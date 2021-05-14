@@ -12,6 +12,8 @@ public:
     ChaseMode();
     void begin();
     void run();
+    void runSound();
+    void runLights();
 
 private:
     boolean forwards = true;
