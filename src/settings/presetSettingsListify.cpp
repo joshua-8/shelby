@@ -26,11 +26,11 @@ int presetSettingsListifyGetIsBIF(int mode, int currVal)
     case TAG_MODE_ID:
         switch (currVal) {
         case 0:
-            return PRESET_SETTINGS_LISTIFY_INT;
+            return PRESET_SETTINGS_LISTIFY_FLOAT;
         case 1:
             return PRESET_SETTINGS_LISTIFY_FLOAT;
         case 2:
-            return PRESET_SETTINGS_LISTIFY_BOOLEAN;
+            return PRESET_SETTINGS_LISTIFY_FLOAT;
         }
         break;
     case CHASE_MODE_ID:
@@ -105,11 +105,11 @@ float presetSettingsListifyGetVal(int mode, int preset, int currVal)
     case TAG_MODE_ID:
         switch (currVal) {
         case 0:
-            return tagModePresetSettings[preset].tagsettingA;
+            return tagModePresetSettings[preset].speed;
         case 1:
-            return tagModePresetSettings[preset].tagsettingB;
+            return tagModePresetSettings[preset].drvDist;
         case 2:
-            return tagModePresetSettings[preset].tagsettingC;
+            return tagModePresetSettings[preset].tagDist;
         }
         break;
     case CHASE_MODE_ID:
@@ -184,13 +184,13 @@ void presetSettingsListifySetVal(int mode, int preset, int currVal, float val)
     case TAG_MODE_ID:
         switch (currVal) {
         case 0:
-            tagModePresetSettings[preset].tagsettingA = val;
+            tagModePresetSettings[preset].speed = val;
             break;
         case 1:
-            tagModePresetSettings[preset].tagsettingB = val;
+            tagModePresetSettings[preset].drvDist = val;
             break;
         case 2:
-            tagModePresetSettings[preset].tagsettingC = val;
+            tagModePresetSettings[preset].tagDist = val;
             break;
         }
         break;
@@ -286,11 +286,11 @@ String presetSettingsListifyGetName(int mode, int currVal)
     case TAG_MODE_ID:
         switch (currVal) {
         case 0:
-            return F("tagsettA");
+            return F("speed");
         case 1:
-            return F("tagsettB");
+            return F("drvDist");
         case 2:
-            return F("tagsettC");
+            return F("tagDist");
         }
         break;
     case CHASE_MODE_ID:

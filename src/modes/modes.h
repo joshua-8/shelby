@@ -2,19 +2,19 @@
 #define MODES_H
 #include "chaseMode.h"
 #include "demoMode.h"
-#include "raceMode.h"
+#include "tagMode.h"
 
 void modesRun()
 {
     if (genS.mode != premodeLastGenS.mode) {
         switch (genS.mode) {
         case TAG_MODE_ID:
+            tagmode.begin();
             break;
         case CHASE_MODE_ID:
             chasemode.begin();
             break;
         case RACE_MODE_ID:
-            racemode.begin();
             break;
         case WALKER_MODE_ID:
             break;
@@ -29,12 +29,12 @@ void modesRun()
 
     switch (genS.mode) {
     case TAG_MODE_ID:
+        tagmode.run();
         break;
     case CHASE_MODE_ID:
         chasemode.run();
         break;
     case RACE_MODE_ID:
-        racemode.run();
         break;
     case WALKER_MODE_ID:
         break;
