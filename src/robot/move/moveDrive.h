@@ -19,5 +19,7 @@ private:
     boolean safe;
     boolean doneMoving;
     boolean doneTurning;
+    float startAngle;
+    float startDist;
 };
 #endif

@@ -12,6 +12,8 @@ MoveDrive::MoveDrive()
     safe = false;
     doneMoving = false;
     doneTurning = false;
+    startAngle = 0;
+    startDist = 0;
 }
 void MoveDrive::run()
 {
@@ -23,25 +25,28 @@ void MoveDrive::run()
 }
 void MoveDrive::setDriveTarget(float distance, float rotation, unsigned long timeMillis, boolean _safe, bool reset)
 {
-    if (timeMillis > 0) { //protect against divide by zero
-        navTime = timeMillis;
-        navigating = true;
-        targetDist = distance;
-        targetTurn = rotation;
-        safe = _safe;
-        doneMoving = false;
-        doneTurning = false;
-    }
     if (reset) {
         subsystems.drivetrain.WheelL.resetPosition();
         subsystems.drivetrain.WheelR.resetPosition();
+    }
+
+    if (timeMillis > 0) { //protect against divide by zero
+        navTime = timeMillis;
+        navigating = true;
+        startDist = subsystems.drivetrain.getDist();
+        startAngle = subsystems.drivetrain.getRotation();
+        targetDist = distance - startDist;
+        targetTurn = rotation - startAngle;
+        safe = _safe;
+        doneMoving = false;
+        doneTurning = false;
     }
 }
 
 boolean MoveDrive::navigate()
 {
-    doneMoving = doneMoving || (targetDist == 0) || (abs(subsystems.drivetrain.getDist()) > abs(targetDist));
-    doneTurning = doneTurning || (targetTurn == 0) || (abs(subsystems.drivetrain.getRotation()) > abs(targetTurn));
+    doneMoving = doneMoving || (targetDist == 0) || (abs(subsystems.drivetrain.getDist() - startDist) > abs(targetDist));
+    doneTurning = doneTurning || (targetTurn == 0) || (abs(subsystems.drivetrain.getRotation() - startAngle) > abs(targetTurn));
 
     if (safe) {
         robot.moveSafe.setVelsSafe(doneMoving ? 0 : (targetDist / (navTime / 1000)), doneTurning ? 0 : (targetTurn / (navTime / 1000)));

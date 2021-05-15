@@ -23,7 +23,9 @@ private:
         DRIVING_CORNER,
         STARTING_TURN,
         WAITING,
-        ENDING_TURN
+        ENDING_TURN,
+        STOPPING_DRIVING,
+        STOPPING_ENDING_TURN
     };
     States state;
     States lastState;

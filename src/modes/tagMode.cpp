@@ -24,20 +24,28 @@ void TagMode::run()
             robot.moveDrive.setDriveTarget(subsystems.drivetrain.getDist(), robot.moveHall.getHallHeading() - 90, tagModeModeSettings.turnTime, tagModeModeSettings.safe, false);
             break;
         case WAITING:
+            encourage = true;
             subsystems.drivetrain.setVels(0, 0);
             break;
         case ENDING_TURN:
             robot.moveDrive.setDriveTarget(subsystems.drivetrain.getDist(), robot.moveHall.getHallHeading(), tagModeModeSettings.turnTime, tagModeModeSettings.safe, false);
             break;
+        case STOPPING_DRIVING:
+            subsystems.drivetrain.setVels(0, 0);
+            break;
+        case STOPPING_ENDING_TURN:
+            subsystems.drivetrain.setVels(0, 0);
+            break;
         }
     }
+
+    lastState = state;
 
     switch (state) { //run mode
     case DRIVING_HALL:
         robot.moveHall.run(tagModePresetSettings[genS.preset].speed, tagModeModeSettings.safe);
-        if (subsystems.drivetrain.getDist() - drivingStartDistance > tagModePresetSettings[genS.preset].drvDist) {
-            state = STARTING_TURN;
-            encourage = true;
+        if (abs(subsystems.drivetrain.getDist() - drivingStartDistance) > tagModePresetSettings[genS.preset].drvDist) {
+            state = STOPPING_DRIVING;
         }
         //state=DRIVING_CORNER
         break;
@@ -54,12 +62,21 @@ void TagMode::run()
     case WAITING:
         if (subsystems.distanceSensors.LTurret.getDist() < tagModePresetSettings[genS.preset].tagDist) {
             state = ENDING_TURN;
-            encourage = true;
         }
         break;
     case ENDING_TURN:
         robot.moveDrive.run();
         if (!robot.moveDrive.isNavigating()) {
+            state = STOPPING_ENDING_TURN;
+        }
+        break;
+    case STOPPING_DRIVING:
+        if (subsystems.drivetrain.WheelL.getVelocity() == 0 && subsystems.drivetrain.WheelR.getVelocity() == 0) {
+            state = STARTING_TURN;
+        }
+        break;
+    case STOPPING_ENDING_TURN:
+        if (subsystems.drivetrain.WheelL.getVelocity() == 0 && subsystems.drivetrain.WheelR.getVelocity() == 0) {
             state = DRIVING_HALL;
         }
         break;
@@ -81,9 +98,11 @@ void TagMode::run()
 
     if (genS.musicMode == 2) {
         robot.entertainment.playConstantMusicLongIR();
+        if (encourage) {
+            encourage = false;
+        }
     }
 
-    lastState = state;
     DURINGModeLastGo = go;
     DURINGmodeLastGenS = genS;
     runGenIR();
