@@ -17,6 +17,7 @@ public:
 private:
     void runLights();
     void runSound();
+    bool sweepDir;
 
     enum States {
         DRIVING_HALL,

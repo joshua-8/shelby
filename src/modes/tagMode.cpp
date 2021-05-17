@@ -4,6 +4,7 @@ TagMode::TagMode()
 }
 void TagMode::begin()
 {
+    sweepDir = true;
     encourage = false;
     subsystems.audio.stopLong();
     subsystems.audio.stopShort();
@@ -21,10 +22,10 @@ void TagMode::run()
         case DRIVING_CORNER:
             break;
         case STARTING_TURN:
-            robot.moveDrive.setDriveTarget(subsystems.drivetrain.getDist(), robot.moveHall.getHallHeading() - 90, tagModeModeSettings.turnTime, tagModeModeSettings.safe, false);
+            encourage = true;
+            robot.moveDrive.setDriveTarget(subsystems.drivetrain.getDist(), robot.moveHall.getHallHeading() - 85, tagModeModeSettings.turnTime, tagModeModeSettings.safe, false);
             break;
         case WAITING:
-            encourage = true;
             subsystems.drivetrain.setVels(0, 0);
             break;
         case ENDING_TURN:
@@ -60,7 +61,12 @@ void TagMode::run()
         }
         break;
     case WAITING:
-        if (subsystems.distanceSensors.LTurret.getDist() < tagModePresetSettings[genS.preset].tagDist) {
+        if (subsystems.distanceSensors.LTurret.getAngle() > -90 + 15)
+            sweepDir = false;
+        if (subsystems.distanceSensors.LTurret.getAngle() < -90 - 15)
+            sweepDir = true;
+        subsystems.distanceSensors.LTurret.setAngle(subsystems.distanceSensors.LTurret.getAngle() + lastLoopTimeMicros / 1000000.0 * 45 * (sweepDir ? 1 : -1));
+        if (subsystems.distanceSensors.LTurret.getDist() != 0 && subsystems.distanceSensors.LTurret.getDist() < tagModePresetSettings[genS.preset].tagDist) {
             state = ENDING_TURN;
         }
         break;
