@@ -55,10 +55,11 @@ float Turret::getAngle()
 }
 boolean Turret::setAngle(float set)
 {
+    angle = constrain(set, minAngle, maxAngle);
+    servo.writeMicroseconds(map(angle, minAngle, maxAngle, minPulse, maxPulse));
+
     if (set > maxAngle || set < minAngle) {
         return false;
     }
-    angle = set;
-    servo.writeMicroseconds(map(angle, minAngle, maxAngle, minPulse, maxPulse));
     return true;
 }

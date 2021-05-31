@@ -13,13 +13,6 @@ void Head::begin()
 }
 void Head::run()
 {
-    // if (go) {
-    //     setServosEnabled(true);
-    //     setPositionX(topSettings.debugA);
-    //     setPositionY(topSettings.debugB);
-    // } else {
-    //     setServosEnabled(false);
-    // }
 
     xposW += constrain(xpos - xposW, -headConstants.panSpeed * lastLoopTimeMicros / 1000, headConstants.panSpeed * lastLoopTimeMicros / 1000);
     yposW += constrain(ypos - yposW, -headConstants.tiltSpeed * lastLoopTimeMicros / 1000, headConstants.tiltSpeed * lastLoopTimeMicros / 1000);

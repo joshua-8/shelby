@@ -18,6 +18,19 @@ Wheel::Wheel()
 }
 void Wheel::begin(byte _speedPin, byte _dirPin, byte _encoderAPin, byte _encoderBPin, byte _magPin, boolean _revMot, boolean _revEnc, boolean _left)
 {
+    tickCounter = 0;
+    magOrientedTickCounter = 0;
+    magTickCounterOffset = 0;
+    vel = 0;
+    voltOut = 0;
+    encForwards = true;
+    lastEncoderCycleInterval = 0;
+    lastEncoderCycleMicros = 0;
+    newSpeed = false;
+    velSet = 0;
+    velWrite = 0;
+    powerAllowed = 15.0;
+
     speedPin = _speedPin;
     dirPin = _dirPin;
     encoderAPin = _encoderAPin;

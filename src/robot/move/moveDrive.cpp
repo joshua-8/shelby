@@ -1,5 +1,8 @@
 #include "moveDrive.h"
 #include "robot/robot.h"
+/**
+ * @brief  drive specific distance and rotation in set time (obstacle detection safe mode option available)
+ */
 MoveDrive::MoveDrive()
 {
     navigating = false;
@@ -9,6 +12,8 @@ MoveDrive::MoveDrive()
     safe = false;
     doneMoving = false;
     doneTurning = false;
+    startAngle = 0;
+    startDist = 0;
 }
 void MoveDrive::run()
 {
@@ -18,26 +23,30 @@ void MoveDrive::run()
         }
     }
 }
-void MoveDrive::setDriveTarget(float distance, float rotation, unsigned long timeMillis, boolean _safe)
+void MoveDrive::setDriveTarget(float distance, float rotation, unsigned long timeMillis, boolean _safe, bool reset)
 {
+    if (reset) {
+        subsystems.drivetrain.WheelL.resetPosition();
+        subsystems.drivetrain.WheelR.resetPosition();
+    }
+
     if (timeMillis > 0) { //protect against divide by zero
         navTime = timeMillis;
         navigating = true;
-        targetDist = distance;
-        targetTurn = rotation;
+        startDist = subsystems.drivetrain.getDist();
+        startAngle = subsystems.drivetrain.getRotation();
+        targetDist = distance - startDist;
+        targetTurn = rotation - startAngle;
         safe = _safe;
         doneMoving = false;
         doneTurning = false;
     }
-
-    subsystems.drivetrain.WheelL.resetPosition();
-    subsystems.drivetrain.WheelR.resetPosition();
 }
 
 boolean MoveDrive::navigate()
 {
-    doneMoving = doneMoving || (targetDist == 0) || (abs(subsystems.drivetrain.getDist()) > abs(targetDist));
-    doneTurning = doneTurning || (targetTurn == 0) || (abs(subsystems.drivetrain.getRotation()) > abs(targetTurn));
+    doneMoving = doneMoving || (targetDist == 0) || (abs(subsystems.drivetrain.getDist() - startDist) > abs(targetDist));
+    doneTurning = doneTurning || (targetTurn == 0) || (abs(subsystems.drivetrain.getRotation() - startAngle) > abs(targetTurn));
 
     if (safe) {
         robot.moveSafe.setVelsSafe(doneMoving ? 0 : (targetDist / (navTime / 1000)), doneTurning ? 0 : (targetTurn / (navTime / 1000)));

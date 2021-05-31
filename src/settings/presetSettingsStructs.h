@@ -2,15 +2,13 @@
 #define PRESET_SETTINGS_STRUCTS_H
 
 struct tagModePresetSettingsStruct {
-    int tagsettingA;
-    float tagsettingB;
-    bool tagsettingC;
+    float speed;
+    float drvDist;
+    float tagDist;
 };
 
 struct chaseModePresetSettingsStruct {
-    int chasesettingA;
-    float chasesettingB;
-    bool chasesettingC;
+    float speed;
 };
 
 struct raceModePresetSettingsStruct {

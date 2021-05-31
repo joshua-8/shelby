@@ -13,10 +13,50 @@ void DemoMode::begin()
 }
 void DemoMode::run()
 {
-    if (genS.musicMode == 2) {
-        robot.entertainment.playConstantMusicLongIR();
+    runLights();
+    runSound();
+
+    if (genS.lightsMode != DURINGmodeLastGenS.lightsMode) {
+        subsystems.lights.WheelLightL.allOff(true);
+        subsystems.lights.WheelLightR.allOff(true);
+    }
+    if (subsystems.audio.isPlayingTrack(30)) {
+        subsystems.tail.wag(2000); //wag to Luca
+    } else {
+        subsystems.tail.stopWag();
     }
 
+    if (mainMode) {
+        if (millis() - subsystems.ir.lastNewMsgMillis < 400 && go) {
+            robot.moveSafe.setVelsSafe(demoModePresetSettings[genS.preset].manualDriveSpeed * (1 * (subsystems.ir.message == irConstants.UP) - 1 * (subsystems.ir.message == irConstants.DOWN)), demoModePresetSettings[genS.preset].manualTurnSpeed * (1 * (subsystems.ir.message == irConstants.RIGHT) - 1 * (subsystems.ir.message == irConstants.LEFT)));
+        } else {
+            subsystems.drivetrain.WheelL.setVel(0);
+            subsystems.drivetrain.WheelR.setVel(0);
+        }
+    }
+
+    ////////////////////////////////////////////////////////manual track select
+    if (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.AUX) {
+        messageScreen.dispValSelector("trk", 4, 0);
+        mainMode = false;
+    }
+    if (messageScreen.valSelectorDone()) {
+        mainMode = true;
+        if (subsystems.audio.isPlayingTrack(messageScreen.valSelectorValue())) {
+            subsystems.audio.stopTrack(messageScreen.valSelectorValue());
+        } else {
+            subsystems.audio.playTrack(messageScreen.valSelectorValue());
+        }
+    }
+
+    DURINGModeLastGo = go;
+    DURINGmodeLastGenS = genS;
+    runGenIR();
+    runGenGoStopButton();
+}
+
+void DemoMode::runLights()
+{
     if (genS.lightsMode == 0) {
         subsystems.lights.eyeLight.setBlinkOff();
         subsystems.lights.eyeLight.setMode(EyeLight::OFF);
@@ -42,16 +82,9 @@ void DemoMode::run()
             subsystems.lights.eyeLight.setStandard(CRGB(50, 100, 255));
         }
     }
-    if (subsystems.audio.isPlayingTrack(30)) {
-        subsystems.tail.wag(2000); //wag to Luca
-    } else {
-        subsystems.tail.stopWag();
-    }
-
-    if (genS.lightsMode != DURINGmodeLastGenS.lightsMode) {
-        subsystems.lights.WheelLightL.allOff(true);
-        subsystems.lights.WheelLightR.allOff(true);
-    }
+}
+void DemoMode::runSound()
+{
 
     if (genS.musicMode == 0) { //off
         if (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK && mainMode) {
@@ -64,29 +97,8 @@ void DemoMode::run()
             subsystems.audio.playNextShort();
         }
     }
-    if (mainMode) {
-        if (millis() - subsystems.ir.lastNewMsgMillis < 800 && go) {
-            robot.moveSafe.setVelsSafe(demoModePresetSettings[genS.preset].manualDriveSpeed * (1 * (subsystems.ir.message == irConstants.UP) - 1 * (subsystems.ir.message == irConstants.DOWN)), demoModePresetSettings[genS.preset].manualTurnSpeed * (1 * (subsystems.ir.message == irConstants.RIGHT) - 1 * (subsystems.ir.message == irConstants.LEFT)));
-        } else {
-            subsystems.drivetrain.WheelL.setVel(0);
-            subsystems.drivetrain.WheelR.setVel(0);
-        }
-    }
 
-    ////////////////////////////////////////////////////////manual track select
-    if (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.AUX) {
-        messageScreen.dispValSelector("trk", 4, 0);
-        mainMode = false;
+    if (genS.musicMode == 2) {
+        robot.entertainment.playConstantMusicLongIR();
     }
-    if (messageScreen.valSelectorDone()) {
-        mainMode = true;
-        if (subsystems.audio.isPlayingTrack(messageScreen.valSelectorValue())) {
-            subsystems.audio.stopTrack(messageScreen.valSelectorValue());
-        } else {
-            subsystems.audio.playTrack(messageScreen.valSelectorValue());
-        }
-    }
-    DURINGmodeLastGenS = genS;
-    runGenIR();
-    runGenGoStopButton();
 }

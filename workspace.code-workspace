@@ -2,10 +2,6 @@
 	"folders": [
 		{
 			"path": "."
-		},
-		{
-			"name": "JMotor",
-			"path": "..\\..\\..\\..\\..\\..\\Documents\\PlatformIO\\Projects\\JMotor"
 		}
 	],
 	"settings": {

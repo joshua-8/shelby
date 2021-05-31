@@ -4,6 +4,7 @@
 #include "robot/genGoStopButton.h"
 #include "robot/genIR.h"
 #include "robot/robot.h"
+#include "settings/settings.h"
 #include "shelbytron_globs.h"
 #include <Arduino.h>
 class ChaseMode {
@@ -11,8 +12,11 @@ public:
     ChaseMode();
     void begin();
     void run();
+    void runSound();
+    void runLights();
 
 private:
+    boolean forwards = true;
 };
 static ChaseMode chasemode = ChaseMode();
 #endif

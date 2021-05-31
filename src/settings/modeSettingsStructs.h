@@ -2,15 +2,12 @@
 #define MODE_SETTINGS_STRUCTS_H
 
 struct tagModeModeSettingsStruct {
-    int tagsettingA;
-    float tagsettingB;
-    bool tagsettingC;
+    bool safe;
+    int turnTime;
 };
 
 struct chaseModeModeSettingsStruct {
-    int chasesettingA;
-    float chasesettingB;
-    bool chasesettingC;
+    boolean safe;
 };
 
 struct raceModeModeSettingsStruct {
