@@ -65,16 +65,16 @@ void Screen_Home::batteryDisplay()
 {
     if (millis() - lastBatDispUpdateMillis > menuScreenConstants.BATTERY_DISPLAY_INTERVAL) {
         lastBatDispUpdateMillis = millis();
-        if (abs(subsystems.batMonitor.getBatVolt() - lastBatVolt) >= menuScreenConstants.BATTERY_DISPLAY_ERROR) {
-            lastBatVolt = subsystems.batMonitor.getBatVolt();
+        if (abs(subsystems.batMonitor.getSupplyVoltage() - lastBatVolt) >= menuScreenConstants.BATTERY_DISPLAY_ERROR) {
+            lastBatVolt = subsystems.batMonitor.getSupplyVoltage();
             (*tft).fillRect(menuScreenConstants.BATTERY_DISPLAY_X_POS, menuScreenConstants.BATTERY_DISPLAY_Y_POS + menuScreenConstants.BATTERY_DISPLAY_HEIGHT * menuScreenConstants.BATTERY_GAUGE_PORTION, menuScreenConstants.BATTERY_DISPLAY_WIDTH, menuScreenConstants.BATTERY_DISPLAY_HEIGHT * (1 - menuScreenConstants.BATTERY_GAUGE_PORTION), menuScreenConstants.BATTERY_DISPLAY_BACKGROUND_COLOR);
             (*tft).setTextColor(menuScreenConstants.BATTERY_DISPLAY_TEXT_COLOR);
             (*tft).setTextSize(3);
             (*tft).setCursor(menuScreenConstants.BATTERY_DISPLAY_X_POS, menuScreenConstants.BATTERY_DISPLAY_Y_POS + .6 * menuScreenConstants.BATTERY_DISPLAY_HEIGHT);
-            (*tft).print(subsystems.batMonitor.getBatVolt(), 2);
-            (*tft).fillRect(menuScreenConstants.BATTERY_DISPLAY_X_POS, menuScreenConstants.BATTERY_DISPLAY_Y_POS, menuScreenConstants.BATTERY_DISPLAY_WIDTH / 4 - 1, menuScreenConstants.BATTERY_DISPLAY_HEIGHT * menuScreenConstants.BATTERY_GAUGE_PORTION, subsystems.batMonitor.getBatVolt() > topSettings.highVoltThresh ? ILI9341_GREEN : ILI9341_RED);
-            (*tft).fillRect(menuScreenConstants.BATTERY_DISPLAY_X_POS + menuScreenConstants.BATTERY_DISPLAY_WIDTH / 4, menuScreenConstants.BATTERY_DISPLAY_Y_POS, menuScreenConstants.BATTERY_DISPLAY_WIDTH / 2 - 1, menuScreenConstants.BATTERY_DISPLAY_HEIGHT * menuScreenConstants.BATTERY_GAUGE_PORTION, subsystems.batMonitor.getBatVolt() > topSettings.lowVoltThresh ? ILI9341_GREEN : ILI9341_RED);
-            (*tft).fillRect(menuScreenConstants.BATTERY_DISPLAY_X_POS + menuScreenConstants.BATTERY_DISPLAY_WIDTH * 3 / 4, menuScreenConstants.BATTERY_DISPLAY_Y_POS, menuScreenConstants.BATTERY_DISPLAY_WIDTH / 3, menuScreenConstants.BATTERY_DISPLAY_HEIGHT * menuScreenConstants.BATTERY_GAUGE_PORTION, subsystems.batMonitor.getBatVolt() > topSettings.criticalVoltThresh ? ILI9341_GREEN : ILI9341_RED);
+            (*tft).print(subsystems.batMonitor.getSupplyVoltage(), 2);
+            (*tft).fillRect(menuScreenConstants.BATTERY_DISPLAY_X_POS, menuScreenConstants.BATTERY_DISPLAY_Y_POS, menuScreenConstants.BATTERY_DISPLAY_WIDTH / 4 - 1, menuScreenConstants.BATTERY_DISPLAY_HEIGHT * menuScreenConstants.BATTERY_GAUGE_PORTION, subsystems.batMonitor.getSupplyVoltage() > topSettings.highVoltThresh ? ILI9341_GREEN : ILI9341_RED);
+            (*tft).fillRect(menuScreenConstants.BATTERY_DISPLAY_X_POS + menuScreenConstants.BATTERY_DISPLAY_WIDTH / 4, menuScreenConstants.BATTERY_DISPLAY_Y_POS, menuScreenConstants.BATTERY_DISPLAY_WIDTH / 2 - 1, menuScreenConstants.BATTERY_DISPLAY_HEIGHT * menuScreenConstants.BATTERY_GAUGE_PORTION, subsystems.batMonitor.getSupplyVoltage() > topSettings.lowVoltThresh ? ILI9341_GREEN : ILI9341_RED);
+            (*tft).fillRect(menuScreenConstants.BATTERY_DISPLAY_X_POS + menuScreenConstants.BATTERY_DISPLAY_WIDTH * 3 / 4, menuScreenConstants.BATTERY_DISPLAY_Y_POS, menuScreenConstants.BATTERY_DISPLAY_WIDTH / 3, menuScreenConstants.BATTERY_DISPLAY_HEIGHT * menuScreenConstants.BATTERY_GAUGE_PORTION, subsystems.batMonitor.getSupplyVoltage() > topSettings.criticalVoltThresh ? ILI9341_GREEN : ILI9341_RED);
         }
     }
 }
