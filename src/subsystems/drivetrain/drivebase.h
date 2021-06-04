@@ -20,7 +20,7 @@ public:
     JMotorControllerClosed leftMotorController = JMotorControllerClosed(leftMotorDriver, leftMotorCompensator, leftWheelEncoder, leftMotorControlLoop);
     JMotorControllerClosed rightMotorController = JMotorControllerClosed(rightMotorDriver, rightMotorCompensator, rightWheelEncoder, rightMotorControlLoop);
     JDrivetrainTwoSide drvtrain = JDrivetrainTwoSide(leftMotorController, rightMotorController, drivetrainConstants.wheelbase);
-    JDrivetrainControllerBasic drivetrain = JDrivetrainControllerBasic(drvtrain, { 1, 1, 1 }, { 1, 1, 1 }, { .1, .1, .1 });
+    JDrivetrainControllerBasic drivetrain = JDrivetrainControllerBasic(drvtrain, { 10, 10, 10 }, { 1, 1, 1 }, { .05, .05, .05 });
     void begin();
     void run();
 };
