@@ -4,15 +4,13 @@ Turret::Turret()
 }
 void Turret::begin(HardwareSerial* _serial, byte _servoControlPin, byte _servoPositionPin, float _minAngle, float _maxAngle, int _minPulse, int _maxPulse)
 {
-    servoControlPin = _servoControlPin;
     servoPositionPin = _servoPositionPin;
     distSerial = _serial;
-    minAngle = _minAngle;
-    maxAngle = _maxAngle;
-    minPulse = _minPulse;
-    maxPulse = _maxPulse;
+
     (*distSerial).begin(turretConstants.baud);
-    servo.attach(servoControlPin);
+    servoDriver = new JMotorDriverAvrServo(_servoControlPin);
+    servo = new JServoController(*servoDriver, false, 180, INFINITY, 1000, _minAngle, _maxAngle, (_minAngle + _maxAngle) / 2.0, _minAngle, _maxAngle, _minPulse, _maxPulse);
+    servo->enable();
     pinMode(servoPositionPin, INPUT);
 }
 void Turret::run()
@@ -20,6 +18,8 @@ void Turret::run()
     if (readDist()) {
         // readAngle();
     }
+    // if (servo)
+    servo->run();
 }
 boolean Turret::readDist()
 {
@@ -53,13 +53,8 @@ float Turret::getAngle()
 {
     return angle;
 }
-boolean Turret::setAngle(float set)
+void Turret::setAngle(float set)
 {
-    angle = constrain(set, minAngle, maxAngle);
-    servo.writeMicroseconds(map(angle, minAngle, maxAngle, minPulse, maxPulse));
-
-    if (set > maxAngle || set < minAngle) {
-        return false;
-    }
-    return true;
+    if (servo)
+        servo->setAngleSmoothed(set);
 }

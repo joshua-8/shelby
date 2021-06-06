@@ -28,7 +28,7 @@ int modeSettingsListifyGetIsBIF(int mode, int currVal)
         case 0:
             return MODE_SETTINGS_LISTIFY_BOOLEAN;
         case 1:
-            return MODE_SETTINGS_LISTIFY_INT;
+            return MODE_SETTINGS_LISTIFY_BOOLEAN;
         }
         break;
     case CHASE_MODE_ID:
@@ -105,7 +105,7 @@ float modeSettingsListifyGetVal(int mode, int currVal)
         case 0:
             return tagModeModeSettings.safe;
         case 1:
-            return tagModeModeSettings.turnTime;
+            return tagModeModeSettings.turnLeft;
         }
         break;
     case CHASE_MODE_ID:
@@ -183,7 +183,7 @@ void modeSettingsListifySetVal(int mode, int currVal, float val)
             tagModeModeSettings.safe = val;
             break;
         case 1:
-            tagModeModeSettings.turnTime = val;
+            tagModeModeSettings.turnLeft = val;
             break;
         }
         break;
@@ -281,7 +281,7 @@ String modeSettingsListifyGetName(int mode, int currVal)
         case 0:
             return F("safe");
         case 1:
-            return F("turnTime");
+            return F("turnLeft");
         }
         break;
     case CHASE_MODE_ID:

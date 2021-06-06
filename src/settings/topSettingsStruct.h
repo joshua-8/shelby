@@ -19,5 +19,6 @@ struct topSettingsStruct {
     float mHallHeadAdj;
     float mHallThresh;
     float mHallDinc;
+    float hallLength;
 };
 #endif

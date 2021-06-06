@@ -8,7 +8,7 @@ void TagMode::begin()
     encourage = false;
     subsystems.audio.stopLong();
     subsystems.audio.stopShort();
-    state = States::DRIVING_HALL;
+    state = States::DRIVING_CORNER_DRIVE;
     lastState = States::DRIVING_CORNER;
     resetAtStartOfHall();
 }
@@ -20,6 +20,10 @@ void TagMode::run()
             drivingStartDistance = subsystems.drivetrain.getDist().y;
             break;
         case DRIVING_CORNER:
+            subsystems.drivetrain.moveDistRZ(tagModeModeSettings.turnLeft ? -90 : 90);
+            break;
+        case DRIVING_CORNER_DRIVE:
+            subsystems.drivetrain.moveDist({ 1.0 /*dist at start of hall*/, 0, 0 });
             break;
         case STARTING_TURN:
             encourage = true;
@@ -50,11 +54,20 @@ void TagMode::run()
         if (abs(subsystems.drivetrain.getDist().y - drivingStartDistance) > tagModePresetSettings[genS.preset].drvDist) {
             state = STOPPING_DRIVING;
         }
-        //state=DRIVING_CORNER
+        if (abs(subsystems.drivetrain.getDist().y) > topSettings.hallLength) {
+            state = DRIVING_CORNER;
+        }
         break;
     case DRIVING_CORNER:
-        /*resetAtStartOfHall();
-          state=DRIVING_HALL;*/
+        if (subsystems.drivetrain.RZLimiter.isPosAtTarget()) {
+            state = DRIVING_CORNER_DRIVE;
+            resetAtStartOfHall();
+        }
+        break;
+    case DRIVING_CORNER_DRIVE:
+        if (subsystems.drivetrain.YLimiter.isPosAtTarget()) {
+            state = DRIVING_HALL;
+        }
         break;
     case STARTING_TURN:
         if (subsystems.drivetrain.getDist().rz < robot.moveHall.getHallHeading() - 45 && subsystems.drivetrain.getVel().rz == 0) {

@@ -26,7 +26,8 @@ private:
         WAITING,
         ENDING_TURN,
         STOPPING_DRIVING,
-        STOPPING_ENDING_TURN
+        STOPPING_ENDING_TURN,
+        DRIVING_CORNER_DRIVE
     };
     States state;
     States lastState;
