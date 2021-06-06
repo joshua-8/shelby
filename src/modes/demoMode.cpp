@@ -10,6 +10,7 @@ void DemoMode::begin()
     subsystems.audio.stopShort();
     subsystems.lights.eyeLight.setStandard(CRGB(100, 120, 255));
     subsystems.lights.eyeLight.setBlink(CRGB(100, 0, 0), 0);
+    subsystems.drivetrain.resetDist();
 }
 void DemoMode::run()
 {
@@ -28,9 +29,18 @@ void DemoMode::run()
 
     if (mainMode) {
         if (millis() - subsystems.ir.lastNewMsgMillis < 400 && go) {
+            // subsystems.drivetrain.setVelLimit({ .5, 50, 0 });
+            // if (subsystems.ir.message == irConstants.DOWN)
+            //     subsystems.drivetrain.movePos({ -.1, 0, 0 });
+            // if (subsystems.ir.message == irConstants.UP)
+            //     subsystems.drivetrain.movePos({ .3, 0, 0 });
+            // if (subsystems.ir.message == irConstants.RIGHT)
+            //     subsystems.drivetrain.movePos({ .3, 45, 0 });
+            // if (subsystems.ir.message == irConstants.LEFT)
+            //     subsystems.drivetrain.movePos({ .3, -45, 0 });
             robot.moveSafe.setVelsSafe(demoModePresetSettings[genS.preset].manualDriveSpeed * (1 * (subsystems.ir.message == irConstants.UP) - 1 * (subsystems.ir.message == irConstants.DOWN)), demoModePresetSettings[genS.preset].manualTurnSpeed * (1 * (subsystems.ir.message == irConstants.RIGHT) - 1 * (subsystems.ir.message == irConstants.LEFT)));
         } else {
-            subsystems.drivetrain.setVel({ 0, 0, 0 });
+            subsystems.drivetrain.moveVel({ 0, 0, 0 });
         }
     }
 

@@ -12,6 +12,8 @@ void Drivebase::run()
 }
 void Drivebase::begin()
 {
+    analogWriteFrequency(LEFT_WHEEL_SPEED_PIN, 20000);
+    analogWriteFrequency(RIGHT_WHEEL_SPEED_PIN, 20000);
     leftWheelEncoder.setUpInterrupts(leftWheelEncoder_jENCODER_ISR_A, leftWheelEncoder_jENCODER_ISR_B);
     rightWheelEncoder.setUpInterrupts(rightWheelEncoder_jENCODER_ISR_A, rightWheelEncoder_jENCODER_ISR_B);
 }
