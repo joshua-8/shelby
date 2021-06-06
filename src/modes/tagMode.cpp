@@ -23,14 +23,14 @@ void TagMode::run()
             break;
         case STARTING_TURN:
             encourage = true;
-            subsystems.drivetrain.movePos({ subsystems.drivetrain.getDist().y, robot.moveHall.getHallHeading() - 90, 0 });
+            subsystems.drivetrain.moveDist({ subsystems.drivetrain.getDist().y, robot.moveHall.getHallHeading() - 90, 0 });
             // robot.moveDrive.setDriveTarget(subsystems.drivetrain.getDist().y, robot.moveHall.getHallHeading() - 85, tagModeModeSettings.turnTime, tagModeModeSettings.safe, false);
             break;
         case WAITING:
             subsystems.drivetrain.moveVel({ 0, 0, 0 });
             break;
         case ENDING_TURN:
-            subsystems.drivetrain.movePos({ subsystems.drivetrain.getDist().y, robot.moveHall.getHallHeading(), 0 });
+            subsystems.drivetrain.moveDist({ subsystems.drivetrain.getDist().y, robot.moveHall.getHallHeading(), 0 });
             // robot.moveDrive.setDriveTarget(subsystems.drivetrain.getDist().y, robot.moveHall.getHallHeading(), tagModeModeSettings.turnTime, tagModeModeSettings.safe, false);
             break;
         case STOPPING_DRIVING:
