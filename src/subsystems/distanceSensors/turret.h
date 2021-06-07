@@ -11,6 +11,7 @@ public:
     float getDist();
     float getAngle();
     void setAngle(float angle);
+    JServoController* servo = NULL;
 
 private:
     HardwareSerial* distSerial;
@@ -23,6 +24,5 @@ private:
     float angle;
     byte servoPositionPin;
     JMotorDriverAvrServo* servoDriver = NULL;
-    JServoController* servo = NULL;
 };
 #endif

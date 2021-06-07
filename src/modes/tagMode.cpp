@@ -17,13 +17,19 @@ void TagMode::run()
     if (state != lastState) { //start mode
         switch (state) {
         case DRIVING_HALL:
+            subsystems.distanceSensors.LTurret.servo->wake();
+            subsystems.distanceSensors.RTurret.servo->wake();
+            subsystems.distanceSensors.LTurret.servo->setVelLimit(180);
             drivingStartDistance = subsystems.drivetrain.getDist().y;
             break;
         case DRIVING_CORNER:
+            Serial.println("DRIVING CORNER");
             subsystems.drivetrain.moveDistRZ(tagModeModeSettings.turnLeft ? -90 : 90);
             break;
         case DRIVING_CORNER_DRIVE:
-            subsystems.drivetrain.moveDist({ 1.0 /*dist at start of hall*/, 0, 0 });
+            Serial.println("DRIVING CORNER DRIVE");
+            subsystems.drivetrain.setVelLimitY(abs(tagModePresetSettings[genS.preset].speed));
+            subsystems.drivetrain.moveDist({ 2.0 /*dist at start of hall*/, 0, 0 });
             break;
         case STARTING_TURN:
             encourage = true;
@@ -75,11 +81,11 @@ void TagMode::run()
         }
         break;
     case WAITING:
-        if (subsystems.distanceSensors.LTurret.getAngle() > -90 + 15)
-            sweepDir = false;
-        if (subsystems.distanceSensors.LTurret.getAngle() < -90 - 15)
-            sweepDir = true;
-        subsystems.distanceSensors.LTurret.setAngle(subsystems.distanceSensors.LTurret.getAngle() + lastLoopTimeMicros / 1000000.0 * 45 * (sweepDir ? 1 : -1));
+        if (subsystems.distanceSensors.LTurret.servo->isPosAtTarget()) {
+            sweepDir = !sweepDir;
+        }
+        subsystems.distanceSensors.LTurret.servo->setVelLimit(30);
+        subsystems.distanceSensors.LTurret.setAngle(-90 + (sweepDir ? 15 : -15));
         if (subsystems.distanceSensors.LTurret.getDist() != 0 && subsystems.distanceSensors.LTurret.getDist() < tagModePresetSettings[genS.preset].tagDist) {
             state = ENDING_TURN;
         }
@@ -100,7 +106,6 @@ void TagMode::run()
         }
         break;
     }
-
     if (genS.musicMode == 0) { //off
         if (encourage || (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK)) {
             subsystems.audio.playTrack(30); //say hi to Luca

@@ -6,13 +6,15 @@
 	],
 	"settings": {
 		"files.associations": {
+			"*.json": "jsonc",
 			"array": "cpp",
 			"deque": "cpp",
 			"string": "cpp",
 			"unordered_map": "cpp",
 			"unordered_set": "cpp",
 			"vector": "cpp",
-			"initializer_list": "cpp"
+			"initializer_list": "cpp",
+			"*.tpp": "cpp"
 		}
 	}
 }

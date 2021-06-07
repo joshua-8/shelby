@@ -9,7 +9,7 @@ void Turret::begin(HardwareSerial* _serial, byte _servoControlPin, byte _servoPo
 
     (*distSerial).begin(turretConstants.baud);
     servoDriver = new JMotorDriverAvrServo(_servoControlPin);
-    servo = new JServoController(*servoDriver, false, 180, INFINITY, 1000, _minAngle, _maxAngle, (_minAngle + _maxAngle) / 2.0, _minAngle, _maxAngle, _minPulse, _maxPulse);
+    servo = new JServoController(*servoDriver, true, 180, INFINITY, 1000, _minAngle, _maxAngle, (_minAngle + _maxAngle) / 2.0, _minAngle, _maxAngle, _minPulse, _maxPulse);
     servo->enable();
     pinMode(servoPositionPin, INPUT);
 }
