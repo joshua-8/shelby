@@ -11,6 +11,7 @@ void DemoMode::begin()
     subsystems.lights.eyeLight.setStandard(CRGB(100, 120, 255));
     subsystems.lights.eyeLight.setBlink(CRGB(100, 0, 0), 0);
     subsystems.drivetrain.resetDist();
+    subsystems.head.setServosEnabled(false);
 }
 void DemoMode::run()
 {
@@ -44,6 +45,7 @@ void DemoMode::run()
             //     subsystems.drivetrain.movePos({ .3, 45, 0 });
             // if (subsystems.ir.message == irConstants.LEFT)
             //     subsystems.drivetrain.movePos({ .3, -45, 0 });
+            subsystems.drivetrain.setVelLimitY(demoModePresetSettings[genS.preset].manualDriveSpeed);
             robot.moveSafe.setVelsSafe(demoModePresetSettings[genS.preset].manualDriveSpeed * (1 * (subsystems.ir.message == irConstants.UP) - 1 * (subsystems.ir.message == irConstants.DOWN)), demoModePresetSettings[genS.preset].manualTurnSpeed * (1 * (subsystems.ir.message == irConstants.RIGHT) - 1 * (subsystems.ir.message == irConstants.LEFT)));
         } else {
             subsystems.drivetrain.moveVel({ 0, 0, 0 });
