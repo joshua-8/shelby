@@ -9,7 +9,6 @@ public:
     void begin();
     float getHallHeading();
 
-private:
     float hallTargetHeading;
     float hallWidth;
     float hallError;

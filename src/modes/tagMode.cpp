@@ -16,6 +16,7 @@ void TagMode::run()
 {
     subsystems.head.setServosEnabled(go);
     if (go) {
+        subsystems.drivetrain.setVelLimitY(tagModePresetSettings[genS.preset].speed);
         if (state != lastState) { //start mode
             switch (state) {
             case DRIVING_HALL:
@@ -29,8 +30,11 @@ void TagMode::run()
                 break;
             case DRIVING_CORNER_DRIVE:
                 subsystems.drivetrain.resetDist();
-                subsystems.drivetrain.setVelLimitY(tagModePresetSettings[genS.preset].speed);
-                subsystems.drivetrain.moveDistY(.25);
+                subsystems.drivetrain.moveDistY(2.0);
+                break;
+            case END_HALL_DRIVE:
+                subsystems.drivetrain.resetDist();
+                subsystems.drivetrain.moveDistY(.33);
                 break;
             case STARTING_TURN:
                 encourage = true;
@@ -39,10 +43,10 @@ void TagMode::run()
                 // robot.moveDrive.setDriveTarget(subsystems.drivetrain.getDist().y, robot.moveHall.getHallHeading() - 85, tagModeModeSettings.turnTime, tagModeModeSettings.safe, false);
                 break;
             case WAITING:
+                subsystems.tail.wag(1500);
                 subsystems.drivetrain.moveVel({ 0, 0, 0 });
                 break;
             case ENDING_TURN:
-                subsystems.tail.wag(2000);
                 subsystems.head.setPositionX(0);
                 subsystems.drivetrain.moveDist({ subsystems.drivetrain.getDist().y, robot.moveHall.getHallHeading(), 0 });
                 // robot.moveDrive.setDriveTarget(subsystems.drivetrain.getDist().y, robot.moveHall.getHallHeading(), tagModeModeSettings.turnTime, tagModeModeSettings.safe, false);
@@ -66,13 +70,18 @@ void TagMode::run()
                 if (abs(subsystems.drivetrain.getDist().y - drivingStartDistance) > tagModePresetSettings[genS.preset].drvDist) {
                     state = STOPPING_DRIVING;
                 }
-                if (abs(subsystems.drivetrain.getDist().y) > topSettings.hallLength) {
-                    state = DRIVING_CORNER;
+                if (abs(subsystems.drivetrain.getDist().y) > topSettings.hallLength && (robot.moveHall.hallWidth > 5.0 || subsystems.distanceSensors.LTurret.getDist() == 0 || subsystems.distanceSensors.RTurret.getDist() == 0)) {
+                    state = END_HALL_DRIVE;
                 }
                 break;
             case DRIVING_CORNER_DRIVE:
                 if (subsystems.drivetrain.YLimiter.isPosAtTarget() && subsystems.drivetrain.getMotorVel(0) == 0 && subsystems.drivetrain.getMotorVel(1) == 0) {
                     state = DRIVING_HALL;
+                }
+                break;
+            case END_HALL_DRIVE:
+                if (subsystems.drivetrain.YLimiter.isPosAtTarget() && subsystems.drivetrain.getMotorVel(0) == 0 && subsystems.drivetrain.getMotorVel(1) == 0) {
+                    state = DRIVING_CORNER;
                 }
                 break;
             case DRIVING_CORNER:
@@ -91,7 +100,7 @@ void TagMode::run()
                     sweepDir = !sweepDir;
                 }
                 subsystems.distanceSensors.LTurret.servo->setVelLimit(30);
-                subsystems.distanceSensors.LTurret.setAngle(-90 + (sweepDir ? 15 : -15));
+                subsystems.distanceSensors.LTurret.setAngle(-90 + (sweepDir ? 25 : -15));
                 if (subsystems.distanceSensors.LTurret.getDist() != 0 && subsystems.distanceSensors.LTurret.getDist() < tagModePresetSettings[genS.preset].tagDist) {
                     state = ENDING_TURN;
                 }

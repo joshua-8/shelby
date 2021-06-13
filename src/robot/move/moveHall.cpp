@@ -66,7 +66,7 @@ void MoveHall::run(float speed, boolean safe)
 
     hallWidth = rightDist + leftDist;
     //left of center=positive, right of center=negative
-    hallError = rightDist - .4; //leftDist;
+    hallError = rightDist - leftDist;
 
     robotHeading = subsystems.drivetrain.getDist().rz;
 
@@ -104,7 +104,7 @@ void MoveHall::run(float speed, boolean safe)
             goodReadingDist += abs(driveDeltaDist);
 
             hallHeading -= robotHeading;
-            hallHeading += (instantAngle - hallHeading) * abs(driveDeltaDist) / (goodReadingDist + .1);
+            hallHeading += (instantAngle - hallHeading) * abs(driveDeltaDist) / (goodReadingDist + .5);
             hallHeading += robotHeading;
         }
 

@@ -27,7 +27,8 @@ private:
         ENDING_TURN,
         STOPPING_DRIVING,
         STOPPING_ENDING_TURN,
-        DRIVING_CORNER_DRIVE
+        DRIVING_CORNER_DRIVE,
+        END_HALL_DRIVE
     };
     States state;
     States lastState;
