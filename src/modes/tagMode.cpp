@@ -57,6 +57,15 @@ void TagMode::run()
             case STOPPING_ENDING_TURN:
                 subsystems.drivetrain.moveVel({ 0, 0, 0 });
                 break;
+            case TURNING_180A:
+                subsystems.drivetrain.moveDistRZInc(-90);
+                break;
+            case TURNING_180B:
+                subsystems.drivetrain.moveDistYInc(.5);
+                break;
+            case TURNING_180C:
+                subsystems.drivetrain.moveDistRZInc(-180);
+                break;
             }
         }
 
@@ -70,22 +79,50 @@ void TagMode::run()
                 if (abs(subsystems.drivetrain.getDist().y - drivingStartDistance) > tagModePresetSettings[genS.preset].drvDist) {
                     state = STOPPING_DRIVING;
                 }
-                if (abs(subsystems.drivetrain.getDist().y) > topSettings.hallLength && (robot.moveHall.hallWidth > 5.0 || subsystems.distanceSensors.LTurret.getDist() == 0 || subsystems.distanceSensors.RTurret.getDist() == 0)) {
-                    state = END_HALL_DRIVE;
+                if (abs(subsystems.drivetrain.getDist().y) > topSettings.hallLength) {
+
+                    if ((where == 0 || where == 2) && (robot.moveHall.hallWidth > 5.0 || subsystems.distanceSensors.LTurret.getDist() == 0 || subsystems.distanceSensors.RTurret.getDist() == 0)) {
+                        state = END_HALL_DRIVE;
+                        where++;
+                    }
+                    if ((where == 1 || where == 3)) {
+                        state = TURNING_180A;
+                        subsystems.audio.playTrack(11);
+                        where++;
+                        if (where >= 4) {
+                            where = 0;
+                        }
+                    }
+                }
+                break;
+            case TURNING_180A:
+                if (subsystems.drivetrain.isVelZero() && subsystems.drivetrain.RZLimiter.isPosAtTarget()) {
+                    state = TURNING_180B;
+                }
+                break;
+            case TURNING_180B:
+                if (subsystems.drivetrain.isVelZero() && subsystems.drivetrain.YLimiter.isPosAtTarget()) {
+                    state = TURNING_180C;
+                }
+                break;
+            case TURNING_180C:
+                if (subsystems.drivetrain.isVelZero() && subsystems.drivetrain.RZLimiter.isPosAtTarget()) {
+                    state = DRIVING_HALL;
+                    resetAtStartOfHall();
                 }
                 break;
             case DRIVING_CORNER_DRIVE:
-                if (subsystems.drivetrain.YLimiter.isPosAtTarget() && subsystems.drivetrain.getMotorVel(0) == 0 && subsystems.drivetrain.getMotorVel(1) == 0) {
+                if (subsystems.drivetrain.YLimiter.isPosAtTarget() && subsystems.drivetrain.isVelZero()) {
                     state = DRIVING_HALL;
                 }
                 break;
             case END_HALL_DRIVE:
-                if (subsystems.drivetrain.YLimiter.isPosAtTarget() && subsystems.drivetrain.getMotorVel(0) == 0 && subsystems.drivetrain.getMotorVel(1) == 0) {
+                if (subsystems.drivetrain.YLimiter.isPosAtTarget() && subsystems.drivetrain.isVelZero()) {
                     state = DRIVING_CORNER;
                 }
                 break;
             case DRIVING_CORNER:
-                if (subsystems.drivetrain.RZLimiter.isPosAtTarget() && subsystems.drivetrain.getMotorVel(0) == 0 && subsystems.drivetrain.getMotorVel(1) == 0) {
+                if (subsystems.drivetrain.RZLimiter.isPosAtTarget() && subsystems.drivetrain.isVelZero()) {
                     state = DRIVING_CORNER_DRIVE;
                     resetAtStartOfHall();
                 }
@@ -99,8 +136,8 @@ void TagMode::run()
                 if (subsystems.distanceSensors.LTurret.servo->isPosAtTarget()) {
                     sweepDir = !sweepDir;
                 }
-                subsystems.distanceSensors.LTurret.servo->setVelLimit(30);
-                subsystems.distanceSensors.LTurret.setAngle(-90 + (sweepDir ? 25 : -15));
+                subsystems.distanceSensors.LTurret.servo->setVelLimit(45);
+                subsystems.distanceSensors.LTurret.setAngle(-90 + (sweepDir ? 30 : -15));
                 if (subsystems.distanceSensors.LTurret.getDist() != 0 && subsystems.distanceSensors.LTurret.getDist() < tagModePresetSettings[genS.preset].tagDist) {
                     state = ENDING_TURN;
                 }
@@ -112,12 +149,12 @@ void TagMode::run()
                 }
                 break;
             case STOPPING_DRIVING:
-                if (subsystems.drivetrain.getMotorVel(0) == 0 && subsystems.drivetrain.getMotorVel(1) == 0) {
+                if (subsystems.drivetrain.isVelZero()) {
                     state = STARTING_TURN;
                 }
                 break;
             case STOPPING_ENDING_TURN:
-                if (subsystems.drivetrain.getMotorVel(0) == 0 && subsystems.drivetrain.getMotorVel(1) == 0) {
+                if (subsystems.drivetrain.isVelZero()) {
                     state = DRIVING_HALL;
                 }
                 break;
