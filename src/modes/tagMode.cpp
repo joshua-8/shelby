@@ -11,6 +11,7 @@ void TagMode::begin()
     state = States::DRIVING_CORNER_DRIVE;
     lastState = States::DRIVING_CORNER;
     resetAtStartOfHall();
+    where = 0;
 }
 void TagMode::run()
 {
@@ -26,15 +27,15 @@ void TagMode::run()
                 drivingStartDistance = subsystems.drivetrain.getDist().y;
                 break;
             case DRIVING_CORNER:
-                subsystems.drivetrain.moveDistRZ(tagModeModeSettings.turnLeft ? -90 : 90);
+                subsystems.drivetrain.moveDistRZ((tagModeModeSettings.turnLeft == (where == 1)) ? -90 : 90);
                 break;
             case DRIVING_CORNER_DRIVE:
                 subsystems.drivetrain.resetDist();
                 subsystems.drivetrain.moveDistY(2.0);
                 break;
-            case END_HALL_DRIVE:
+            case END_HALL_DRIVE: //clear corner
                 subsystems.drivetrain.resetDist();
-                subsystems.drivetrain.moveDistY(.33);
+                subsystems.drivetrain.moveDistY(.345);
                 break;
             case STARTING_TURN:
                 encourage = true;
@@ -64,7 +65,7 @@ void TagMode::run()
                 subsystems.drivetrain.moveDistYInc(.5);
                 break;
             case TURNING_180C:
-                subsystems.drivetrain.moveDistRZInc(-180);
+                subsystems.drivetrain.moveDistRZInc(-90);
                 break;
             }
         }
@@ -84,8 +85,7 @@ void TagMode::run()
                     if ((where == 0 || where == 2) && (robot.moveHall.hallWidth > 5.0 || subsystems.distanceSensors.LTurret.getDist() == 0 || subsystems.distanceSensors.RTurret.getDist() == 0)) {
                         state = END_HALL_DRIVE;
                         where++;
-                    }
-                    if ((where == 1 || where == 3)) {
+                    } else if ((where == 1 || where == 3)) {
                         state = TURNING_180A;
                         subsystems.audio.playTrack(11);
                         where++;
