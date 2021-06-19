@@ -2,7 +2,7 @@
 
 int topSettingsListifyGetLength()
 {
-    return 20;
+    return 18;
 }
 
 int topSettingsListifyGetIsBIF(int currVal)
@@ -44,10 +44,6 @@ int topSettingsListifyGetIsBIF(int currVal)
         return TOP_SETTINGS_LISTIFY_FLOAT;
     case 17:
         return TOP_SETTINGS_LISTIFY_FLOAT;
-    case 18:
-        return TOP_SETTINGS_LISTIFY_FLOAT;
-    case 19:
-        return TOP_SETTINGS_LISTIFY_FLOAT;
     }
     return 0;
 }
@@ -74,27 +70,23 @@ float topSettingsListifyGetVal(int currVal)
     case 8:
         return topSettings.criticalVoltThresh;
     case 9:
-        return topSettings.leftWheelFF;
-    case 10:
-        return topSettings.rightWheelFF;
-    case 11:
-        return topSettings.wheelAccel;
-    case 12:
         return topSettings.mHeadMxRtErr;
-    case 13:
+    case 10:
         return topSettings.mHeadPterm;
-    case 14:
+    case 11:
         return topSettings.mHallPterm;
-    case 15:
+    case 12:
         return topSettings.mHallHeadRng;
-    case 16:
+    case 13:
         return topSettings.mHallHallAdj;
-    case 17:
+    case 14:
         return topSettings.mHallHeadAdj;
-    case 18:
+    case 15:
         return topSettings.mHallThresh;
-    case 19:
+    case 16:
         return topSettings.mHallDinc;
+    case 17:
+        return topSettings.hallLength;
     }
     return 0;
 }
@@ -130,37 +122,31 @@ void topSettingsListifySetVal(int currVal, float val)
         topSettings.criticalVoltThresh = val;
         break;
     case 9:
-        topSettings.leftWheelFF = val;
-        break;
-    case 10:
-        topSettings.rightWheelFF = val;
-        break;
-    case 11:
-        topSettings.wheelAccel = val;
-        break;
-    case 12:
         topSettings.mHeadMxRtErr = val;
         break;
-    case 13:
+    case 10:
         topSettings.mHeadPterm = val;
         break;
-    case 14:
+    case 11:
         topSettings.mHallPterm = val;
         break;
-    case 15:
+    case 12:
         topSettings.mHallHeadRng = val;
         break;
-    case 16:
+    case 13:
         topSettings.mHallHallAdj = val;
         break;
-    case 17:
+    case 14:
         topSettings.mHallHeadAdj = val;
         break;
-    case 18:
+    case 15:
         topSettings.mHallThresh = val;
         break;
-    case 19:
+    case 16:
         topSettings.mHallDinc = val;
+        break;
+    case 17:
+        topSettings.hallLength = val;
         break;
     }
 }
@@ -187,27 +173,23 @@ String topSettingsListifyGetName(int currVal)
     case 8:
         return F("CritBat");
     case 9:
-        return F("LWheelFF");
-    case 10:
-        return F("RWheelFF");
-    case 11:
-        return F("wheelAccel");
-    case 12:
         return F("mHeadMxRtErr");
-    case 13:
+    case 10:
         return F("mHeadPterm");
-    case 14:
+    case 11:
         return F("mHallPterm");
-    case 15:
+    case 12:
         return F("mHallHeadRng");
-    case 16:
+    case 13:
         return F("mHallHallAdj");
-    case 17:
+    case 14:
         return F("mHallHeadAdj");
-    case 18:
+    case 15:
         return F("mHallThresh");
-    case 19:
+    case 16:
         return F("mHallDinc");
+    case 17:
+        return F("hallLength");
     }
     return "";
 }

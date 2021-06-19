@@ -7,45 +7,25 @@ public:
     {
         if (forward > 0) {
             if (subsystems.distanceSensors.FDist.getValid()) { //obstacle
-                subsystems.drivetrain.setVels(0, 0);
+                subsystems.drivetrain.moveVel({ 0, 0, 0 });
+
                 return false;
             } else {
-                subsystems.drivetrain.setVels(forward, rotation);
+                subsystems.drivetrain.moveVel({ forward, rotation, 0 });
                 return true;
             }
         }
         if (forward < 0) {
             if (subsystems.distanceSensors.BDist.getValid()) { //obstacle
-                subsystems.drivetrain.setVels(0, 0);
+                subsystems.drivetrain.moveVel({ 0, 0, 0 });
                 return false;
             } else {
-                subsystems.drivetrain.setVels(forward, rotation);
+                subsystems.drivetrain.moveVel({ forward, rotation, 0 });
                 return true;
             }
         }
-        subsystems.drivetrain.setVels(0, rotation);
+        subsystems.drivetrain.moveVel({ 0, rotation, 0 });
         return true;
-    }
-    boolean setVelTurnRadSafe(float forward, float radius)
-    {
-        if (forward > 0) {
-            if (subsystems.distanceSensors.FDist.getValid()) { //obstacle
-                subsystems.drivetrain.setVels(0, 0);
-                return false;
-            } else {
-                subsystems.drivetrain.setVels(forward, radius);
-                return true;
-            }
-        }
-        if (forward < 0) {
-            if (subsystems.distanceSensors.BDist.getValid()) { //obstacle
-                subsystems.drivetrain.setVels(0, 0);
-                return false;
-            } else {
-                subsystems.drivetrain.setVels(forward, radius);
-                return true;
-            }
-        }
     }
 };
 

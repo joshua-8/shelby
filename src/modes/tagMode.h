@@ -13,6 +13,7 @@ public:
     void begin();
     void run();
     float drivingStartDistance;
+    byte where;
 
 private:
     void runLights();
@@ -26,7 +27,12 @@ private:
         WAITING,
         ENDING_TURN,
         STOPPING_DRIVING,
-        STOPPING_ENDING_TURN
+        STOPPING_ENDING_TURN,
+        DRIVING_CORNER_DRIVE,
+        END_HALL_DRIVE,
+        TURNING_180A,
+        TURNING_180B,
+        TURNING_180C
     };
     States state;
     States lastState;

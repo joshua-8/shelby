@@ -23,7 +23,7 @@ void ChaseMode::run()
         forwards = !forwards;
         begin();
     }
-
+    subsystems.drivetrain.setVelLimitY(chaseModePresetSettings[genS.preset].speed);
     if (go) {
         if (forwards) {
             // robot.moveHeading.driveHeading(0, chaseModePresetSettings[genS.preset].speed, chaseModeModeSettings.safe);

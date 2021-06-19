@@ -2,7 +2,7 @@
 #define TURRET_H
 #include "constants/turretConstants.h"
 #include <Arduino.h>
-#include <Servo.h>
+#include <JMotor.h>
 class Turret {
 public:
     Turret();
@@ -10,7 +10,8 @@ public:
     void run();
     float getDist();
     float getAngle();
-    boolean setAngle(float angle);
+    void setAngle(float angle);
+    JServoController* servo = NULL;
 
 private:
     HardwareSerial* distSerial;
@@ -20,14 +21,8 @@ private:
     int signalStrength;
 
     // void readAngle();
-    byte servoControlPin;
-    byte servoPositionPin;
-    Servo servo;
     float angle;
-
-    float minAngle;
-    float maxAngle;
-    int minPulse;
-    int maxPulse;
+    byte servoPositionPin;
+    JMotorDriverAvrServo* servoDriver = NULL;
 };
 #endif

@@ -66,9 +66,9 @@ void MoveHall::run(float speed, boolean safe)
 
     hallWidth = rightDist + leftDist;
     //left of center=positive, right of center=negative
-    hallError = rightDist - .4; //leftDist;
+    hallError = rightDist - leftDist;
 
-    robotHeading = subsystems.drivetrain.getRotation();
+    robotHeading = subsystems.drivetrain.getDist().rz;
 
     //P (I? D?) controller
     targetRobotHeadingHall = topSettings.mHallPterm * hallError * (speed >= 0 ? 1.0 : -1.0);
@@ -78,14 +78,14 @@ void MoveHall::run(float speed, boolean safe)
     processedTargetRobotHeading += constrain(targetRobotHeading - processedTargetRobotHeading, -topSettings.mHallHeadAdj * lastLoopTimeMicros / 1000000.0, topSettings.mHallHeadAdj * lastLoopTimeMicros / 1000000.0);
 
     /////////////////hall Heading calculation
-    if (abs(subsystems.drivetrain.getDist()) - abs(lastDriveDist) > topSettings.mHallDinc) {
+    if (abs(subsystems.drivetrain.getDist().y) - abs(lastDriveDist) > topSettings.mHallDinc) {
 
         leftDist = subsystems.distanceSensors.LTurret.getDist();
         rightDist = subsystems.distanceSensors.RTurret.getDist();
         leftDelta = -(leftDist - lastLeftDist);
         rightDelta = (rightDist - lastRightDist);
 
-        driveDeltaDist = subsystems.drivetrain.getDist() - lastDriveDist;
+        driveDeltaDist = subsystems.drivetrain.getDist().y - lastDriveDist;
 
         leftValid = abs(leftDelta) <= topSettings.mHallThresh && leftDist != 0 && leftDist < 3;
         rightValid = abs(rightDelta) <= topSettings.mHallThresh && rightDist != 0 && rightDist < 3;
@@ -104,11 +104,11 @@ void MoveHall::run(float speed, boolean safe)
             goodReadingDist += abs(driveDeltaDist);
 
             hallHeading -= robotHeading;
-            hallHeading += (instantAngle - hallHeading) * abs(driveDeltaDist) / (goodReadingDist + .1);
+            hallHeading += (instantAngle - hallHeading) * abs(driveDeltaDist) / (goodReadingDist + .5);
             hallHeading += robotHeading;
         }
 
-        lastDriveDist = subsystems.drivetrain.getDist();
+        lastDriveDist = subsystems.drivetrain.getDist().y;
         lastLeftDist = leftDist;
         lastRightDist = rightDist;
 

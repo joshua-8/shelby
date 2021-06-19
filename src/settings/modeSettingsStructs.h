@@ -3,7 +3,7 @@
 
 struct tagModeModeSettingsStruct {
     bool safe;
-    int turnTime;
+    bool turnLeft;
 };
 
 struct chaseModeModeSettingsStruct {

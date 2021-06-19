@@ -11,9 +11,6 @@ struct topSettingsStruct {
     float highVoltThresh;
     float lowVoltThresh;
     float criticalVoltThresh;
-    float leftWheelFF;
-    float rightWheelFF;
-    float wheelAccel;
     float mHeadMxRtErr;
     float mHeadPterm;
     float mHallPterm;
@@ -22,5 +19,6 @@ struct topSettingsStruct {
     float mHallHeadAdj;
     float mHallThresh;
     float mHallDinc;
+    float hallLength;
 };
 #endif
