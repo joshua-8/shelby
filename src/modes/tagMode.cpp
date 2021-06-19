@@ -87,7 +87,10 @@ void TagMode::run()
                         where++;
                     } else if ((where == 1 || where == 3)) {
                         state = TURNING_180A;
-                        subsystems.audio.playTrack(11);
+                        if (where == 1)
+                            subsystems.audio.playTrack(0211);
+                        if (where == 3)
+                            subsystems.audio.playTrack(0210);
                         where++;
                         if (where >= 4) {
                             where = 0;
@@ -138,7 +141,7 @@ void TagMode::run()
                 }
                 subsystems.distanceSensors.LTurret.servo->setVelLimit(45);
                 subsystems.distanceSensors.LTurret.setAngle(-90 + (sweepDir ? 30 : -15));
-                if (subsystems.distanceSensors.LTurret.getDist() != 0 && subsystems.distanceSensors.LTurret.getDist() < tagModePresetSettings[genS.preset].tagDist) {
+                if ((subsystems.distanceSensors.LTurret.getDist() != 0 && subsystems.distanceSensors.LTurret.getDist() < tagModePresetSettings[genS.preset].tagDist) || (subsystems.ir.newMsg && subsystems.ir.message == irConstants.OK)) {
                     state = ENDING_TURN;
                 }
                 break;
@@ -162,26 +165,7 @@ void TagMode::run()
         }
     }
 
-    if (genS.musicMode == 0) { //off
-        if (encourage || (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK)) {
-            subsystems.audio.playTrack(30); //say hi to Luca
-            encourage = false;
-        }
-    }
-
-    if (genS.musicMode == 1) { //short
-        if (encourage || (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK)) {
-            subsystems.audio.playNextShort();
-            encourage = false;
-        }
-    }
-
-    if (genS.musicMode == 2) {
-        robot.entertainment.playConstantMusicLongIR();
-        if (encourage) {
-            encourage = false;
-        }
-    }
+    runSound();
 
     DURINGModeLastGo = go;
     DURINGmodeLastGenS = genS;
@@ -219,20 +203,23 @@ void TagMode::runLights()
 }
 void TagMode::runSound()
 {
-
     if (genS.musicMode == 0) { //off
-        if (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK) {
-            subsystems.audio.playTrack(30); //say hi to Luca
+        if (encourage || (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK)) {
+            encourage = false;
         }
     }
 
     if (genS.musicMode == 1) { //short
-        if (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK) {
+        if (encourage || (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK)) {
             subsystems.audio.playNextShort();
+            encourage = false;
         }
     }
 
     if (genS.musicMode == 2) {
         robot.entertainment.playConstantMusicLongIR();
+        if (encourage) {
+            encourage = false;
+        }
     }
 }
