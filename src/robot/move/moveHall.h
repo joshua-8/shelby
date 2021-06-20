@@ -33,5 +33,6 @@ public:
     float lastDriveDist;
     float driveDeltaDist;
     float instantAngle;
+    float hallErrorOffset;
 };
 #endif

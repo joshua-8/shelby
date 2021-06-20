@@ -20,6 +20,8 @@ private:
     void runSound();
     bool sweepDir;
 
+    bool nudge3a = true;
+
     enum States {
         DRIVING_HALL,
         DRIVING_CORNER,
