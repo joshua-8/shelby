@@ -142,7 +142,8 @@ void TagMode::run()
                 subsystems.distanceSensors.LTurret.servo->setVelLimit(45);
                 subsystems.distanceSensors.LTurret.setAngle(-90 + (sweepDir ? 30 : -15));
                 if ((subsystems.distanceSensors.LTurret.getDist() != 0 && subsystems.distanceSensors.LTurret.getDist() < tagModePresetSettings[genS.preset].tagDist) || (subsystems.ir.newMsg && subsystems.ir.message == irConstants.OK)) {
-                    state = ENDING_TURN;
+                    state = ENDING_TURN; //got tagged
+                    subsystems.audio.playTrack(0021);
                 }
                 break;
             case ENDING_TURN:
