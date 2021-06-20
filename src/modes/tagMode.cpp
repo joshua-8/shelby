@@ -170,6 +170,8 @@ void TagMode::run()
     DURINGModeLastGo = go;
     DURINGmodeLastGenS = genS;
     runGenIR();
+    if (genS.mode == 1) //SKIP FROM TAG TO DEMO
+        mode = DEMO_MODE_ID;
     runGenGoStopButton();
 }
 
@@ -204,13 +206,14 @@ void TagMode::runLights()
 void TagMode::runSound()
 {
     if (genS.musicMode == 0) { //off
-        if (encourage || (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK)) {
+        if (encourage || (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.AUX)) {
+            subsystems.audio.playTrack(30); //say hi to Luca
             encourage = false;
         }
     }
 
     if (genS.musicMode == 1) { //short
-        if (encourage || (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK)) {
+        if (encourage || (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.AUX)) {
             subsystems.audio.playNextShort();
             encourage = false;
         }
@@ -219,6 +222,7 @@ void TagMode::runSound()
     if (genS.musicMode == 2) {
         robot.entertainment.playConstantMusicLongIR();
         if (encourage) {
+            robot.subsystems.audio.playTrack(21);
             encourage = false;
         }
     }
