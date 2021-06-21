@@ -50,7 +50,7 @@ void TagMode::run()
             case ENDING_TURN:
                 subsystems.head.setPositionX(0);
                 subsystems.drivetrain.moveDist({ subsystems.drivetrain.getDist().y, robot.moveHall.getHallHeading(), 0 });
-                subsystems.audio.playTrackLoud(0021);
+                subsystems.audio.playTrackLoud(21);
                 // robot.moveDrive.setDriveTarget(subsystems.drivetrain.getDist().y, robot.moveHall.getHallHeading(), tagModeModeSettings.turnTime, tagModeModeSettings.safe, false);
                 break;
             case STOPPING_DRIVING:
@@ -181,8 +181,10 @@ void TagMode::run()
     DURINGModeLastGo = go;
     DURINGmodeLastGenS = genS;
     runGenIR();
-    if (genS.mode == 1) //SKIP FROM TAG TO DEMO
+    if (genS.mode == 1) { //SKIP FROM TAG TO DEMO
         genS.mode = DEMO_MODE_ID;
+        saveGenSettingsSD();
+    }
     runGenGoStopButton();
 }
 
