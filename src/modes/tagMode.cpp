@@ -64,7 +64,7 @@ void TagMode::run()
                 break;
             case TURNING_180B:
                 if (where == 0)
-                    subsystems.drivetrain.moveDistYInc(.5);
+                    subsystems.drivetrain.moveDistYInc(.85);
                 break;
             case TURNING_180C:
                 subsystems.drivetrain.moveDistRZInc(-90);
@@ -177,6 +177,7 @@ void TagMode::run()
     }
 
     runSound();
+    runLights();
 
     DURINGModeLastGo = go;
     DURINGmodeLastGenS = genS;
@@ -197,16 +198,10 @@ void TagMode::runLights()
     if (genS.lightsMode == 1) {
         subsystems.lights.eyeLight.setMode(EyeLight::NORMAL);
         subsystems.lights.eyeLight.setBlinkOff();
-        if (subsystems.audio.isPlayingShort() || subsystems.audio.isPlayingTrack(30)) {
-            subsystems.lights.eyeLight.setStandard(CRGB(255, 0, 255));
-        } else if (subsystems.audio.isPlayingLong()) {
-            subsystems.lights.eyeLight.setStandard(CRGB(0, 55, 0));
-        } else {
-            subsystems.lights.eyeLight.setStandard(CRGB(0, 0, 0));
-        }
+        subsystems.lights.eyeLight.setStandard(CRGB(50, 100, 255));
     }
     if (genS.lightsMode == 2) {
-        if (subsystems.audio.isPlayingShort() || subsystems.audio.isPlayingTrack(30)) {
+        if (state == WAITING) {
             subsystems.lights.eyeLight.setMode(EyeLight::RAINBOW);
             subsystems.lights.eyeLight.setBlinkOff();
         } else {
