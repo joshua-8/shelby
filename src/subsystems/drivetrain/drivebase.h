@@ -13,8 +13,8 @@ public:
     JEncoderQuadratureAttachInterrupt leftWheelEncoder = JEncoderQuadratureAttachInterrupt(LEFT_WHEEL_ENCODER_CHA_PIN, LEFT_WHEEL_ENCODER_CHB_PIN, .25 / wheelConstants.ticksPerMeter);
     JEncoderQuadratureAttachInterrupt rightWheelEncoder = JEncoderQuadratureAttachInterrupt(RIGHT_WHEEL_ENCODER_CHA_PIN, RIGHT_WHEEL_ENCODER_CHB_PIN, .25 / wheelConstants.ticksPerMeter, true);
     JVoltageCompMeasure<8> mbatMonitor = JVoltageCompMeasure<8>(BAT_MONITOR_PIN, drivetrainConstants.batMon);
-    JMotorCompBasic leftMotorCompensator = JMotorCompBasic(mbatMonitor, 3.45, .05);
-    JMotorCompBasic rightMotorCompensator = JMotorCompBasic(mbatMonitor, 3.7, .05);
+    JMotorCompBasic leftMotorCompensator = JMotorCompBasic(mbatMonitor, 3.65, .05);
+    JMotorCompBasic rightMotorCompensator = JMotorCompBasic(mbatMonitor, 3.65, .05);
     JControlLoopBasic leftMotorControlLoop = JControlLoopBasic(20, 1000);
     JControlLoopBasic rightMotorControlLoop = JControlLoopBasic(20, 1000);
     JMotorControllerClosed leftMotorController = JMotorControllerClosed(leftMotorDriver, leftMotorCompensator, leftWheelEncoder, leftMotorControlLoop, INFINITY, INFINITY, .05, false, 2.0);

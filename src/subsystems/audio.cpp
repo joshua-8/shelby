@@ -118,6 +118,11 @@ void Audio::playTrack(int t)
     wTrig.trackPlayPoly(t);
     wTrig.trackGain(t, topSettings.musicNormalGain);
 }
+void Audio::playTrackLoud(int t)
+{
+    wTrig.trackPlayPoly(t);
+    wTrig.trackGain(t, 0);
+}
 boolean Audio::isPlayingTrack(int t)
 {
     return wTrig.isTrackPlaying(t);

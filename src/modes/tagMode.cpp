@@ -44,12 +44,13 @@ void TagMode::run()
                 // robot.moveDrive.setDriveTarget(subsystems.drivetrain.getDist().y, robot.moveHall.getHallHeading() - 85, tagModeModeSettings.turnTime, tagModeModeSettings.safe, false);
                 break;
             case WAITING:
-                subsystems.tail.wag(1500);
+                subsystems.tail.wag(2000);
                 subsystems.drivetrain.moveVel({ 0, 0, 0 });
                 break;
             case ENDING_TURN:
                 subsystems.head.setPositionX(0);
                 subsystems.drivetrain.moveDist({ subsystems.drivetrain.getDist().y, robot.moveHall.getHallHeading(), 0 });
+                subsystems.audio.playTrackLoud(21);
                 // robot.moveDrive.setDriveTarget(subsystems.drivetrain.getDist().y, robot.moveHall.getHallHeading(), tagModeModeSettings.turnTime, tagModeModeSettings.safe, false);
                 break;
             case STOPPING_DRIVING:
@@ -62,7 +63,8 @@ void TagMode::run()
                 subsystems.drivetrain.moveDistRZInc(-90);
                 break;
             case TURNING_180B:
-                subsystems.drivetrain.moveDistYInc(.5);
+                if (where == 0)
+                    subsystems.drivetrain.moveDistYInc(.85);
                 break;
             case TURNING_180C:
                 subsystems.drivetrain.moveDistRZInc(-90);
@@ -75,12 +77,19 @@ void TagMode::run()
         } else {
             switch (state) { //run mode
             case DRIVING_HALL:
+                if (where == 0 || where == 1 || where == 3)
+                    robot.moveHall.hallErrorOffset = robot.moveHall.hallWidth / 4;
+
                 robot.moveHall.run(tagModePresetSettings[genS.preset].speed, tagModeModeSettings.safe);
                 subsystems.head.setPositionX(robot.moveHall.getHallHeading() - subsystems.drivetrain.getDist().rz);
-                if (abs(subsystems.drivetrain.getDist().y - drivingStartDistance) > tagModePresetSettings[genS.preset].drvDist) {
+                if (where == 3 && subsystems.drivetrain.getDist().y == 7 && nudge3a) {
+                    nudge3a = false;
+                    robot.moveHall.hallHeadingProcessed += 25;
+                }
+                if (abs(subsystems.drivetrain.getDist().y - drivingStartDistance) > tagModePresetSettings[genS.preset].drvDist && abs(topSettings.hallLength - subsystems.drivetrain.getDist().y) > tagModePresetSettings[genS.preset].drvDist) {
                     state = STOPPING_DRIVING;
                 }
-                if (abs(subsystems.drivetrain.getDist().y) > topSettings.hallLength) {
+                if (((where == 0 || where == 2) && abs(subsystems.drivetrain.getDist().y) > topSettings.hallLength) || ((where == 1 || where == 3) && abs(subsystems.drivetrain.getDist().y) > topSettings.hallLength + .5)) {
 
                     if ((where == 0 || where == 2) && (robot.moveHall.hallWidth > 5.0 || subsystems.distanceSensors.LTurret.getDist() == 0 || subsystems.distanceSensors.RTurret.getDist() == 0)) {
                         state = END_HALL_DRIVE;
@@ -88,9 +97,11 @@ void TagMode::run()
                     } else if ((where == 1 || where == 3)) {
                         state = TURNING_180A;
                         if (where == 1)
-                            subsystems.audio.playTrack(0211);
-                        if (where == 3)
-                            subsystems.audio.playTrack(0210);
+                            subsystems.audio.playTrackLoud(211);
+                        if (where == 3) {
+                            nudge3a = true;
+                            subsystems.audio.playTrackLoud(210);
+                        }
                         where++;
                         if (where >= 4) {
                             where = 0;
@@ -139,10 +150,10 @@ void TagMode::run()
                 if (subsystems.distanceSensors.LTurret.servo->isPosAtTarget()) {
                     sweepDir = !sweepDir;
                 }
-                subsystems.distanceSensors.LTurret.servo->setVelLimit(45);
-                subsystems.distanceSensors.LTurret.setAngle(-90 + (sweepDir ? 30 : -15));
+                subsystems.distanceSensors.LTurret.servo->setVelLimit(80);
+                subsystems.distanceSensors.LTurret.setAngle(-90 + (sweepDir ? 15 : -15));
                 if ((subsystems.distanceSensors.LTurret.getDist() != 0 && subsystems.distanceSensors.LTurret.getDist() < tagModePresetSettings[genS.preset].tagDist) || (subsystems.ir.newMsg && subsystems.ir.message == irConstants.OK)) {
-                    state = ENDING_TURN;
+                    state = ENDING_TURN; //got tagged
                 }
                 break;
             case ENDING_TURN:
@@ -166,10 +177,15 @@ void TagMode::run()
     }
 
     runSound();
+    runLights();
 
     DURINGModeLastGo = go;
     DURINGmodeLastGenS = genS;
     runGenIR();
+    if (genS.mode == 1) { //SKIP FROM TAG TO DEMO
+        genS.mode = DEMO_MODE_ID;
+        saveGenSettingsSD();
+    }
     runGenGoStopButton();
 }
 
@@ -182,16 +198,10 @@ void TagMode::runLights()
     if (genS.lightsMode == 1) {
         subsystems.lights.eyeLight.setMode(EyeLight::NORMAL);
         subsystems.lights.eyeLight.setBlinkOff();
-        if (subsystems.audio.isPlayingShort() || subsystems.audio.isPlayingTrack(30)) {
-            subsystems.lights.eyeLight.setStandard(CRGB(255, 0, 255));
-        } else if (subsystems.audio.isPlayingLong()) {
-            subsystems.lights.eyeLight.setStandard(CRGB(0, 55, 0));
-        } else {
-            subsystems.lights.eyeLight.setStandard(CRGB(0, 0, 0));
-        }
+        subsystems.lights.eyeLight.setStandard(CRGB(50, 100, 255));
     }
     if (genS.lightsMode == 2) {
-        if (subsystems.audio.isPlayingShort() || subsystems.audio.isPlayingTrack(30)) {
+        if (state == WAITING) {
             subsystems.lights.eyeLight.setMode(EyeLight::RAINBOW);
             subsystems.lights.eyeLight.setBlinkOff();
         } else {
@@ -204,13 +214,14 @@ void TagMode::runLights()
 void TagMode::runSound()
 {
     if (genS.musicMode == 0) { //off
-        if (encourage || (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK)) {
+        if (encourage || (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.AUX)) {
+            subsystems.audio.playTrack(30); //say hi to Luca
             encourage = false;
         }
     }
 
     if (genS.musicMode == 1) { //short
-        if (encourage || (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK)) {
+        if (encourage || (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.AUX)) {
             subsystems.audio.playNextShort();
             encourage = false;
         }

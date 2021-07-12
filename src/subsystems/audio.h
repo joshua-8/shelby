@@ -19,6 +19,7 @@ public:
     void stopLong();
 
     void playTrack(int t);
+    void playTrackLoud(int t);
     void stopTrack(int t);
     boolean isPlayingTrack(int t);
 
