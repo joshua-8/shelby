@@ -76,6 +76,8 @@ boolean Audio::isPlayingLong()
 
 void Audio::playWordMode(int m)
 {
+    if (genS.wordsMode == 0)
+        return;
     if (m == TAG_MODE_ID) {
         if (wordToPlay >= audioConstants.wordsPlaylistTagLength) {
             wordToPlay = 0;
