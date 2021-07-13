@@ -74,6 +74,17 @@ boolean Audio::isPlayingLong()
     return longTrackPlaying;
 }
 
+void Audio::playWordMode(int m)
+{
+    if (m == TAG_MODE_ID) {
+        if (wordToPlay >= audioConstants.wordsPlaylistTagLength) {
+            wordToPlay = 0;
+        }
+        playTrackLoud(audioConstants.wordsPlaylistTag[wordToPlay]);
+        wordToPlay++;
+    }
+}
+
 void Audio::playNextShort()
 {
     stopShort();

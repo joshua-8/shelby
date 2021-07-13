@@ -23,6 +23,9 @@ public:
     const short musicShortPlaylistListCalm[25] = { 1515, 1503, 1519, 1525, 1538, 1555, 1548, 1520, 1536, 1554, 1529, 1558, 1542, 1516, 1528, 1532, 1552, 1514, 1510, 1570, 1544, 1506, 1545, 1565, 1533 };
     const short musicShortPlaylistListOlder[58] = { 1554, 1541, 1553, 1555, 1552, 1562, 1528, 1532, 1570, 1567, 1563, 1527, 1536, 1514, 1521, 1551, 1529, 1559, 1518, 1566, 1533, 1560, 1547, 1520, 1534, 1544, 1558, 1519, 1565, 1549, 1524, 1538, 1542, 1526, 1568, 1510, 1513, 1569, 1530, 1545, 1561, 1531, 1571, 1543, 1525, 1564, 1515, 1537, 1546, 1509, 1540, 1583, 1585, 1580, 1586, 1582, 1584, 1581 };
     const short* musicShortPlaylist[musicListNum] = { musicShortPlaylistListYoung, musicShortPlaylistListChase, musicShortPlaylistListCalm, musicShortPlaylistListOlder };
+
+    const short wordsPlaylistTagLength = 11;
+    const short wordsPlaylistTag[11] = { 514, 504, 506, 508, 509, 511, 513, 510, 507, 505, 502 };
 };
 static const audioConsts audioConstants;
 #endif

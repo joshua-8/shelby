@@ -10,7 +10,7 @@ const int8_t numLightsModes = 3;
 const char lightsModeName[numLightsModes][5] = { "off", "low", "high" };
 
 const int8_t numWordModes = 2;
-const char wordModeName[2][8] = { "younger", "older" };
+const char wordModeName[2][8] = { "off", "on" };
 
 
 const int8_t modeNum = 6;

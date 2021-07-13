@@ -17,6 +17,7 @@ public:
     boolean isPlayingShort();
     void stopShort();
     void stopLong();
+    void playWordMode(int m);
 
     void playTrack(int t);
     void playTrackLoud(int t);
@@ -33,5 +34,6 @@ private:
     int shortMusicPlaying;
     unsigned long shortTrackStartMillis = 0;
     boolean shortTrackPlaying = false;
+    byte wordToPlay=0;
 };
 #endif

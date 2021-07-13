@@ -144,6 +144,7 @@ void TagMode::run()
             case STARTING_TURN:
                 if (subsystems.drivetrain.getDist().rz < robot.moveHall.getHallHeading() - 45 && subsystems.drivetrain.getVel().rz == 0) {
                     state = WAITING;
+                    subsystems.audio.playWordMode(TAG_MODE_ID);
                 }
                 break;
             case WAITING:
