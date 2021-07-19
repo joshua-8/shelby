@@ -68,7 +68,9 @@ void MoveHall::run(float speed, boolean safe)
 
     hallWidth = rightDist + leftDist;
     //left of center=positive, right of center=negative
-    hallError = rightDist - leftDist + hallErrorOffset;
+    if (rightDist != 0 && leftDist != 0) {
+        hallError = rightDist - leftDist + hallErrorOffset;
+    }
 
     robotHeading = subsystems.drivetrain.getDist().rz;
 
@@ -133,6 +135,19 @@ void MoveHall::run(float speed, boolean safe)
     hallHeadingProcessed += constrain(hallHeading - hallHeadingProcessed, -topSettings.mHallHallAdj * lastLoopTimeMicros / 1000000.0, topSettings.mHallHallAdj * lastLoopTimeMicros / 1000000.0);
 
     robot.moveHeading.driveHeading(processedTargetRobotHeading + hallHeadingProcessed, speed, safe);
+
+    // Serial.print("err:");
+    // Serial.print(hallError);
+    // Serial.print(" ");
+    // Serial.print("targ:");
+    // Serial.print(processedTargetRobotHeading + hallHeadingProcessed);
+    // Serial.print(" ");
+    // Serial.print("head:");
+    // Serial.print(robotHeading);
+    // Serial.print(" ");
+    // Serial.print("hallHeading:");
+    // Serial.print(hallHeadingProcessed);
+    // Serial.println();
 
     leftTurretAngle = -90; // - robotHeading + hallHeading;
     rightTurretAngle = 90; // - robotHeading + hallHeading;

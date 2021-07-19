@@ -15,7 +15,7 @@ void Tail::begin()
 }
 void Tail::run()
 {
-    if (period > 0) {
+    if (period > 0 && go) {
 
         float movement = constrain(1.0 * (tailConstants.rightRange - tailConstants.leftRange) * lastLoopTimeMicros / 1000 / period * 2, -(tailConstants.rightRange - tailConstants.leftRange) / 5, (tailConstants.rightRange - tailConstants.leftRange) / 5);
 

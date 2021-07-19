@@ -26,11 +26,11 @@ void ChaseMode::run()
     subsystems.drivetrain.setVelLimitY(chaseModePresetSettings[genS.preset].speed);
     if (go) {
         if (forwards) {
-            // robot.moveHeading.driveHeading(0, chaseModePresetSettings[genS.preset].speed, chaseModeModeSettings.safe);
-            robot.moveHall.run(chaseModePresetSettings[genS.preset].speed, chaseModeModeSettings.safe);
+            robot.moveHeading.driveHeading(0, chaseModePresetSettings[genS.preset].speed, chaseModeModeSettings.safe);
+            // robot.moveHall.run(chaseModePresetSettings[genS.preset].speed, chaseModeModeSettings.safe);
         } else {
-            // robot.moveHeading.driveHeading(0, -chaseModePresetSettings[genS.preset].speed, chaseModeModeSettings.safe);
-            robot.moveHall.run(-chaseModePresetSettings[genS.preset].speed, chaseModeModeSettings.safe);
+            robot.moveHeading.driveHeading(0, -chaseModePresetSettings[genS.preset].speed, chaseModeModeSettings.safe);
+            // robot.moveHall.run(-chaseModePresetSettings[genS.preset].speed, chaseModeModeSettings.safe);
         }
     }
 

@@ -12,6 +12,7 @@ void TagMode::begin()
     lastState = States::DRIVING_CORNER;
     resetAtStartOfHall();
     where = 0;
+    justStarted = true;
 }
 void TagMode::run()
 {
@@ -35,7 +36,7 @@ void TagMode::run()
                 break;
             case END_HALL_DRIVE: //clear corner
                 subsystems.drivetrain.resetDist();
-                subsystems.drivetrain.moveDistY(.345);
+                subsystems.drivetrain.moveDistY(.6);
                 break;
             case STARTING_TURN:
                 encourage = true;
@@ -64,7 +65,9 @@ void TagMode::run()
                 break;
             case TURNING_180B:
                 if (where == 0)
-                    subsystems.drivetrain.moveDistYInc(.85);
+                    subsystems.drivetrain.moveDistYInc(.5);
+                if (where == 2)
+                    subsystems.drivetrain.moveDistYInc(.5);
                 break;
             case TURNING_180C:
                 subsystems.drivetrain.moveDistRZInc(-90);
@@ -77,29 +80,25 @@ void TagMode::run()
         } else {
             switch (state) { //run mode
             case DRIVING_HALL:
-                if (where == 0 || where == 1 || where == 3)
-                    robot.moveHall.hallErrorOffset = robot.moveHall.hallWidth / 4;
+                robot.moveHall.hallErrorOffset = 0;
 
                 robot.moveHall.run(tagModePresetSettings[genS.preset].speed, tagModeModeSettings.safe);
                 subsystems.head.setPositionX(robot.moveHall.getHallHeading() - subsystems.drivetrain.getDist().rz);
-                if (where == 3 && subsystems.drivetrain.getDist().y == 7 && nudge3a) {
-                    nudge3a = false;
-                    robot.moveHall.hallHeadingProcessed += 25;
-                }
                 if (abs(subsystems.drivetrain.getDist().y - drivingStartDistance) > tagModePresetSettings[genS.preset].drvDist && abs(topSettings.hallLength - subsystems.drivetrain.getDist().y) > tagModePresetSettings[genS.preset].drvDist) {
                     state = STOPPING_DRIVING;
                 }
-                if (((where == 0 || where == 2) && abs(subsystems.drivetrain.getDist().y) > topSettings.hallLength) || ((where == 1 || where == 3) && abs(subsystems.drivetrain.getDist().y) > topSettings.hallLength + .5)) {
+                if (((where == 0 || where == 2) && abs(subsystems.drivetrain.getDist().y) > topSettings.hallLength - (where == 2 ? 1 : 0) - (justStarted ? 0 : 3))
+                    || ((where == 1 || where == 3) && abs(subsystems.drivetrain.getDist().y) > topSettings.hallLength - 2)) {
 
                     if ((where == 0 || where == 2) && (robot.moveHall.hallWidth > 5.0 || subsystems.distanceSensors.LTurret.getDist() == 0 || subsystems.distanceSensors.RTurret.getDist() == 0)) {
                         state = END_HALL_DRIVE;
                         where++;
+                        justStarted = false;
                     } else if ((where == 1 || where == 3)) {
                         state = TURNING_180A;
                         if (where == 1)
                             subsystems.audio.playTrackLoud(211);
                         if (where == 3) {
-                            nudge3a = true;
                             subsystems.audio.playTrackLoud(210);
                         }
                         where++;
@@ -215,10 +214,6 @@ void TagMode::runLights()
 void TagMode::runSound()
 {
     if (genS.musicMode == 0) { //off
-        if (encourage || (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.AUX)) {
-            subsystems.audio.playTrack(30); //say hi to Luca
-            encourage = false;
-        }
     }
 
     if (genS.musicMode == 1) { //short

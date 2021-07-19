@@ -7,9 +7,9 @@ static void runGenGoStopButton()
         go = !go;
     }
     if (go) {
-        subsystems.goButton.setColor(CRGB(200, 250, 255));
+        subsystems.goButton.setColor(CRGB(250, 250, 200));
     } else {
-        subsystems.goButton.fade(CRGB(2, 2, 2), 1500, CRGB(150, 150, 150), 1000);
+        subsystems.goButton.fade(CRGB(2, 2, 10), 1500, CRGB(150, 150, 250), 1000);
     }
 }
 
