@@ -5,6 +5,10 @@ Audio::Audio()
     longMusicPlaying = 0;
     longTrackStartMillis = 0;
     longTrackPlaying = false;
+    wordTrackStartMillis = 0;
+    shortMusicPlaying = 0;
+    shortTrackStartMillis = 0;
+    shortTrackPlaying = false;
 }
 
 void Audio::begin()
@@ -25,6 +29,12 @@ void Audio::run()
     if (genS.musicList != premodeLastGenS.musicList) {
         stopShort();
         stopLong();
+    }
+
+    if (wordStarted && millis() - wordTrackStartMillis > audioConstants.WTRIG_LAG && !wTrig.isTrackPlaying(wordPlaying)) {
+        wordStarted = false;
+        wTrig.trackFade(longMusicPlaying, topSettings.musicNormalGain, 200, false);
+        wTrig.trackFade(shortMusicPlaying, topSettings.musicNormalGain, 200, false);
     }
 
     wTrig.update();
@@ -79,11 +89,16 @@ void Audio::playWordMode(int m)
     if (genS.wordsMode == 0)
         return;
     if (m == TAG_MODE_ID) {
+        wordToPlay++;
         if (wordToPlay >= audioConstants.wordsPlaylistTagLength) {
             wordToPlay = 0;
         }
-        playTrackLoud(audioConstants.wordsPlaylistTag[wordToPlay]);
-        wordToPlay++;
+        wordStarted = true;
+        wordPlaying = audioConstants.wordsPlaylistTag[wordToPlay];
+        wTrig.trackGain(longMusicPlaying, topSettings.musicNormalGain - topSettings.musicVolumeDecrease);
+        wTrig.trackGain(shortMusicPlaying, topSettings.musicNormalGain - topSettings.musicVolumeDecrease);
+        playTrackLoud(wordPlaying);
+        wordTrackStartMillis = millis();
     }
 }
 

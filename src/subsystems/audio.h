@@ -34,6 +34,9 @@ private:
     int shortMusicPlaying;
     unsigned long shortTrackStartMillis = 0;
     boolean shortTrackPlaying = false;
-    byte wordToPlay=0;
+    byte wordToPlay = 0;
+    boolean wordStarted = false;
+    int wordPlaying = 0;
+    unsigned long wordTrackStartMillis = 0;
 };
 #endif

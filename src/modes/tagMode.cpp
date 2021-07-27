@@ -176,6 +176,10 @@ void TagMode::run()
         }
     }
 
+    if (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.AUX) {
+        subsystems.audio.playWordMode(TAG_MODE_ID);
+    }
+
     runSound();
     runLights();
 
