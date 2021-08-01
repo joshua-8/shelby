@@ -51,7 +51,6 @@ void TagMode::run()
             case ENDING_TURN:
                 subsystems.head.setPositionX(0);
                 subsystems.drivetrain.moveDist({ subsystems.drivetrain.getDist().y, robot.moveHall.getHallHeading(), 0 });
-                subsystems.audio.playTrackLoud(21);
                 // robot.moveDrive.setDriveTarget(subsystems.drivetrain.getDist().y, robot.moveHall.getHallHeading(), tagModeModeSettings.turnTime, tagModeModeSettings.safe, false);
                 break;
             case STOPPING_DRIVING:

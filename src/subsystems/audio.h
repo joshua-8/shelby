@@ -23,10 +23,10 @@ public:
     void playTrackLoud(int t);
     void stopTrack(int t);
     boolean isPlayingTrack(int t);
+    wavTrigger wTrig;
 
 private:
     boolean playingMusic;
-    wavTrigger wTrig;
     int lastVolume;
     int longMusicPlaying;
     unsigned long longTrackStartMillis = 0;
