@@ -96,9 +96,9 @@ void TagMode::run()
                     } else if ((where == 1 || where == 3)) {
                         state = TURNING_180A;
                         if (where == 1)
-                            subsystems.audio.playTrackLoud(211);
+                            subsystems.audio.playTrackLoud(213);
                         if (where == 3) {
-                            subsystems.audio.playTrackLoud(210);
+                            subsystems.audio.playTrackLoud(212);
                         }
                         where++;
                         if (where >= 4) {
@@ -115,6 +115,7 @@ void TagMode::run()
             case TURNING_180B:
                 if (subsystems.drivetrain.isVelZero() && subsystems.drivetrain.YLimiter.isPosAtTarget()) {
                     state = TURNING_180C;
+                    go = false;
                 }
                 break;
             case TURNING_180C:
