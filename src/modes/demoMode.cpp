@@ -30,21 +30,6 @@ void DemoMode::run()
 
     if (mainMode) {
         if (millis() - subsystems.ir.lastNewMsgMillis < 400 && go) {
-            // subsystems.drivetrain.setVelLimit({ .5, 50, 0 });
-            // if (subsystems.ir.message == irConstants.DOWN) {
-            //     subsystems.distanceSensors.LTurret.setAngle(-120);
-            //     subsystems.distanceSensors.RTurret.setAngle(120);
-            //      subsystems.drivetrain.movePos({ -.1, 0, 0 });
-            // }
-            // if (subsystems.ir.message == irConstants.UP) {
-            // subsystems.distanceSensors.LTurret.setAngle(-60);
-            // subsystems.distanceSensors.RTurret.setAngle(60);
-            //     subsystems.drivetrain.movePos({ .3, 0, 0 });
-            // }
-            // if (subsystems.ir.message == irConstants.RIGHT)
-            //     subsystems.drivetrain.movePos({ .3, 45, 0 });
-            // if (subsystems.ir.message == irConstants.LEFT)
-            //     subsystems.drivetrain.movePos({ .3, -45, 0 });
             subsystems.drivetrain.setVelLimitY(demoModePresetSettings[genS.preset].manualDriveSpeed);
             robot.moveSafe.setVelsSafe(demoModePresetSettings[genS.preset].manualDriveSpeed * (1 * (subsystems.ir.message == irConstants.UP) - 1 * (subsystems.ir.message == irConstants.DOWN)), demoModePresetSettings[genS.preset].manualTurnSpeed * (1 * (subsystems.ir.message == irConstants.RIGHT) - 1 * (subsystems.ir.message == irConstants.LEFT)));
         } else {

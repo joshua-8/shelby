@@ -19,8 +19,7 @@ private:
     void runLights();
     void runSound();
     bool sweepDir;
-
-    bool nudge3a = true;
+    bool justStarted = true;
 
     enum States {
         DRIVING_HALL,

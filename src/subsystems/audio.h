@@ -17,15 +17,16 @@ public:
     boolean isPlayingShort();
     void stopShort();
     void stopLong();
+    void playWordMode(int m);
 
     void playTrack(int t);
     void playTrackLoud(int t);
     void stopTrack(int t);
     boolean isPlayingTrack(int t);
+    wavTrigger wTrig;
 
 private:
     boolean playingMusic;
-    wavTrigger wTrig;
     int lastVolume;
     int longMusicPlaying;
     unsigned long longTrackStartMillis = 0;
@@ -33,5 +34,9 @@ private:
     int shortMusicPlaying;
     unsigned long shortTrackStartMillis = 0;
     boolean shortTrackPlaying = false;
+    byte wordToPlay = 0;
+    boolean wordStarted = false;
+    int wordPlaying = 0;
+    unsigned long wordTrackStartMillis = 0;
 };
 #endif

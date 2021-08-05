@@ -8,5 +8,7 @@ extern boolean DURINGModeLastGo;
 extern unsigned long lastLoopTimeMicros;
 extern Subsystems subsystems;
 extern MsgScreen messageScreen;
+extern bool BAT_low_alerted;
+extern bool BAT_crit_alerted;
 
 #endif

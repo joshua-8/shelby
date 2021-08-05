@@ -6,8 +6,8 @@ MoveHeading::MoveHeading()
 void MoveHeading::driveHeading(float heading, float speed, boolean safe)
 {
     float error = heading - subsystems.drivetrain.getDist().rz;
-    float output = constrain(error, -topSettings.mHeadMxRtErr, topSettings.mHeadMxRtErr);
-    output *= topSettings.mHeadPterm;
+    float output = error * topSettings.mHeadPterm;
+    output = constrain(output, -topSettings.mHeadMxRtErr, topSettings.mHeadMxRtErr);
     if (safe) {
         robot.moveSafe.setVelsSafe(speed, output);
     } else {

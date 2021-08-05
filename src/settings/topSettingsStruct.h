@@ -20,5 +20,6 @@ struct topSettingsStruct {
     float mHallThresh;
     float mHallDinc;
     float hallLength;
+    float musicVolumeDecrease;
 };
 #endif

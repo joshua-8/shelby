@@ -7,9 +7,19 @@ static void runGenGoStopButton()
         go = !go;
     }
     if (go) {
-        subsystems.goButton.setColor(CRGB(200, 250, 255));
+        if (BAT_crit_alerted)
+            subsystems.goButton.setColor(CRGB(255, 0, 0));
+        else if (BAT_low_alerted)
+            subsystems.goButton.setColor(CRGB(255, 255, 0));
+        else
+            subsystems.goButton.setColor(CRGB(255, 255, 170));
     } else {
-        subsystems.goButton.fade(CRGB(2, 2, 2), 1500, CRGB(150, 150, 150), 1000);
+        if (BAT_crit_alerted)
+            subsystems.goButton.fade(CRGB(4, 0, 0), 1500, CRGB(120, 0, 0), 1000);
+        else if (BAT_low_alerted)
+            subsystems.goButton.fade(CRGB(4, 0, 0), 1500, CRGB(120, 120, 0), 1000);
+        else
+            subsystems.goButton.fade(CRGB(4, 4, 18), 1500, CRGB(120, 120, 255), 1000);
     }
 }
 
