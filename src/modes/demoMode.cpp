@@ -6,8 +6,6 @@ DemoMode::DemoMode()
 void DemoMode::begin()
 {
     mainMode = true;
-    subsystems.audio.stopLong();
-    subsystems.audio.stopShort();
     subsystems.lights.eyeLight.setStandard(CRGB(100, 120, 255));
     subsystems.lights.eyeLight.setBlink(CRGB(100, 0, 0), 0);
     subsystems.drivetrain.resetDist();

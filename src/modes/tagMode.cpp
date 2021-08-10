@@ -6,8 +6,6 @@ void TagMode::begin()
 {
     sweepDir = true;
     encourage = false;
-    subsystems.audio.stopLong();
-    subsystems.audio.stopShort();
     state = States::DRIVING_CORNER_DRIVE;
     lastState = States::DRIVING_CORNER;
     resetAtStartOfHall();
@@ -186,10 +184,6 @@ void TagMode::run()
     DURINGModeLastGo = go;
     DURINGmodeLastGenS = genS;
     runGenIR();
-    if (genS.mode == 1) { //SKIP FROM TAG TO DEMO
-        genS.mode = DEMO_MODE_ID;
-        saveGenSettingsSD();
-    }
     runGenGoStopButton();
 }
 

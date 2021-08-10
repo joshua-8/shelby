@@ -7,36 +7,16 @@ struct tagModePresetSettingsStruct {
     float tagDist;
 };
 
-struct chaseModePresetSettingsStruct {
-    float speed;
-};
-
-struct raceModePresetSettingsStruct {
-    int racesettingA;
-    float racesettingB;
-    bool racesettingC;
-    int racesettingD;
-    float racesettingE;
-    bool racesettingF;
-    int racesettingG;
-    float racesettingH;
-    bool racesettingI;
-    int racesettingJ;
-    float racesettingK;
-    bool racesettingL;
-};
-
-struct walkerModePresetSettingsStruct {
-    int walkersettingA;
-    float walkersettingB;
-    bool walkersettingC;
-    int walkersettingD;
+struct driveModePresetSettingsStruct {
+    float manualDriveSpeed;
+    float manualTurnSpeed;
+    float hallSpeed;
 };
 
 struct stillModePresetSettingsStruct {
     bool stillsettingA;
-    int stillsettingB;
 };
+
 struct demoModePresetSettingsStruct {
     float manualDriveSpeed;
     float manualTurnSpeed;

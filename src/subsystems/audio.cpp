@@ -88,18 +88,31 @@ void Audio::playWordMode(int m)
 {
     if (genS.wordsMode == 0)
         return;
-    if (m == TAG_MODE_ID) {
+
+    if (m == -10) { //encourage
+        wordToPlay++;
+        if (wordToPlay >= audioConstants.wordsPlaylistEncourageLength) {
+            wordToPlay = 0;
+        }
+        playTrackOthersQuiet(audioConstants.wordsPlaylistEncourage[wordToPlay]);
+    }
+    if (m == TAG_MODE_ID || m == DRIVE_MODE_ID) {
         wordToPlay++;
         if (wordToPlay >= audioConstants.wordsPlaylistTagLength) {
             wordToPlay = 0;
         }
-        wordStarted = true;
-        wordPlaying = audioConstants.wordsPlaylistTag[wordToPlay];
-        wTrig.trackGain(longMusicPlaying, topSettings.musicNormalGain - topSettings.musicVolumeDecrease);
-        wTrig.trackGain(shortMusicPlaying, topSettings.musicNormalGain - topSettings.musicVolumeDecrease);
-        playTrackLoud(wordPlaying);
-        wordTrackStartMillis = millis();
+        playTrackOthersQuiet(audioConstants.wordsPlaylistTag[wordToPlay]);
     }
+}
+
+void Audio::playTrackOthersQuiet(int t)
+{
+    wordStarted = true;
+    wordPlaying = t;
+    wTrig.trackGain(longMusicPlaying, topSettings.musicNormalGain - topSettings.musicVolumeDecrease);
+    wTrig.trackGain(shortMusicPlaying, topSettings.musicNormalGain - topSettings.musicVolumeDecrease);
+    playTrackLoud(wordPlaying);
+    wordTrackStartMillis = millis();
 }
 
 void Audio::playNextShort()

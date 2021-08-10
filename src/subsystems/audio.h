@@ -24,6 +24,7 @@ public:
     void stopTrack(int t);
     boolean isPlayingTrack(int t);
     wavTrigger wTrig;
+    void playTrackOthersQuiet(int t);
 
 private:
     boolean playingMusic;

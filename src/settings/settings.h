@@ -12,16 +12,12 @@ extern generalSetStruct premodeLastGenS;
 extern generalSetStruct DURINGmodeLastGenS;
 
 extern tagModePresetSettingsStruct tagModePresetSettings[presetNum];
-extern chaseModePresetSettingsStruct chaseModePresetSettings[presetNum];
-extern raceModePresetSettingsStruct raceModePresetSettings[presetNum];
-extern walkerModePresetSettingsStruct walkerModePresetSettings[presetNum];
+extern driveModePresetSettingsStruct driveModePresetSettings[presetNum];
 extern stillModePresetSettingsStruct stillModePresetSettings[presetNum];
 extern demoModePresetSettingsStruct demoModePresetSettings[presetNum];
 
 extern tagModeModeSettingsStruct tagModeModeSettings;
-extern chaseModeModeSettingsStruct chaseModeModeSettings;
-extern raceModeModeSettingsStruct raceModeModeSettings;
-extern walkerModeModeSettingsStruct walkerModeModeSettings;
+extern driveModeModeSettingsStruct driveModeModeSettings;
 extern stillModeModeSettingsStruct stillModeModeSettings;
 extern demoModeModeSettingsStruct demoModeModeSettings;
 
