@@ -16,10 +16,6 @@ void DemoMode::run()
     runLights();
     runSound();
 
-    if (genS.lightsMode != DURINGmodeLastGenS.lightsMode) {
-        subsystems.lights.WheelLightL.allOff(true);
-        subsystems.lights.WheelLightR.allOff(true);
-    }
     if (subsystems.audio.isPlayingTrack(30)) {
         subsystems.tail.wag(2000); //wag to Luca
     } else {
@@ -82,6 +78,7 @@ void DemoMode::runLights()
             subsystems.lights.eyeLight.setStandard(CRGB(50, 100, 255));
         }
     }
+    robot.rLights.genLights();
 }
 void DemoMode::runSound()
 {

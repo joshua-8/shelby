@@ -208,6 +208,7 @@ void TagMode::runLights()
             subsystems.lights.eyeLight.setStandard(CRGB(50, 100, 255));
         }
     }
+    robot.rLights.genLights();
 }
 void TagMode::runSound()
 {
