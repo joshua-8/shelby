@@ -4,7 +4,7 @@
 class drivetrainConsts {
 public:
     float wheelbase = 0.605; //meters
-    float batMon = 134; //DAC units per volt, larger value=lower reading
+    float batMon = 127; //DAC units per volt, larger value=lower reading
 };
 static const drivetrainConsts drivetrainConstants;
 #endif

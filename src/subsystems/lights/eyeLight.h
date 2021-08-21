@@ -23,6 +23,7 @@ public:
     void setBlinkOff();
     void setStandard(CRGB _standardColor);
     void setMode(eyeMode _mode);
+    boolean winking;
 
 private:
     CRGB blinkColor;

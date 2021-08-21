@@ -57,7 +57,7 @@ void DriveMode::run()
     runLights();
 
     if (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.WORD_MODE) {
-        //celebrate
+        //joke
         subsystems.audio.playWordMode(-10);
     }
     if (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.LIGHTS_MODE) {
@@ -100,7 +100,7 @@ void DriveMode::runLights()
             subsystems.lights.eyeLight.setStandard(CRGB(50, 100, 255));
         }
     }
-    
+
     robot.rLights.genLights();
 }
 void DriveMode::runSound()

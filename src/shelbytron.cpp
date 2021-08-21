@@ -49,9 +49,10 @@ void loop()
     if (subsystems.batMonitor.getSupplyVoltage() < topSettings.criticalVoltThresh || subsystems.batMonitor.getSupplyVoltage() <= 10) {
         if (BAT_crit_alerted == false) {
             if (genS.volume < 30) {
-                genS.musicMode = 0;
                 genS.volume = 30;
             }
+            genS.musicMode = 0;
+            subsystems.audio.wTrig.stopAllTracks();
             subsystems.audio.playTrackLoud(221); //I really need a nap
             BAT_crit_alerted = true;
             go = false;
@@ -60,6 +61,8 @@ void loop()
     if (BAT_crit_alerted) {
         genS.lightsMode = 0;
         if (go == true) {
+            subsystems.lights.WheelLightL.allOff(true);
+            subsystems.lights.WheelLightR.allOff(true);
             messageScreen.dispMessage("charge", "battery", 3000);
             subsystems.audio.playTrack(14); //low battery
         }
