@@ -4,18 +4,14 @@ StillMode::StillMode()
 }
 void StillMode::begin()
 {
+    subsystems.head.setServosEnabled(false);
 }
 void StillMode::run()
 {
     subsystems.head.setServosEnabled(go);
     if (go) {
-        if (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK) {
-            if (subsystems.tail.getWagPeriod() == 0) {
-                subsystems.tail.wag(2000);
-            } else {
-                subsystems.tail.stopWag();
-            }
-        }
+        if (subsystems.tail.getWagPeriod() == 0)
+            subsystems.tail.wag(2000);
     }
 
     runSound();
@@ -135,7 +131,7 @@ void StillMode::runSound()
     }
 
     if (genS.musicMode == 1) { //short
-        if (false /*encourage*/ || (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.AUX)) {
+        if ((subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK)) {
             subsystems.audio.playNextShort();
             // encourage = false;
         }

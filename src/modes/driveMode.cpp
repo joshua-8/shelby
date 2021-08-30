@@ -7,10 +7,12 @@ void DriveMode::begin()
     youdrive = true;
     subsystems.drivetrain.resetDist();
     robot.moveHall.begin();
+    subsystems.head.setServosEnabled(false);
 }
 void DriveMode::run()
 {
     subsystems.head.setServosEnabled(go);
+    subsystems.head.setPositions(0, 0);
 
     if (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK) {
         youdrive = !youdrive;
@@ -18,6 +20,10 @@ void DriveMode::run()
             subsystems.audio.playTrackOthersQuiet(229);
         } else {
             robot.moveHall.begin();
+            subsystems.distanceSensors.LTurret.setAngle(-90);
+            subsystems.distanceSensors.RTurret.setAngle(90);
+            subsystems.distanceSensors.LTurret.servo->wake();
+            subsystems.distanceSensors.RTurret.servo->wake();
             subsystems.audio.playTrackOthersQuiet(228);
         }
     }
@@ -31,6 +37,8 @@ void DriveMode::run()
                 subsystems.drivetrain.moveVel({ 0, 0, 0 });
             }
         } else { //helpdrive
+            subsystems.distanceSensors.LTurret.setAngle(-90);
+            subsystems.distanceSensors.RTurret.setAngle(90);
             subsystems.drivetrain.setVelLimitY(driveModePresetSettings[genS.preset].hallSpeed);
 
             if (millis() - subsystems.ir.lastNewMsgMillis < 400 && subsystems.ir.message == irConstants.UP) {
@@ -42,11 +50,19 @@ void DriveMode::run()
                     robot.moveHall.begin();
                 robot.moveHall.run(-driveModePresetSettings[genS.preset].hallSpeed, true);
             } else if (millis() - subsystems.ir.lastNewMsgMillis < 400 && subsystems.ir.message == irConstants.LEFT) {
-                if (!subsystems.ir.repeat)
-                    subsystems.drivetrain.moveDistRZInc(-90);
+                if (!subsystems.ir.repeat) {
+                    if (abs(subsystems.drivetrain.getVel().sumAbs()) < .1)
+                        subsystems.drivetrain.moveDistRZInc(-90);
+                    else
+                        subsystems.drivetrain.moveVel({ 0, 0, 0 });
+                }
             } else if (millis() - subsystems.ir.lastNewMsgMillis < 400 && subsystems.ir.message == irConstants.RIGHT) {
-                if (!subsystems.ir.repeat)
-                    subsystems.drivetrain.moveDistRZInc(90);
+                if (!subsystems.ir.repeat) {
+                    if (abs(subsystems.drivetrain.getVel().sumAbs()) < .1)
+                        subsystems.drivetrain.moveDistRZInc(90);
+                    else
+                        subsystems.drivetrain.moveVel({ 0, 0, 0 });
+                }
             } else {
                 subsystems.drivetrain.moveVel({ 0, 0, 0 });
             }

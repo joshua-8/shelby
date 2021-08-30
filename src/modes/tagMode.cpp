@@ -11,6 +11,8 @@ void TagMode::begin()
     resetAtStartOfHall();
     where = 0;
     justStarted = true;
+    subsystems.head.setServosEnabled(false);
+    subsystems.head.setPositions(0, 0);
 }
 void TagMode::run()
 {
@@ -26,15 +28,23 @@ void TagMode::run()
                 drivingStartDistance = subsystems.drivetrain.getDist().y;
                 break;
             case DRIVING_CORNER:
-                subsystems.drivetrain.moveDistRZ((tagModeModeSettings.turnLeft == (where == 1)) ? -90 : 90);
+                subsystems.drivetrain.moveDistRZ((tagModeModeSettings.turnLeft == (where == 1)) ? -90 + robot.moveHall.getHallHeading() : 90 + robot.moveHall.getHallHeading());
                 break;
             case DRIVING_CORNER_DRIVE:
                 subsystems.drivetrain.resetDist();
                 subsystems.drivetrain.moveDistY(2.0);
                 break;
+            case END_HALL_DRIVE_STOPFOR:
+                subsystems.drivetrain.moveVel({ 0, 0, 0 });
+                break;
+            case TURNING_180_STOPFOR:
+                subsystems.drivetrain.moveVel({ 0, 0, 0 });
+                break;
             case END_HALL_DRIVE: //clear corner
+                //                tempDriveVel = subsystems.drivetrain.getDist().y;
                 subsystems.drivetrain.resetDist();
-                subsystems.drivetrain.moveDistY(.6);
+                //                subsystems.drivetrain.YLimiter.setVelocity(tempDriveVel);
+                subsystems.drivetrain.moveDistY(.5);
                 break;
             case STARTING_TURN:
                 encourage = true;
@@ -62,16 +72,15 @@ void TagMode::run()
                 break;
             case TURNING_180B:
                 if (where == 0)
-                    subsystems.drivetrain.moveDistYInc(.5);
+                    subsystems.drivetrain.moveDistYInc(0);
                 if (where == 2)
-                    subsystems.drivetrain.moveDistYInc(.5);
+                    subsystems.drivetrain.moveDistYInc(0);
                 break;
             case TURNING_180C:
                 subsystems.drivetrain.moveDistRZInc(-90);
                 break;
             }
         }
-
         if (lastState != state) {
             lastState = state;
         } else {
@@ -84,15 +93,15 @@ void TagMode::run()
                 if (abs(subsystems.drivetrain.getDist().y - drivingStartDistance) > tagModePresetSettings[genS.preset].drvDist && abs(topSettings.hallLength - subsystems.drivetrain.getDist().y) > tagModePresetSettings[genS.preset].drvDist) {
                     state = STOPPING_DRIVING;
                 }
-                if (((where == 0 || where == 2) && abs(subsystems.drivetrain.getDist().y) > topSettings.hallLength - (where == 2 ? 1 : 0) - (justStarted ? 0 : 3))
+                if (((where == 0 || where == 2) && abs(subsystems.drivetrain.getDist().y) > topSettings.hallLength - (where == 2 ? 1 : 0) - (justStarted ? 1 : 3))
                     || ((where == 1 || where == 3) && abs(subsystems.drivetrain.getDist().y) > topSettings.hallLength - 2)) {
 
                     if ((where == 0 || where == 2) && (robot.moveHall.hallWidth > 5.0 || subsystems.distanceSensors.LTurret.getDist() == 0 || subsystems.distanceSensors.RTurret.getDist() == 0)) {
-                        state = END_HALL_DRIVE;
+                        state = END_HALL_DRIVE_STOPFOR;
                         where++;
                         justStarted = false;
                     } else if ((where == 1 || where == 3)) {
-                        state = TURNING_180A;
+                        state = TURNING_180_STOPFOR;
                         if (where == 1)
                             subsystems.audio.playTrackLoud(213);
                         if (where == 3) {
@@ -103,6 +112,11 @@ void TagMode::run()
                             where = 0;
                         }
                     }
+                }
+                break;
+            case TURNING_180_STOPFOR:
+                if (subsystems.drivetrain.getVel().sumAbs() == 0) {
+                    state = TURNING_180A;
                 }
                 break;
             case TURNING_180A:
@@ -125,6 +139,11 @@ void TagMode::run()
             case DRIVING_CORNER_DRIVE:
                 if (subsystems.drivetrain.YLimiter.isPosAtTarget() && subsystems.drivetrain.isVelZero()) {
                     state = DRIVING_HALL;
+                }
+                break;
+            case END_HALL_DRIVE_STOPFOR:
+                if (subsystems.drivetrain.getVel().sumAbs() == 0) {
+                    state = END_HALL_DRIVE;
                 }
                 break;
             case END_HALL_DRIVE:

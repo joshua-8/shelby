@@ -74,7 +74,7 @@ void MoveHall::run(float speed, boolean safe)
 
     robotHeading = subsystems.drivetrain.getDist().rz;
 
-    //P (I? D?) controller
+    //P controller
     targetRobotHeadingHall = topSettings.mHallPterm * hallError * (speed >= 0 ? 1.0 : -1.0);
     //add hallHeading, limit range of heading.
     targetRobotHeading = constrain(targetRobotHeadingHall, -topSettings.mHallHeadRng, topSettings.mHallHeadRng);
@@ -91,8 +91,8 @@ void MoveHall::run(float speed, boolean safe)
 
         driveDeltaDist = subsystems.drivetrain.getDist().y - lastDriveDist;
 
-        leftValid = abs(leftDelta) <= topSettings.mHallThresh && leftDist != 0 && leftDist < 3;
-        rightValid = abs(rightDelta) <= topSettings.mHallThresh && rightDist != 0 && rightDist < 3;
+        leftValid = abs(leftDelta) <= topSettings.mHallThresh && leftDist != 0 && leftDist < 2;
+        rightValid = abs(rightDelta) <= topSettings.mHallThresh && rightDist != 0 && rightDist < 2;
         if (leftValid || rightValid) {
             if (leftValid && rightValid) {
                 delta = (leftDelta + rightDelta) / 2.0;
@@ -108,7 +108,7 @@ void MoveHall::run(float speed, boolean safe)
             goodReadingDist += abs(driveDeltaDist);
 
             hallHeading -= robotHeading;
-            hallHeading += (instantAngle - hallHeading) * abs(driveDeltaDist) / (goodReadingDist + .5);
+            hallHeading += (instantAngle - hallHeading) * abs(driveDeltaDist) / (goodReadingDist + .25);
             hallHeading += robotHeading;
         }
 
