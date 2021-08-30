@@ -51,3 +51,7 @@ void Tail::stopWag()
 {
     period = 0;
 }
+unsigned int Tail::getWagPeriod()
+{
+    return period;
+}

@@ -15,6 +15,12 @@
 			"vector": "cpp",
 			"initializer_list": "cpp",
 			"*.tpp": "cpp"
-		}
+		},
+		"cSpell.words": [
+			"Dinc",
+			"Pterm",
+			"bdumtisslaugh",
+			"wtrig"
+		]
 	}
 }

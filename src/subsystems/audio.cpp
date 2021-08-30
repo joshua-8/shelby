@@ -9,10 +9,14 @@ Audio::Audio()
     shortMusicPlaying = 0;
     shortTrackStartMillis = 0;
     shortTrackPlaying = false;
+    wordToPlay = -1;
+    wordToPlayJoke = -1;
 }
 
 void Audio::begin()
 {
+    wordToPlay = -1;
+    wordToPlayJoke = -1;
     lastVolume = audioConstants.AUDIO_BOARD_VOLUME_MIN - 1;
     wTrig.start();
     wTrig.setReporting(true);
@@ -88,18 +92,31 @@ void Audio::playWordMode(int m)
 {
     if (genS.wordsMode == 0)
         return;
-    if (m == TAG_MODE_ID) {
+
+    if (m == -10) { //joke
+        wordToPlayJoke++;
+        if (wordToPlayJoke >= audioConstants.wordsPlaylistJokeLength || wordToPlayJoke < 0) {
+            wordToPlayJoke = 0;
+        }
+        playTrackOthersQuiet(audioConstants.wordsPlaylistJoke[wordToPlayJoke]);
+    }
+    if (m == TAG_MODE_ID || m == DRIVE_MODE_ID || m == STILL_MODE_ID) {
         wordToPlay++;
-        if (wordToPlay >= audioConstants.wordsPlaylistTagLength) {
+        if (wordToPlay >= audioConstants.wordsPlaylistYayLength || wordToPlay < 0) {
             wordToPlay = 0;
         }
-        wordStarted = true;
-        wordPlaying = audioConstants.wordsPlaylistTag[wordToPlay];
-        wTrig.trackGain(longMusicPlaying, topSettings.musicNormalGain - topSettings.musicVolumeDecrease);
-        wTrig.trackGain(shortMusicPlaying, topSettings.musicNormalGain - topSettings.musicVolumeDecrease);
-        playTrackLoud(wordPlaying);
-        wordTrackStartMillis = millis();
+        playTrackOthersQuiet(audioConstants.wordsPlaylistYay[wordToPlay]);
     }
+}
+
+void Audio::playTrackOthersQuiet(int t)
+{
+    wordStarted = true;
+    wordPlaying = t;
+    wTrig.trackGain(longMusicPlaying, topSettings.musicNormalGain - topSettings.musicVolumeDecrease);
+    wTrig.trackGain(shortMusicPlaying, topSettings.musicNormalGain - topSettings.musicVolumeDecrease);
+    playTrackLoud((int)wordPlaying);
+    wordTrackStartMillis = millis();
 }
 
 void Audio::playNextShort()

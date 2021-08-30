@@ -16,6 +16,7 @@ public:
 
 private:
     boolean mainMode = true;
+    int song = 1;
 };
 static DemoMode demomode = DemoMode();
 #endif

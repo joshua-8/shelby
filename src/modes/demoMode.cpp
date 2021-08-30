@@ -6,8 +6,6 @@ DemoMode::DemoMode()
 void DemoMode::begin()
 {
     mainMode = true;
-    subsystems.audio.stopLong();
-    subsystems.audio.stopShort();
     subsystems.lights.eyeLight.setStandard(CRGB(100, 120, 255));
     subsystems.lights.eyeLight.setBlink(CRGB(100, 0, 0), 0);
     subsystems.drivetrain.resetDist();
@@ -18,15 +16,10 @@ void DemoMode::run()
     runLights();
     runSound();
 
-    if (genS.lightsMode != DURINGmodeLastGenS.lightsMode) {
-        subsystems.lights.WheelLightL.allOff(true);
-        subsystems.lights.WheelLightR.allOff(true);
-    }
-    if (subsystems.audio.isPlayingTrack(30)) {
-        subsystems.tail.wag(2000); //wag to Luca
-    } else {
-        subsystems.tail.stopWag();
-    }
+    subsystems.head.setServosEnabled(go);
+    subsystems.head.setPositions(0, 0);
+
+    subsystems.tail.stopWag();
 
     if (mainMode) {
         if (millis() - subsystems.ir.lastNewMsgMillis < 400 && go) {
@@ -36,7 +29,6 @@ void DemoMode::run()
             subsystems.drivetrain.moveVel({ 0, 0, 0 });
         }
     }
-
     ////////////////////////////////////////////////////////manual track select
     if (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.AUX) {
         messageScreen.dispValSelector("trk", 4, 0);
@@ -44,10 +36,19 @@ void DemoMode::run()
     }
     if (messageScreen.valSelectorDone()) {
         mainMode = true;
+        song = messageScreen.valSelectorValue();
         if (subsystems.audio.isPlayingTrack(messageScreen.valSelectorValue())) {
             subsystems.audio.stopTrack(messageScreen.valSelectorValue());
         } else {
             subsystems.audio.playTrack(messageScreen.valSelectorValue());
+        }
+    }
+
+    if (mainMode && subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK) {
+        if (subsystems.audio.isPlayingTrack(song)) {
+            subsystems.audio.stopTrack(song);
+        } else {
+            subsystems.audio.playTrack(song);
         }
     }
 
@@ -66,7 +67,7 @@ void DemoMode::runLights()
     if (genS.lightsMode == 1) {
         subsystems.lights.eyeLight.setMode(EyeLight::NORMAL);
         subsystems.lights.eyeLight.setBlinkOff();
-        if (subsystems.audio.isPlayingShort() || subsystems.audio.isPlayingTrack(30)) {
+        if (subsystems.audio.isPlayingShort()) {
             subsystems.lights.eyeLight.setStandard(CRGB(255, 0, 255));
         } else if (subsystems.audio.isPlayingLong()) {
             subsystems.lights.eyeLight.setStandard(CRGB(0, 55, 0));
@@ -75,7 +76,7 @@ void DemoMode::runLights()
         }
     }
     if (genS.lightsMode == 2) {
-        if (subsystems.audio.isPlayingShort() || subsystems.audio.isPlayingTrack(30)) {
+        if (subsystems.audio.isPlayingShort()) {
             subsystems.lights.eyeLight.setMode(EyeLight::RAINBOW);
             subsystems.lights.eyeLight.setBlinkOff();
         } else {
@@ -84,14 +85,12 @@ void DemoMode::runLights()
             subsystems.lights.eyeLight.setStandard(CRGB(50, 100, 255));
         }
     }
+    robot.rLights.genLights();
 }
 void DemoMode::runSound()
 {
 
     if (genS.musicMode == 0) { //off
-        if (subsystems.ir.newMsg && !subsystems.ir.repeat && subsystems.ir.message == irConstants.OK && mainMode) {
-            subsystems.audio.playTrack(30); //say hi to Luca
-        }
     }
 
     if (genS.musicMode == 1) { //short

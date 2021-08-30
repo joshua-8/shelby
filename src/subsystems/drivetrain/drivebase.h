@@ -15,12 +15,12 @@ public:
     JVoltageCompMeasure<8> mbatMonitor = JVoltageCompMeasure<8>(BAT_MONITOR_PIN, drivetrainConstants.batMon);
     JMotorCompBasic leftMotorCompensator = JMotorCompBasic(mbatMonitor, 3.65, .05);
     JMotorCompBasic rightMotorCompensator = JMotorCompBasic(mbatMonitor, 3.65, .05);
-    JControlLoopBasic leftMotorControlLoop = JControlLoopBasic(30, 1000);
-    JControlLoopBasic rightMotorControlLoop = JControlLoopBasic(30, 1000);
+    JControlLoopBasic leftMotorControlLoop = JControlLoopBasic(35, 1000);
+    JControlLoopBasic rightMotorControlLoop = JControlLoopBasic(35, 1000);
     JMotorControllerClosed leftMotorController = JMotorControllerClosed(leftMotorDriver, leftMotorCompensator, leftWheelEncoder, leftMotorControlLoop, INFINITY, INFINITY, .05, false, 2.0);
     JMotorControllerClosed rightMotorController = JMotorControllerClosed(rightMotorDriver, rightMotorCompensator, rightWheelEncoder, rightMotorControlLoop, INFINITY, INFINITY, .05, false, 2.0);
     JDrivetrainTwoSide drvtrain = JDrivetrainTwoSide(leftMotorController, rightMotorController, drivetrainConstants.wheelbase);
-    JDrivetrainControllerBasic drivetrain = JDrivetrainControllerBasic(drvtrain, { 10, 200, 0 }, { 1, 100, 0 }, { .1, 20, 0 });
+    JDrivetrainControllerBasic drivetrain = JDrivetrainControllerBasic(drvtrain, { 10, 200, 0 }, { .8, 80, 0 }, { .1, 20, 0 });
     void begin();
     void run();
 };

@@ -11,6 +11,7 @@ public:
     void run();
     void wag(unsigned int _period);
     void stopWag();
+    unsigned int getWagPeriod();
 
 private:
     Servo servo;

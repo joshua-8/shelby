@@ -9,6 +9,7 @@ EyeLight::EyeLight()
     specialPatternMillis = 0;
     mode = OFF;
     blinking = false;
+    winking = false;
 }
 void EyeLight::begin()
 {
@@ -72,7 +73,9 @@ void EyeLight::allOff(boolean s)
  */
 void EyeLight::allColor(CRGB c, boolean s)
 {
-    for (int i = 0; i < eyeLightConstants.NUM_LEDS; i++) {
+    if (winking)
+        allOff(false);
+    for (int i = 0; i < (winking ? eyeLightConstants.NUM_LEDS / 2 : eyeLightConstants.NUM_LEDS); i++) {
         leds[i] = c;
     }
     if (s) {
